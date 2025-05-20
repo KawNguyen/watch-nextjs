@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Brand } from "@/types/brand";
 import Link from "next/link";
-import { buttonVariants } from "../../../components/ui/button";
+import { buttonVariants } from "../../../../components/ui/button";
 import { usePathname } from "next/navigation";
 
 interface WatchBrandProps {

@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 
 import { watchesApi } from "@/services/watches";
-import WatchesContainer from "@/app/watches/_component/watch-container";
+import WatchesContainer from "@/app/(root)/watches/_component/watch-container";
 
 interface BrandPageProps {
   params: {
