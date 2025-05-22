@@ -17,8 +17,7 @@ export default function OtpPage() {
   const mutateVerifyOTP = useMutation({
     mutationFn: (otp: string) => authApi.verifyOTP(email, otp),
     onSuccess: (data) => {
-      setAuth(data.token, data.user.profile);
-      console.log(data);
+      setAuth(data.user);
       router.push("/");
     },
     onError: (error) => {

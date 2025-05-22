@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useMemo } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
@@ -25,19 +26,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { googleLogin } from "@/lib/auth";
 
-const signinSchema = z.object({
-  email: z.string().email("Invalid email format"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
-export type SigninFormData = z.infer<typeof signinSchema>;
-export type RegisterFormData = z.infer<typeof signinSchema>;
+export interface AuthField {
+  name: string;
+  label: string;
+  type?: string;
+  placeholder?: string;
+  validation: z.ZodTypeAny;
+}
 
 interface AuthFormProps {
   mode?: "signin" | "register";
-  onSubmit?: (data: SigninFormData | RegisterFormData) => void;
+  onSubmit?: (data: Record<string, any>) => void;
   className?: string;
   isPending?: boolean;
+  fields: AuthField[];
 }
 
 export function AuthForm({
@@ -45,20 +47,34 @@ export function AuthForm({
   onSubmit,
   className = "",
   isPending,
+  fields,
 }: AuthFormProps) {
-  const schema = signinSchema;
-  const form = useForm<SigninFormData | RegisterFormData>({
+  // Dynamic schema and default values
+  const schema = useMemo(() => {
+    return z.object(
+      fields.reduce((acc, field) => {
+        acc[field.name] = field.validation;
+        return acc;
+      }, {} as Record<string, z.ZodTypeAny>)
+    );
+  }, [fields]);
+
+  type FormData = z.infer<typeof schema>;
+
+  const defaultValues = useMemo(() => {
+    return fields.reduce((acc, field) => {
+      acc[field.name] = "";
+      return acc;
+    }, {} as Record<string, string>);
+  }, [fields]);
+
+  const form = useForm({
     resolver: zodResolver(schema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues,
   });
 
-  const handleSubmit = (data: SigninFormData | RegisterFormData) => {
-    if (onSubmit) {
-      onSubmit(data);
-    }
+  const handleSubmit = (data: FormData) => {
+    onSubmit?.(data);
   };
 
   const handleGoogleSignIn = () => {
@@ -73,51 +89,33 @@ export function AuthForm({
         </CardTitle>
         <CardDescription>
           {mode === "signin"
-            ? "Enter your email and password to sign in"
-            : "Enter your information to create an account"}
+            ? "Enter your credentials to access your account"
+            : "Fill the form to register"}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="example@email.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter your password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+            {fields.map((field) => (
+              <FormField
+                key={field.name}
+                control={form.control}
+                name={field.name}
+                render={({ field: f }) => (
+                  <FormItem>
+                    <FormLabel>{field.label}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type={field.type || "text"}
+                        placeholder={field.placeholder || ""}
+                        {...f}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
 
             <div className="space-y-4">
               <Button type="submit" className="w-full" disabled={isPending}>
@@ -136,7 +134,7 @@ export function AuthForm({
               {mode === "signin" && (
                 <div className="text-center text-sm">
                   <span className="text-muted-foreground">
-                    Don&apos;t have an account? {""}
+                    Don&apos;t have an account?{" "}
                   </span>
                   <Link href="/register">Sign Up</Link>
                 </div>

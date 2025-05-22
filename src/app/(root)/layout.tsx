@@ -5,10 +5,10 @@ import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <main>
       <Header />
       {children}
-    </div>
+    </main>
   );
 };
 

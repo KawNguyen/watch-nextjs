@@ -19,7 +19,6 @@ const Header = () => {
   const { getUser, isAuthenticated, logout } = useAuthStore();
   const user = getUser();
   const router = useRouter();
-  console.log(getUser());
   return (
     <header className="w-full h-20 content-center bg-slate-300">
       <div className="container mx-auto flex justify-between items-center">
@@ -41,16 +40,16 @@ const Header = () => {
           </Link>
           {isAuthenticated ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-2 outline-none">
+              <DropdownMenuTrigger className="flex items-center space-x-2 outline-none" asChild>
                 <Avatar>
                   <AvatarImage src={user?.avatar} className="object-cover" />
                   <AvatarFallback>
-                    {user?.name?.charAt(0).toUpperCase()}
+                    {user?.firstName?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
+                <DropdownMenuLabel>{user?.lastName}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push("/")}>
                   <UserCog />
@@ -59,7 +58,7 @@ const Header = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
+                  Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
