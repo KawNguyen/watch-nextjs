@@ -23,18 +23,15 @@ import {
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { googleLogin } from "@/lib/auth";
 
 const signinSchema = z.object({
   email: z.string().email("Invalid email format"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const registerSchema = signinSchema.extend({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-});
-
 export type SigninFormData = z.infer<typeof signinSchema>;
-export type RegisterFormData = z.infer<typeof registerSchema>;
+export type RegisterFormData = z.infer<typeof signinSchema>;
 
 interface AuthFormProps {
   mode?: "signin" | "register";
@@ -49,13 +46,12 @@ export function AuthForm({
   className = "",
   isPending,
 }: AuthFormProps) {
-  const schema = mode === "signin" ? signinSchema : registerSchema;
+  const schema = signinSchema;
   const form = useForm<SigninFormData | RegisterFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
-      ...(mode === "register" && { name: "" }),
     },
   });
 
@@ -63,6 +59,10 @@ export function AuthForm({
     if (onSubmit) {
       onSubmit(data);
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    googleLogin();
   };
 
   return (
@@ -83,22 +83,6 @@ export function AuthForm({
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-4"
           >
-            {mode === "register" && (
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Full Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
             <FormField
               control={form.control}
               name="email"
@@ -182,9 +166,7 @@ export function AuthForm({
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={() => {
-                  console.log("Google sign in clicked");
-                }}
+                onClick={handleGoogleSignIn}
               >
                 <Image
                   src="svg/google.svg"

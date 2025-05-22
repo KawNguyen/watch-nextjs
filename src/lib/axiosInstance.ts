@@ -35,11 +35,11 @@ axiosInstance.interceptors.response.use(
 
       try {
         localStorage.removeItem("token");
-        window.location.href = "/auth/signin";
+        window.location.href = "/sign-in";
       } catch (err) {
         console.log(err);
         localStorage.removeItem("token");
-        window.location.href = "/auth/signin";
+        window.location.href = "/sign-in";
       }
     }
 
