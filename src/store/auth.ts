@@ -1,53 +1,53 @@
 import { create } from "zustand";
 
-interface User {
-  id: string;
-  email: string;
-  accessToken: string;
+interface Profile {
   firstName: string;
-  lastName: string;
   avatar: string;
+  lastName: string;
+}
+
+interface User {
+  userId: string;
+  accessToken: string;
+  profile: Profile;
 }
 
 interface AuthStore {
   email: string;
-  user: {
-    profile: User | null;
-  };
+  user: User | null;
   isAuthenticated: boolean;
   setEmail: (email: string) => void;
   setAuth: (user: User) => void;
   logout: () => void;
   getToken: () => string | null;
-  getUser: () => User | null;
+  getUser: () => Profile | null;
 }
 
-export const useAuthStore = create<AuthStore>((set, get): AuthStore => {
-  const user =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("user") || "null")
-      : null;
+export const useAuthStore = create<AuthStore>((set, get) => ({
+  email: "",
+  user: null,
+  isAuthenticated: !!localStorage.getItem("access_token"),
 
-  return {
-    email: "",
-    user,
-    isAuthenticated: user ? !!user.accessToken : false,
-    setEmail: (email) => set({ email }),
+  setEmail: (email) => set({ email }),
+
+  setAuth: (user: User) => {
+    localStorage.setItem("access_token", user.accessToken);
+    localStorage.setItem("user", JSON.stringify(user.profile));
+    set({ user, isAuthenticated: true });
+  },
+
+  logout: () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
+    set({ user: null, isAuthenticated: false });
+  },
+
+  getToken: () => localStorage.getItem("access_token"),
+
+  getUser: () => {
+    const userData = localStorage.getItem("user");
+    if (!userData) return null;
+    return JSON.parse(userData);
+  },
   
-    setAuth: (user: User) => {
-      localStorage.setItem("access_token", user.accessToken);
-      localStorage.setItem("user", JSON.stringify(user));
-      set({ user: { profile: user }, isAuthenticated: true });
-    },
-
-    logout: () => {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("user");
-      set({ user: { profile: null }, isAuthenticated: false });
-    },
-
-    getToken: () => get().user?.profile?.accessToken || null,
-
-    getUser: () => get().user?.profile,
-  };
-});
+}));
