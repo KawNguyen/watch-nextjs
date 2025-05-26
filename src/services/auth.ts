@@ -8,7 +8,12 @@ export const authApi = {
     });
     return response.data;
   },
-  register: async (firstName: string, lastName:string,email: string, password: string) => {
+  register: async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) => {
     const response = await axiosInstance.post("/auth/register", {
       firstName,
       lastName,
@@ -24,5 +29,4 @@ export const authApi = {
     });
     return response.data;
   },
-  
 };

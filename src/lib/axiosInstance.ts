@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
@@ -23,28 +24,5 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        localStorage.removeItem("token");
-        window.location.href = "/sign-in";
-      } catch (err) {
-        console.log(err);
-        localStorage.removeItem("token");
-        window.location.href = "/sign-in";
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
 
 export default axiosInstance;

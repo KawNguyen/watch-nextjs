@@ -1,53 +1,28 @@
 import { create } from "zustand";
+import Cookies from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
+import { userAPI } from "@/services/user";
 
-interface Profile {
-  firstName: string;
-  avatar: string;
-  lastName: string;
-}
-
-interface User {
-  userId: string;
-  accessToken: string;
-  profile: Profile;
-}
-
-interface AuthStore {
+interface AuthState {
   email: string;
-  user: User | null;
+  user: any;
   isAuthenticated: boolean;
   setEmail: (email: string) => void;
-  setAuth: (user: User) => void;
+  setAuth: (user: any) => void;
   logout: () => void;
-  getToken: () => string | null;
-  getUser: () => Profile | null;
 }
 
-export const useAuthStore = create<AuthStore>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   email: "",
   user: null,
-  isAuthenticated: !!localStorage.getItem("access_token"),
-
+  isAuthenticated: false,
   setEmail: (email) => set({ email }),
-
-  setAuth: (user: User) => {
-    localStorage.setItem("access_token", user.accessToken);
-    localStorage.setItem("user", JSON.stringify(user.profile));
-    set({ user, isAuthenticated: true });
-  },
-
+  setAuth: (user) => set({ user, isAuthenticated: true }),
   logout: () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("user");
+    Cookies.remove("accessToken");
     set({ user: null, isAuthenticated: false });
-  },
-
-  getToken: () => localStorage.getItem("access_token"),
-
-  getUser: () => {
-    const userData = localStorage.getItem("user");
-    if (!userData) return null;
-    return JSON.parse(userData);
-  },
-  
+  }
 }));
+
+// Tạo hook riêng để xử lý authentication
+

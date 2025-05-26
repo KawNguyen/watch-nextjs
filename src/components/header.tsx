@@ -1,7 +1,6 @@
 "use client";
 
 import { routes } from "@/constant/routes";
-import { useAuthStore } from "@/store/auth";
 import {
   Heart,
   LogIn,
@@ -21,12 +20,15 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/queries/user";
+import { useAuthStore } from "@/store/auth";
 
 const Header = () => {
-  const { getUser, isAuthenticated, logout } = useAuthStore();
-  console.log(getUser())
+  const {user, logout} = useUser();
+  const profile = user?.profile;
+  console.log(user)
+  const isAuthenticated = useAuthStore();
   const router = useRouter();
-  const user = getUser();
 
 
   return (
@@ -68,14 +70,14 @@ const Header = () => {
                   asChild
                 >
                   <Avatar>
-                    <AvatarImage src={user?.avatar} className="object-cover" />
+                    <AvatarImage src={profile?.avatar} className="object-cover" />
                     <AvatarFallback>
-                      {user?.firstName?.charAt(0).toUpperCase()}
+                      {profile?.firstName?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>{user?.firstName} {user?.lastName}</DropdownMenuLabel>
+                  <DropdownMenuLabel>{profile?.firstName} {profile?.lastName}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => router.push("/")}>
                     <UserCog />
