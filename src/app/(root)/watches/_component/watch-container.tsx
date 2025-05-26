@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaginationControl from "@/components/pagination-control";
 import { useState } from "react";
 import { useBrandQuery } from "@/queries/brand";
-import WatchBrand from "@/app/watches/_component/watch-brand";
+import WatchBrand from "@/app/(root)/watches/_component/watch-brand";
 
 export default function WatchesContainer({ brand }: { brand?: string }) {
   const [currentPage, setCurrentPage] = useState(1);

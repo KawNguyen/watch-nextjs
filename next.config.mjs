@@ -26,6 +26,19 @@ const nextConfig = {
         protocol: "https",
         hostname: "media.rolex.com",
       },
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "media.gq-magazine.co.uk",
+      }
+      
     ],
   },
 };
