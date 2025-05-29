@@ -36,7 +36,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkAuth = () => {
     if (status === "success") {
-      console.log(data);
       setProfile(data?.profile);
       setIsAuthenticated(true);
     } else {
