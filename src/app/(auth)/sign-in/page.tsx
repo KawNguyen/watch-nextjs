@@ -1,8 +1,8 @@
 "use client";
 
 import { AuthForm } from "@/components/auth-form";
+import { useAuth } from "@/components/providers/auth-context";
 import { authApi } from "@/services/auth";
-import { useAuthStore } from "@/store/auth";
 import { SignInTypes } from "@/types/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import { z } from "zod";
 
 const Page = () => {
   const router = useRouter();
-  const setEmail = useAuthStore((state) => state.setEmail);
+  const { setEmail } = useAuth();
   const mutateSignIn = useMutation({
     mutationFn: (data: SignInTypes) =>
       authApi.signIn(data.email, data.password),

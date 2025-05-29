@@ -37,6 +37,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "media.gq-magazine.co.uk",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com"
       }
       
     ],

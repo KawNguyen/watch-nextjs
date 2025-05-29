@@ -20,16 +20,20 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/queries/user";
-import { useAuthStore } from "@/store/auth";
+import { useMutation } from "@tanstack/react-query";
+import { authApi } from "@/services/auth";
+import { useAuth } from "./providers/auth-context";
 
 const Header = () => {
-  const {user, logout} = useUser();
-  const profile = user?.profile;
-  console.log(user)
-  const isAuthenticated = useAuthStore();
   const router = useRouter();
-
+  const { isAuthenticated, profile, logout } = useAuth();
+  const mutateLogout = useMutation({
+    mutationFn: async () => await authApi.logout(),
+    onSuccess: () => {
+      logout();
+      router.push("/");
+    },
+  });
 
   return (
     <header className="w-full h-20 content-center bg-slate-300">
@@ -70,21 +74,26 @@ const Header = () => {
                   asChild
                 >
                   <Avatar>
-                    <AvatarImage src={profile?.avatar} className="object-cover" />
+                    <AvatarImage
+                      src={profile?.avatar}
+                      className="object-cover"
+                    />
                     <AvatarFallback>
                       {profile?.firstName?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>{profile?.firstName} {profile?.lastName}</DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    {profile?.firstName} {profile?.lastName}
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => router.push("/")}>
                     <UserCog />
                     Profile
-                  </DropdownMenuItem> 
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout}>
+                  <DropdownMenuItem onClick={() => mutateLogout.mutate()}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Log out
                   </DropdownMenuItem>

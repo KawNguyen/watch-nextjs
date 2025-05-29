@@ -1,9 +1,9 @@
 "use client";
 
+import { useAuth } from "@/components/providers/auth-context";
 import { Button } from "@/components/ui/button";
 import { VerifyOTP } from "@/components/verify-otp";
 import { authApi } from "@/services/auth";
-import { useAuthStore } from "@/store/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,13 +11,11 @@ import { useState } from "react";
 export default function OtpPage() {
   const [otp, setOtp] = useState("");
   const router = useRouter();
-  const email = useAuthStore((state) => state.email);
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const { email } = useAuth();
   
   const mutateVerifyOTP = useMutation({
     mutationFn: (otp: string) => authApi.verifyOTP(email, otp),
-    onSuccess: (data) => {
-      setAuth(data.user);
+    onSuccess: () => {
       router.push("/");
     },
     onError: (error) => {

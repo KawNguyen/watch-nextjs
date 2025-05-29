@@ -4,17 +4,27 @@ import { AuthForm } from "@/components/auth-form";
 import { authApi } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/auth";
 import { z } from "zod";
 import { RegisterTypes } from "@/types/auth";
+import { useAuth } from "@/components/providers/auth-context";
 
 const Page = () => {
   const router = useRouter();
-  const setEmail = useAuthStore((state) => state.setEmail);
+  const { setEmail } = useAuth();
 
   const mutateRegister = useMutation({
-    mutationFn: (data: { firstName: string, lastName: string, email: string, password: string }) =>
-      authApi.register(data.firstName, data.lastName, data.email, data.password),
+    mutationFn: (data: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+    }) =>
+      authApi.register(
+        data.firstName,
+        data.lastName,
+        data.email,
+        data.password
+      ),
     onSuccess: () => {
       router.push("/verify-otp");
     },
@@ -23,7 +33,7 @@ const Page = () => {
     },
   });
 
-  const handleSubmit = (data: RegisterTypes ) => {
+  const handleSubmit = (data: RegisterTypes) => {
     setEmail(data.email);
     mutateRegister.mutate(data);
   };
