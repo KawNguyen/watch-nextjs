@@ -37,8 +37,15 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "media.gq-magazine.co.uk",
-      }
-      
+      },
+      {
+        protocol: "https",
+        hostname: "luxatch-store-newdemo.myshopify.com",
+      },
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+      },
     ],
   },
 };
