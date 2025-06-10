@@ -24,9 +24,7 @@ import {
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { googleLogin } from "@/lib/auth";
-import { useMutation } from "@tanstack/react-query";
-import { useUser } from "@/queries/user";
+import { googleLogin } from "@/lib/google-login";
 
 export interface AuthField {
   name: string;

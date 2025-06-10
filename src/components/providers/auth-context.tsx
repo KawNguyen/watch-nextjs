@@ -1,22 +1,41 @@
 "use client";
 
 import { useUser } from "@/queries/user";
-import { ProfileTypes, UserTypes } from "@/types/auth";
+import { authApi } from "@/services/auth";
+import { ProfileTypes, RegisterTypes, SignInTypes } from "@/types/auth";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
-  email: string;
-  setEmail: (email: string) => void;
   profile: ProfileTypes | null;
   isAuthenticated: boolean;
+  step: "1" | "2";
+  setStep: (step: "1" | "2") => void;
+  register: (data: RegisterTypes) => void;
+  signIn: (data: SignInTypes) => void;
+  verifyOTP: (email: string, otp: string) => void;
+  pendingState: {
+    register: boolean;
+    signIn: boolean;
+    verifyOTP: boolean;
+  };
   logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
-  email: "",
-  setEmail: () => {},
   profile: null,
   isAuthenticated: false,
+  step: "1",
+  setStep: () => {},
+  register: () => {},
+  signIn: () => {},
+  verifyOTP: () => {},
+  pendingState: {
+    register: false,
+    signIn: false,
+    verifyOTP: false,
+  },
   logout: () => {},
 });
 
@@ -29,35 +48,86 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [email, setEmail] = useState<string>("");
-  const [profile, setProfile] = useState<ProfileTypes | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { data, status } = useUser();
-
-  const checkAuth = () => {
-    if (status === "success") {
-      setProfile(data?.profile);
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  };
+  const router = useRouter();
+  const { data: profile, refetch } = useUser();
+  const [step, setStep] = useState<"1" | "2">("1");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    checkAuth();
-  }, [data])
+    if (profile) {
+      setIsAuthenticated(true);
+    }
+  }, [profile]);
+
+  const mutateRegister = useMutation({
+    mutationFn: (data: RegisterTypes) =>
+      authApi.register(
+        data.firstName,
+        data.lastName,
+        data.email,
+        data.password
+      ),
+    onSuccess: () => {
+      setStep("2");
+    },
+  });
+
+  const mutateSignIn = useMutation({
+    mutationFn: (data: SignInTypes) =>
+      authApi.signIn(data.email, data.password),
+    onSuccess: () => {
+      setStep("2");
+    },
+  });
+
+  const mutateVerifyOTP = useMutation({
+    mutationFn: ({ email, otp }: { email: string; otp: string }) =>
+      authApi.verifyOTP(email, otp),
+    onSuccess: () => {
+      router.push("/");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const mutateLogout = useMutation({
+    mutationFn: () => authApi.logout(),
+  });
+
+  const register = (data: RegisterTypes) => {
+    mutateRegister.mutate(data);
+  };
+
+  const signIn = (data: SignInTypes) => {
+    mutateSignIn.mutate(data);
+  };
+
+  const verifyOTP = (email: string, otp: string) => {
+    mutateVerifyOTP.mutate({ email, otp });
+    refetch();
+  };
 
   const logout = () => {
-    sessionStorage.removeItem("user");
-    setProfile(null);
+    mutateLogout.mutate();
     setIsAuthenticated(false);
+    setStep("1")
+    refetch();
   };
 
   const value: AuthContextType = {
-    email,
-    setEmail,
     profile,
     isAuthenticated,
+    step,
+    setStep,
+    register,
+    signIn,
+    verifyOTP,
+    pendingState: {
+      register: mutateRegister.isPending,
+      signIn: mutateSignIn.isPending,
+      verifyOTP: mutateVerifyOTP.isPending,
+    },
     logout,
   };
 

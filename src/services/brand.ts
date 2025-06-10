@@ -4,7 +4,7 @@ import { ApiResponse } from "@/types/watch";
 
 export const brandApi = {
   fetchAll: async (): Promise<ApiResponse<Brand>> => {
-    const data = await fetcher<ApiResponse<Brand>>(`/brands`);
+    const data = await fetcher<ApiResponse<Brand>>(`/brand`);
     return data;
   },
 };
