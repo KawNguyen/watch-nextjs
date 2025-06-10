@@ -47,7 +47,7 @@ export function VerifyOTP({ length = 6, onChange }: OtpInputProps) {
           onChange={(e) => handleChange(e.target.value, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           ref={(el) => void (inputRefs.current[index] = el)}
-          className="w-12 h-12 text-center text-xl font-semibold"
+          className="max-w-12 max-h-12 min-w-10 min-h-10 text-center text-xl font-semibold"
         />
       ))}
     </div>

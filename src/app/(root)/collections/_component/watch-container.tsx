@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaginationControl from "@/components/pagination-control";
 import { useState } from "react";
 import { useBrandQuery } from "@/queries/brand";
-import WatchBrand from "@/app/(root)/watches/_component/watch-brand";
+import WatchBrand from "@/app/(root)/collections/_component/watch-brand";
 
 export default function WatchesContainer({ brand }: { brand?: string }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +39,7 @@ export default function WatchesContainer({ brand }: { brand?: string }) {
           unoptimized
         />
         <div className="absolute inset-0 bg-black/50 size-full backdrop-blur-xs"></div>
-        <h2 className="relative z-10 text-white text-4xl font-bold text-center">
+        <h2 className="relative text-white text-4xl font-bold text-center">
           Elevate Every Moment - Discover Your Watch
         </h2>
       </div>

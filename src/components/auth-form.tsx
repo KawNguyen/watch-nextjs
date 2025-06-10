@@ -24,7 +24,7 @@ import {
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { googleLogin } from "@/lib/auth";
+import { googleLogin } from "@/lib/google-login";
 
 export interface AuthField {
   name: string;
@@ -49,7 +49,6 @@ export function AuthForm({
   isPending,
   fields,
 }: AuthFormProps) {
-  // Dynamic schema and default values
   const schema = useMemo(() => {
     return z.object(
       fields.reduce((acc, field) => {
@@ -95,7 +94,10 @@ export function AuthForm({
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             {fields.map((field) => (
               <FormField
                 key={field.name}

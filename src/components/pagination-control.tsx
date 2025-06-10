@@ -33,18 +33,15 @@ export default function PaginationControl({
 
     const endPage = initialEndPage;
 
-    // Add first page
     if (startPage > 1) {
       pages.push(1);
       if (startPage > 2) pages.push("ellipsis");
     }
 
-    // Add middle pages
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
 
-    // Add last page
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) pages.push("ellipsis");
       pages.push(totalPages);

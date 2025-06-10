@@ -1,15 +1,14 @@
-// "use client";
-
-import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
     <main>
-      <Header />
-      {children}
-      <Footer />
+      <TooltipProvider>
+        <Header />
+        {children}
+      </TooltipProvider>
     </main>
   );
 };

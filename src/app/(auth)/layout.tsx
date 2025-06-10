@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ReactNode } from "react";
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="h-screen w-screen flex bg-gray-100">
-      <div className="hidden lg:block w-[72%] relative">
+    <main className="h-screen w-screen flex bg-gray-100">
+      <div className="hidden lg:block w-[68%] relative">
         <Image
           src="/images/auth.webp"
           alt="auth background"
@@ -20,7 +20,7 @@ const layout = ({ children }: { children: ReactNode }) => {
         </div>
       </div>
 
-      <div className="w-full lg:w-[28%] flex items-center justify-center p-6">
+      <div className="lg:w-[32%] w-full flex items-center justify-center p-6">
         <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
           <div className="flex justify-center mb-6">
             <Link href="/">
@@ -36,7 +36,7 @@ const layout = ({ children }: { children: ReactNode }) => {
           {children}
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
