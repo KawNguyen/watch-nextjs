@@ -10,23 +10,24 @@ const routes = [
       { path: "/products", title: "All products" },
       { path: "/products?gender=Men", title: "Men" },
       { path: "/products?gender=Women", title: "Women" },
+      { path: "/products?gender=Unisex", title: "Unisex" },
     ],
   },
   {
     title: "Support",
     children: [
-      { path: "/contact", title: "About Us" },
-      { path: "/contact", title: "Contact" },
-      { path: "/contact", title: "FAQ" },
+      { path: "/support/about-us", title: "About Us" },
+      { path: "/support/contact", title: "Contact" },
+      { path: "/support/faq", title: "FAQ" },
     ],
   },
   {
     title: "Policy",
     children: [
-      { path: "/term-of-use", title: "Term Of Use" },
-      { path: "/privacy-policy", title: "Privacy Policy" },
-      { path: "/shipping-return", title: "Shipping And Returns" },
-      { path: "/refund-policy", title: "Refund Policy" },
+      { path: "/policy/term-of-use", title: "Term Of Use" },
+      { path: "/policy/privacy-policy", title: "Privacy Policy" },
+      { path: "/policy/shipping-return", title: "Shipping And Returns" },
+      { path: "/policy/refund-policy", title: "Refund Policy" },
     ],
   },
 ];

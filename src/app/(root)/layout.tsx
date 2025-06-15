@@ -1,6 +1,8 @@
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ReactNode } from "react";
+
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -8,6 +10,7 @@ const layout = ({ children }: { children: ReactNode }) => {
       <TooltipProvider>
         <Header />
         {children}
+        <Footer/>
       </TooltipProvider>
     </main>
   );
