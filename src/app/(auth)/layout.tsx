@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-
 const layout = ({ children }: { children: ReactNode }) => {
   return (
     <main className="h-screen w-screen flex bg-gray-100">
