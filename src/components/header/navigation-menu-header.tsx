@@ -30,7 +30,7 @@ const NavigationMenuHeader = () => {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <Link href={"/"}>Blog</Link>
+              <Link href={"/blog"}>Blog</Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>

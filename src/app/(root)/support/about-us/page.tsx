@@ -27,7 +27,7 @@ export default function AboutUs() {
         {/* Header */}
         <div className="text-center mb-12">
           <Gem className="w-8 h-8 mx-auto mb-4 text-emerald-600" />
-          <h1 className="text-3xl font-light mb-3">About LuxWatch</h1>
+          <h1 className="text-3xl font-light mb-3">About KronLux</h1>
           <p className="text-gray-600">Crafting Timeless Luxury, One Watch at a Time</p>
         </div>
 
@@ -35,7 +35,7 @@ export default function AboutUs() {
         <div className="bg-gray-50 p-6 rounded-lg mb-12">
           <h2 className="text-xl font-light mb-4 flex items-center gap-2"><Star className="w-5 h-5 text-yellow-500" /> Our Story</h2>
           <p className="text-gray-600 leading-relaxed">
-            Founded in 2020, LuxWatch was born from a passion for horology and a vision to make luxury timepieces accessible to discerning collectors worldwide. Each watch in our curated collection is handpicked for its craftsmanship, heritage, and timeless design.
+            Founded in 2020, KronLux was born from a passion for horology and a vision to make luxury timepieces accessible to discerning collectors worldwide. Each watch in our curated collection is handpicked for its craftsmanship, heritage, and timeless design.
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export default function AboutUs() {
 
         {/* Contact CTA */}
         <div className="text-center mt-12">
-          <p className="text-gray-600">Want to know more or collaborate? Reach out at <span className="text-emerald-600 font-medium">contact@luxwatch.com</span></p>
+          <p className="text-gray-600">Want to know more or collaborate? Reach out at <span className="text-emerald-600 font-medium">KronLux@gmail.com</span></p>
         </div>
       </div>
     </div>

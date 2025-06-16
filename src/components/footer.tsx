@@ -48,7 +48,7 @@ const icons = [
 ];
 const Footer = () => {
   return (
-    <div className="bg-slate-300 text-black">
+    <div className="bg-white text-black border-t">
       <div className="container mx-auto py-10 grid md:grid-cols-4 gap-8">
         {/* Logo & Social */}
         <div className="px-4 flex flex-col justify-between space-y-4">

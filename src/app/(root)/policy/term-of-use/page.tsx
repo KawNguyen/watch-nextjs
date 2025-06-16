@@ -23,15 +23,15 @@ export default function TermOfUsePage() {
         <div className="text-center mb-12">
           <Lock className="w-8 h-8 mx-auto mb-4 text-gray-700" />
           <h1 className="text-3xl font-light mb-3">Terms of Use</h1>
-          <p className="text-gray-600">LuxWatch - Premium Watch E-commerce Platform</p>
+          <p className="text-gray-600">KronLux - Premium Watch E-commerce Platform</p>
           <p className="text-sm text-gray-500 mt-2">Last updated: January 15, 2024</p>
         </div>
 
         {/* Welcome Section */}
-        <div className="bg-gray-50 p-6 rounded-lg mb-12">
-          <h2 className="text-xl font-light mb-4">Welcome to LuxWatch</h2>
+        <div className="bg-gray-100 p-6 rounded-lg mb-12">
+          <h2 className="text-xl font-light mb-4">Welcome to KronLux</h2>
           <p className="text-gray-600 leading-relaxed">
-            These Terms of Use govern your access to and use of the LuxWatch website and services. LuxWatch is a premium
+            These Terms of Use govern your access to and use of the KronLux website and services. KronLux is a premium
             timepiece retailer offering luxury watches with free worldwide shipping and comprehensive 2-year warranty.
             By using our platform, you agree to these terms and our commitment to providing exceptional timepieces and
             customer service.
