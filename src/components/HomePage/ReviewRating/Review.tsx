@@ -1,6 +1,5 @@
 import React from "react";
 import { ReviewCard } from "./ReviewCard";
-import { StarIcon } from "lucide-react";
 import { ReviewForm } from "./ReviewForm";
 export function Review() {
   const reviews = [

@@ -45,7 +45,7 @@ export function ReviewCard({ review }: ReviewProps) {
         </div>
       </div>
       <div className="relative">
-        <p className="text-gray-600 mb-4 leading-relaxed">"{review.review}"</p>
+        <p className="text-gray-600 mb-4 leading-relaxed">&quot;{review.review}&quot;</p>
         <div className="text-sm text-gray-400 flex items-center gap-2">
           {review.date}
         </div>

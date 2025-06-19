@@ -4,16 +4,20 @@ import { useEffect, useState } from "react";
 import { Flame, Truck, Clock } from "lucide-react";
 
 const messages = [
-  <span className="flex justify-center items-center gap-1">
-    <Flame className="text-red-600" /> Big Sale up to 50% off on selected models!
-  </span>,
-  <span className="flex justify-center items-center gap-1">
-    <Truck className="text-green-500"/> Free worldwide shipping
-  </span>,
-  <span className="flex justify-center items-center gap-1">
-    <Clock className="text-yellow-500"/> Limited time offer – Shop now!
-  </span>,
+  {
+    icon: <Flame className="text-red-600" />,
+    text: "Big Sale up to 50% off on selected models!",
+  },
+  {
+    icon: <Truck className="text-green-500" />,
+    text: "Free worldwide shipping",
+  },
+  {
+    icon: <Clock className="text-yellow-500" />,
+    text: "Limited time offer – Shop now!",
+  },
 ];
+
 
 const SaleSlider = () => {
   const [current, setCurrent] = useState(0);
@@ -33,12 +37,13 @@ const SaleSlider = () => {
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {messages.map((msg, index) => (
-          <div
+          <span
             key={index}
-            className="w-full flex-shrink-0 flex justify-center items-center"
+            className="flex justify-center items-center gap-1 text-sm md:text-base"
           >
-            {msg}
-          </div>
+            {msg.icon}
+            {msg.text}
+          </span>
         ))}
       </div>
     </div>

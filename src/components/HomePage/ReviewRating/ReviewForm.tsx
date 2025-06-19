@@ -37,8 +37,6 @@ export function ReviewForm() {
     },
   });
 
-  const rating = form.watch("rating");
-
   const onSubmit = (values: ReviewFormValues) => {
     console.log(values);
     form.reset(); // Reset form
@@ -83,11 +81,10 @@ export function ReviewForm() {
                       >
                         <StarIcon
                           size={24}
-                          className={`transition-colors duration-200 ${
-                            star <= (hoverRating || field.value)
+                          className={`transition-colors duration-200 ${star <= (hoverRating || field.value)
                               ? "text-yellow-400 fill-yellow-400"
                               : "text-gray-300"
-                          }`}
+                            }`}
                         />
                       </Button>
                     ))}

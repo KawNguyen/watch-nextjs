@@ -1,6 +1,7 @@
 'use client';
 
 import { Users, Star, Gem, ShieldCheck } from 'lucide-react';
+import Image from 'next/image';
 
 const team = [
   {
@@ -53,7 +54,7 @@ export default function AboutUs() {
           <div className="grid md:grid-cols-3 gap-6">
             {team.map(member => (
               <div key={member.name} className="bg-gray-50 rounded-lg p-6 flex flex-col items-center">
-                <img
+                <Image
                   src={member.image}
                   alt={member.name}
                   className="w-24 h-24 rounded-full object-cover mb-4 border-4 border-white shadow"

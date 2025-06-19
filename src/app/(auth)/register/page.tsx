@@ -13,9 +13,17 @@ const Page = () => {
   const [email, setEmail] = useState<string>("");
   const { step, register, verifyOTP, pendingState } = useAuth();
 
-  const handleSubmit = (data: RegisterTypes) => {
-    setEmail(data.email);
-    register(data);
+  const handleSubmit = (data: RegisterTypes | unknown) => {
+    if (
+      typeof data === "object" &&
+      data !== null &&
+      "firstName" in data &&
+      "lastName" in data
+    ) {
+      const registerData = data as RegisterTypes;
+      setEmail(registerData.email);
+      register(registerData);
+    }
   };
 
   const handleSubmitOTP = (otp: string) => {
@@ -73,7 +81,7 @@ const Page = () => {
               validation: z.string().min(6),
             },
           ]}
-          onSubmit={(data) => handleSubmit(data as RegisterTypes)}
+          onSubmit={(data) => handleSubmit(data)}
           className="w-full max-w-[400px] mx-auto"
         />
       )}

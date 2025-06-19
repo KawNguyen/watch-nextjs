@@ -25,6 +25,7 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { googleLogin } from "@/lib/google-login";
+import { RegisterTypes, SignInTypes } from "@/types/auth";
 
 export interface AuthField {
   name: string;
@@ -36,7 +37,7 @@ export interface AuthField {
 
 interface AuthFormProps {
   mode?: "signin" | "register";
-  onSubmit?: (data: Record<string, any>) => void;
+  onSubmit?: (data: RegisterTypes | SignInTypes) => void;
   className?: string;
   isPending?: boolean;
   fields: AuthField[];
@@ -73,7 +74,7 @@ export function AuthForm({
   });
 
   const handleSubmit = (data: FormData) => {
-    onSubmit?.(data);
+    onSubmit?.(data as RegisterTypes | SignInTypes);
   };
 
   const handleGoogleSignIn = () => {
