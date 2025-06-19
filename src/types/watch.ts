@@ -16,7 +16,7 @@ export interface Movement {
   updatedAt: string;
 }
 
-export interface WatchImage {
+export interface WatchPoster {
   id: string;
   url: string;
   watchId: string;
@@ -46,7 +46,7 @@ export interface Watch {
   material: Material;
   bandMaterial: Material;
   movement: Movement;
-  images: WatchImage[];
+  poster: WatchPoster[];
   rating: number;
 }
 

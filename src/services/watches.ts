@@ -3,7 +3,7 @@ import { Watch, ApiResponse } from "@/types/watch";
 
 export const watchesApi = {
   fetchAll: async (page: number = 1): Promise<ApiResponse<Watch>> => {
-    const data = await fetcher<ApiResponse<Watch>>(`/watches?page=${page}`);
+    const data = await fetcher<ApiResponse<Watch>>(`/watch?page=${page}`);
     return data;
   },
   fetchByBrand: async (
@@ -11,7 +11,7 @@ export const watchesApi = {
     brand: string,
   ): Promise<ApiResponse<Watch>> => {
     const data = await fetcher<ApiResponse<Watch>>(
-      `/watches/brand/${brand}?page=${page}`,
+      `/watch/brand/${brand}?page=${page}`,
     );
     return data;
   },
