@@ -52,20 +52,26 @@ export function AuthForm({
 }: AuthFormProps) {
   const schema = useMemo(() => {
     return z.object(
-      fields.reduce((acc, field) => {
-        acc[field.name] = field.validation;
-        return acc;
-      }, {} as Record<string, z.ZodTypeAny>)
+      fields.reduce(
+        (acc, field) => {
+          acc[field.name] = field.validation;
+          return acc;
+        },
+        {} as Record<string, z.ZodTypeAny>,
+      ),
     );
   }, [fields]);
 
   type FormData = z.infer<typeof schema>;
 
   const defaultValues = useMemo(() => {
-    return fields.reduce((acc, field) => {
-      acc[field.name] = "";
-      return acc;
-    }, {} as Record<string, string>);
+    return fields.reduce(
+      (acc, field) => {
+        acc[field.name] = "";
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
   }, [fields]);
 
   const form = useForm({

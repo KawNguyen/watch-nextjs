@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 const categories = [
-  'All',
-  'Featured',
-  'Men Watch',
-  'Open source',
-  'Research',
-  'Women Watch',
-  'Hardware',
-  'Unisex Watch',
+  "All",
+  "Featured",
+  "Men Watch",
+  "Open source",
+  "Research",
+  "Women Watch",
+  "Hardware",
+  "Unisex Watch",
 ];
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function FilterTabs({ onSelectCategory }: Props) {
-  const [active, setActive] = useState('All');
+  const [active, setActive] = useState("All");
 
   return (
     <div className="flex items-center flex-wrap gap-2 py-4 px-4">
@@ -33,8 +33,8 @@ export default function FilterTabs({ onSelectCategory }: Props) {
           className={`px-4 py-1.5 rounded-full text-sm font-medium transition 
             ${
               active === category
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
         >
           {category}

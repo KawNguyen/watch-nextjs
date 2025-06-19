@@ -18,7 +18,6 @@ const messages = [
   },
 ];
 
-
 const SaleSlider = () => {
   const [current, setCurrent] = useState(0);
 
@@ -39,7 +38,7 @@ const SaleSlider = () => {
         {messages.map((msg, index) => (
           <span
             key={index}
-            className="flex justify-center items-center gap-1 text-sm md:text-base"
+            className="w-full flex-shrink-0 flex justify-center items-center gap-1 text-sm md:text-base"
           >
             {msg.icon}
             {msg.text}

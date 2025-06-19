@@ -31,9 +31,7 @@ const poster = [
   },
 ];
 export function HomeHero() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000 })
-  );
+  const plugin = React.useRef(Autoplay({ delay: 2000 }));
 
   return (
     <Carousel

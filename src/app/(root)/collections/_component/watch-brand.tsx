@@ -19,7 +19,7 @@ export default function WatchBrand({ brands }: WatchBrandProps) {
         className={cn(
           buttonVariants({
             variant: pathname === "/watches" ? "default" : "outline",
-          })
+          }),
         )}
         href="/watches"
       >
@@ -32,7 +32,7 @@ export default function WatchBrand({ brands }: WatchBrandProps) {
             buttonVariants({
               variant:
                 pathname === `/${brand.slug}/watches` ? "default" : "outline",
-            })
+            }),
           )}
           href={`/${brand.slug}/watches`}
         >

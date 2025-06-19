@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-import { Watch } from "@/types/watch"
+import { Watch } from "@/types/watch";
 
 export default function WatchCard({ watchData }: { watchData: Watch }) {
   return (

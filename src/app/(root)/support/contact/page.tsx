@@ -7,7 +7,9 @@ const ContactPage = () => {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -24,8 +26,13 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-[80vh] bg-gradient-to-br from-gray-50 to-gray-200 flex flex-col items-center justify-center py-12 px-4">
-      <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gray-900">Contact Us</h1>
-      <p className="text-gray-600 mb-8 text-center max-w-xl">We would love to hear from you! Fill out the form below or reach us directly via phone, email, or visit our store.</p>
+      <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gray-900">
+        Contact Us
+      </h1>
+      <p className="text-gray-600 mb-8 text-center max-w-xl">
+        We would love to hear from you! Fill out the form below or reach us
+        directly via phone, email, or visit our store.
+      </p>
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-4xl">
         {/* Contact Info Cards */}
         <div className="flex flex-col gap-6">
@@ -40,19 +47,26 @@ const ContactPage = () => {
             <Mail className="text-indigo-600" />
             <div>
               <div className="font-semibold">Email</div>
-              <div className="text-gray-500 text-sm">contact@luxurywatch.com</div>
+              <div className="text-gray-500 text-sm">
+                contact@luxurywatch.com
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-4 bg-white rounded-xl shadow p-4 hover:shadow-lg transition">
             <MapPin className="text-indigo-600" />
             <div>
               <div className="font-semibold">Address</div>
-              <div className="text-gray-500 text-sm">123 KronLux Ave, New York, NY</div>
+              <div className="text-gray-500 text-sm">
+                123 KronLux Ave, New York, NY
+              </div>
             </div>
           </div>
         </div>
         {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-8 flex flex-col gap-5 animate-fade-in">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl shadow p-8 flex flex-col gap-5 animate-fade-in"
+        >
           <input
             type="text"
             name="name"
@@ -85,9 +99,19 @@ const ContactPage = () => {
             disabled={loading}
             className="flex items-center justify-center gap-2 bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition disabled:opacity-60"
           >
-            {loading ? "Sending..." : <><Send size={18} /> Send Message</>}
+            {loading ? (
+              "Sending..."
+            ) : (
+              <>
+                <Send size={18} /> Send Message
+              </>
+            )}
           </button>
-          {sent && <div className="text-green-600 text-center font-medium mt-2">Thank you! Your message has been sent.</div>}
+          {sent && (
+            <div className="text-green-600 text-center font-medium mt-2">
+              Thank you! Your message has been sent.
+            </div>
+          )}
         </form>
       </div>
     </div>

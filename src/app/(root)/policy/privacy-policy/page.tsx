@@ -1,9 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Shield, Eye, Lock, UserCircle, Bell, Server, ChevronDown, ChevronRight } from 'lucide-react';
-
-
+import { useState } from "react";
+import {
+  Shield,
+  Eye,
+  Lock,
+  UserCircle,
+  Bell,
+  Server,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
 
 export default function PrivacyPolicyPage() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -23,17 +30,22 @@ export default function PrivacyPolicyPage() {
         <div className="text-center mb-12">
           <Shield className="w-8 h-8 mx-auto mb-4 text-gray-700" />
           <h1 className="text-3xl font-light mb-3">Privacy Policy</h1>
-          <p className="text-gray-600">LuxWatch - Premium Watch E-commerce Platform</p>
-          <p className="text-sm text-gray-500 mt-2">Last updated: January 15, 2024</p>
+          <p className="text-gray-600">
+            LuxWatch - Premium Watch E-commerce Platform
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            Last updated: January 15, 2024
+          </p>
         </div>
 
         {/* Introduction Section */}
         <div className="bg-gray-50 p-6 rounded-lg mb-12">
           <h2 className="text-xl font-light mb-4">Your Privacy Matters</h2>
           <p className="text-gray-600 leading-relaxed">
-            At LuxWatch, we take your privacy seriously. This policy outlines how we collect, use, and protect your personal
-            information when you use our website and services. We are committed to maintaining the trust and confidence of our
-            valued customers.
+            At LuxWatch, we take your privacy seriously. This policy outlines
+            how we collect, use, and protect your personal information when you
+            use our website and services. We are committed to maintaining the
+            trust and confidence of our valued customers.
           </p>
         </div>
 
@@ -61,8 +73,8 @@ export default function PrivacyPolicyPage() {
         {/* Privacy Sections */}
         <div className="space-y-4">
           <div className="border rounded-lg overflow-hidden">
-            <button 
-              onClick={() => toggleSection('information')} 
+            <button
+              onClick={() => toggleSection("information")}
               className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50"
             >
               <div className="flex items-center gap-3">
@@ -70,24 +82,34 @@ export default function PrivacyPolicyPage() {
                 <span className="font-light">Information We Collect</span>
               </div>
               <span className="text-gray-400">
-                {expandedSection === 'information' ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                {expandedSection === "information" ? (
+                  <ChevronDown className="w-5 h-5" />
+                ) : (
+                  <ChevronRight className="w-5 h-5" />
+                )}
               </span>
             </button>
-            {expandedSection === 'information' && (
+            {expandedSection === "information" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We collect personal information that you voluntarily provide to us when you register on our website, place an order, subscribe to our newsletter, or contact our customer service. This may include your name, email address, shipping address, phone number, and payment information.
+                  We collect personal information that you voluntarily provide
+                  to us when you register on our website, place an order,
+                  subscribe to our newsletter, or contact our customer service.
+                  This may include your name, email address, shipping address,
+                  phone number, and payment information.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  We also automatically collect certain information about your device, including your IP address, browser type, and browsing patterns through cookies and similar technologies.
+                  We also automatically collect certain information about your
+                  device, including your IP address, browser type, and browsing
+                  patterns through cookies and similar technologies.
                 </p>
               </div>
             )}
           </div>
 
           <div className="border rounded-lg overflow-hidden">
-            <button 
-              onClick={() => toggleSection('usage')} 
+            <button
+              onClick={() => toggleSection("usage")}
               className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50"
             >
               <div className="flex items-center gap-3">
@@ -95,24 +117,32 @@ export default function PrivacyPolicyPage() {
                 <span className="font-light">How We Use Your Data</span>
               </div>
               <span className="text-gray-400">
-                {expandedSection === 'usage' ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                {expandedSection === "usage" ? (
+                  <ChevronDown className="w-5 h-5" />
+                ) : (
+                  <ChevronRight className="w-5 h-5" />
+                )}
               </span>
             </button>
-            {expandedSection === 'usage' && (
+            {expandedSection === "usage" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We use your personal information to process and fulfill your orders, communicate with you about your purchases, provide customer support, and send you marketing communications if you ve opted in.
+                  We use your personal information to process and fulfill your
+                  orders, communicate with you about your purchases, provide
+                  customer support, and send you marketing communications if you
+                  ve opted in.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  We also use your data to improve our website, analyze usage patterns, prevent fraud, and comply with legal obligations.
+                  We also use your data to improve our website, analyze usage
+                  patterns, prevent fraud, and comply with legal obligations.
                 </p>
               </div>
             )}
           </div>
 
           <div className="border rounded-lg overflow-hidden">
-            <button 
-              onClick={() => toggleSection('security')} 
+            <button
+              onClick={() => toggleSection("security")}
               className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50"
             >
               <div className="flex items-center gap-3">
@@ -120,24 +150,32 @@ export default function PrivacyPolicyPage() {
                 <span className="font-light">Data Security</span>
               </div>
               <span className="text-gray-400">
-                {expandedSection === 'security' ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                {expandedSection === "security" ? (
+                  <ChevronDown className="w-5 h-5" />
+                ) : (
+                  <ChevronRight className="w-5 h-5" />
+                )}
               </span>
             </button>
-            {expandedSection === 'security' && (
+            {expandedSection === "security" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.
+                  We implement appropriate technical and organizational measures
+                  to protect your personal data against unauthorized access,
+                  alteration, disclosure, or destruction.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  All payment transactions are encrypted using SSL technology, and we do not store your full credit card information on our servers.
+                  All payment transactions are encrypted using SSL technology,
+                  and we do not store your full credit card information on our
+                  servers.
                 </p>
               </div>
             )}
           </div>
 
           <div className="border rounded-lg overflow-hidden">
-            <button 
-              onClick={() => toggleSection('communication')} 
+            <button
+              onClick={() => toggleSection("communication")}
               className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50"
             >
               <div className="flex items-center gap-3">
@@ -145,24 +183,32 @@ export default function PrivacyPolicyPage() {
                 <span className="font-light">Communication Preferences</span>
               </div>
               <span className="text-gray-400">
-                {expandedSection === 'communication' ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                {expandedSection === "communication" ? (
+                  <ChevronDown className="w-5 h-5" />
+                ) : (
+                  <ChevronRight className="w-5 h-5" />
+                )}
               </span>
             </button>
-            {expandedSection === 'communication' && (
+            {expandedSection === "communication" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  You can manage your communication preferences by updating your account settings or clicking the unsubscribe link in our marketing emails.
+                  You can manage your communication preferences by updating your
+                  account settings or clicking the unsubscribe link in our
+                  marketing emails.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  We will still send you service-related communications, such as order confirmations and important account notifications, even if you opt out of marketing communications.
+                  We will still send you service-related communications, such as
+                  order confirmations and important account notifications, even
+                  if you opt out of marketing communications.
                 </p>
               </div>
             )}
           </div>
 
           <div className="border rounded-lg overflow-hidden">
-            <button 
-              onClick={() => toggleSection('rights')} 
+            <button
+              onClick={() => toggleSection("rights")}
               className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50"
             >
               <div className="flex items-center gap-3">
@@ -170,16 +216,23 @@ export default function PrivacyPolicyPage() {
                 <span className="font-light">Your Privacy Rights</span>
               </div>
               <span className="text-gray-400">
-                {expandedSection === 'rights' ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                {expandedSection === "rights" ? (
+                  <ChevronDown className="w-5 h-5" />
+                ) : (
+                  <ChevronRight className="w-5 h-5" />
+                )}
               </span>
             </button>
-            {expandedSection === 'rights' && (
+            {expandedSection === "rights" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Depending on your location, you may have certain rights regarding your personal data, including the right to access, correct, delete, or restrict processing of your data.
+                  Depending on your location, you may have certain rights
+                  regarding your personal data, including the right to access,
+                  correct, delete, or restrict processing of your data.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  To exercise these rights, please contact us at privacy@luxwatch.com with your specific request.
+                  To exercise these rights, please contact us at
+                  privacy@luxwatch.com with your specific request.
                 </p>
               </div>
             )}
@@ -193,5 +246,5 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

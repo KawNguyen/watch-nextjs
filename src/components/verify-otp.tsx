@@ -1,39 +1,39 @@
-'use client'
+"use client";
 
-import { Input } from "@/components/ui/input"
-import { useEffect, useRef, useState } from "react"
+import { Input } from "@/components/ui/input";
+import { useEffect, useRef, useState } from "react";
 
 interface OtpInputProps {
-  length?: number
-  onChange?: (otp: string) => void
+  length?: number;
+  onChange?: (otp: string) => void;
 }
 
 export function VerifyOTP({ length = 6, onChange }: OtpInputProps) {
-  const [otp, setOtp] = useState<string[]>(Array(length).fill(""))
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const [otp, setOtp] = useState<string[]>(Array(length).fill(""));
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (value: string, index: number) => {
-    if (!/^\d*$/.test(value)) return
+    if (!/^\d*$/.test(value)) return;
 
-    const newOtp = [...otp]
-    newOtp[index] = value.slice(-1)
-    setOtp(newOtp)
-    onChange?.(newOtp.join(""))
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+    onChange?.(newOtp.join(""));
 
     if (value && index < length - 1) {
-      inputRefs.current[index + 1]?.focus()
+      inputRefs.current[index + 1]?.focus();
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus()
+      inputRefs.current[index - 1]?.focus();
     }
-  }
+  };
 
   useEffect(() => {
-    inputRefs.current[0]?.focus()
-  }, [])
+    inputRefs.current[0]?.focus();
+  }, []);
 
   return (
     <div className="flex gap-2 justify-center">
@@ -51,5 +51,5 @@ export function VerifyOTP({ length = 6, onChange }: OtpInputProps) {
         />
       ))}
     </div>
-  )
+  );
 }

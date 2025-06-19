@@ -81,10 +81,11 @@ export function ReviewForm() {
                       >
                         <StarIcon
                           size={24}
-                          className={`transition-colors duration-200 ${star <= (hoverRating || field.value)
+                          className={`transition-colors duration-200 ${
+                            star <= (hoverRating || field.value)
                               ? "text-yellow-400 fill-yellow-400"
                               : "text-gray-300"
-                            }`}
+                          }`}
                         />
                       </Button>
                     ))}

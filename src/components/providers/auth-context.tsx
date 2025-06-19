@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         data.firstName,
         data.lastName,
         data.email,
-        data.password
+        data.password,
       ),
     onSuccess: () => {
       setStep("2");
@@ -111,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     mutateLogout.mutate();
     setIsAuthenticated(false);
-    setStep("1")
+    setStep("1");
     refetch();
   };
 

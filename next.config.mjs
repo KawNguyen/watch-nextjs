@@ -40,16 +40,16 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "lh3.googleusercontent.com"
+        hostname: "lh3.googleusercontent.com",
       },
       {
         protocol: "https",
-        hostname: "luxatch-store-newdemo.myshopify.com"
+        hostname: "luxatch-store-newdemo.myshopify.com",
       },
       {
         protocol: "https",
-        hostname: "randomuser.me"
-      }
+        hostname: "randomuser.me",
+      },
     ],
   },
 };

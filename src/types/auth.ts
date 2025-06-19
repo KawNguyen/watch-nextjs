@@ -1,23 +1,22 @@
 export interface SignInTypes {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface RegisterTypes {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 
 export interface UserTypes {
-    email: string;
-    profile: ProfileTypes;
+  email: string;
+  profile: ProfileTypes;
 }
 
 export interface ProfileTypes {
-    firstName: string;
-    lastName: string;
-    avatar: string;
-
+  firstName: string;
+  lastName: string;
+  avatar: string;
 }

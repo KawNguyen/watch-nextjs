@@ -1,70 +1,72 @@
-'use client';
-import BlogCard, { BlogPost } from '@/components/blogs/blog-card';
-import { useState } from 'react';
-import FilterTabs from '@/components/blogs/filter-tabs';
+"use client";
+import BlogCard, { BlogPost } from "@/components/blogs/blog-card";
+import { useState } from "react";
+import FilterTabs from "@/components/blogs/filter-tabs";
 
-import Image from 'next/image';
-import * as React from "react"
-import Autoplay from "embla-carousel-autoplay"
-import { Card, CardContent } from "@/components/ui/card"
+import Image from "next/image";
+import * as React from "react";
+import Autoplay from "embla-carousel-autoplay";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
 const allPosts = [
   {
-    title: 'Intro to ML',
-    category: 'Men Watch',
-    image: '/images/logo.png'
+    title: "Intro to ML",
+    category: "Men Watch",
+    image: "/images/logo.png",
   },
   {
-    title: 'All',
-    category: 'All',
-    image: '/images/logo.png'
+    title: "All",
+    category: "All",
+    image: "/images/logo.png",
   },
   {
-    title: 'Why Open Source Matters',
-    category: 'Open source',
-    image: '/images/logo.png'
+    title: "Why Open Source Matters",
+    category: "Open source",
+    image: "/images/logo.png",
   },
   {
-    title: 'GPT vs BERT in NLP',
-    category: 'Natural language processing',
-    image: '/images/logo.png'
+    title: "GPT vs BERT in NLP",
+    category: "Natural language processing",
+    image: "/images/logo.png",
   },
   {
-    title: 'Our Hardware Journey',
-    category: 'Hardware',
-    image: '/images/logo.png'
+    title: "Our Hardware Journey",
+    category: "Hardware",
+    image: "/images/logo.png",
   },
   {
-    title: 'Vision Transformers',
-    category: 'Women Watch',
-    image: '/images/logo.png'
+    title: "Vision Transformers",
+    category: "Women Watch",
+    image: "/images/logo.png",
   },
   {
-    title: 'AI Research Roadmap 2025',
-    category: 'Research',
-    image: '/images/logo.png'
+    title: "AI Research Roadmap 2025",
+    category: "Research",
+    image: "/images/logo.png",
   },
 ];
 
 export default function BlogPage() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  )
-  const [selectedCategory, setSelectedCategory] = useState('All');
+    Autoplay({ delay: 2000, stopOnInteraction: true }),
+  );
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredPosts =
-    selectedCategory === 'All'
+    selectedCategory === "All"
       ? allPosts
       : allPosts.filter((post) => post.category === selectedCategory);
 
   return (
     <main className="min-h-screen w-full  py-6 bg-white">
-      <h1 className="text-4xl font-bold mb-4 text-center ">Welcome to our KronLux blog</h1>
+      <h1 className="text-4xl font-bold mb-4 text-center ">
+        Welcome to our KronLux blog
+      </h1>
       <Carousel
         plugins={[plugin.current]}
         className="w-full  mx-auto my-8"

@@ -25,7 +25,10 @@ export default function PaginationControl({
     const halfVisible = Math.floor(maxVisiblePages / 2);
 
     let startPage = Math.max(1, currentPage - halfVisible);
-    const initialEndPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    const initialEndPage = Math.min(
+      totalPages,
+      startPage + maxVisiblePages - 1,
+    );
 
     if (initialEndPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, initialEndPage - maxVisiblePages + 1);
@@ -56,7 +59,11 @@ export default function PaginationControl({
         <PaginationItem>
           <PaginationPrevious
             onClick={() => onPageChange(currentPage - 1)}
-            className={currentPage <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+            className={
+              currentPage <= 1
+                ? "pointer-events-none opacity-50"
+                : "cursor-pointer"
+            }
           />
         </PaginationItem>
 
@@ -85,7 +92,11 @@ export default function PaginationControl({
         <PaginationItem>
           <PaginationNext
             onClick={() => onPageChange(currentPage + 1)}
-            className={currentPage >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+            className={
+              currentPage >= totalPages
+                ? "pointer-events-none opacity-50"
+                : "cursor-pointer"
+            }
           />
         </PaginationItem>
       </PaginationContent>

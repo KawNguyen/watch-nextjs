@@ -1,49 +1,60 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { motion, useInView, AnimatePresence } from "framer-motion"
+import { useState, useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
 const timelineEvents = [
   {
     year: "1952",
     title: "Foundation",
-    description: "Our company was founded with a vision to create exceptional timepieces",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
+    description:
+      "Our company was founded with a vision to create exceptional timepieces",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
   },
   {
     year: "1968",
     title: "First Collection",
-    description: "Launch of our first signature collection that defined our brand",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
+    description:
+      "Launch of our first signature collection that defined our brand",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
   },
   {
     year: "1985",
     title: "Innovation",
-    description: "Pioneered new watchmaking techniques that revolutionized the industry",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
+    description:
+      "Pioneered new watchmaking techniques that revolutionized the industry",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
   },
   {
     year: "2005",
     title: "Global Expansion",
-    description: "Expanded to international markets, becoming a global luxury brand",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
+    description:
+      "Expanded to international markets, becoming a global luxury brand",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj8dX7OsbIg2-Vdwo5wW3ya5CrJL92DHaGvgGI6MdgD5UAlE3Jso2z0lDK7sDydxUdP3k&usqp=CAU",
   },
   {
     year: "2023",
     title: "Modern Era",
-    description: "Combining traditional craftsmanship with cutting-edge technology",
+    description:
+      "Combining traditional craftsmanship with cutting-edge technology",
     image: "/placeholder.svg?height=300&width=400",
   },
-  
-]
+];
 
 export function History() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.2 })
-  const [activeEvent, setActiveEvent] = useState(0)
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [activeEvent, setActiveEvent] = useState(0);
 
   return (
-    <section ref={ref} className="py-12 bg-white to-black text-black overflow-hidden">
+    <section
+      ref={ref}
+      className="py-12 bg-white to-black text-black overflow-hidden"
+    >
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -52,7 +63,9 @@ export function History() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">Our Heritage</h2>
-          <p className="text-lg text-black max-w-2xl mx-auto">A legacy of excellence spanning over seven decades</p>
+          <p className="text-lg text-black max-w-2xl mx-auto">
+            A legacy of excellence spanning over seven decades
+          </p>
         </motion.div>
 
         <div className="relative">
@@ -70,7 +83,9 @@ export function History() {
             <motion.div
               className="absolute top-1/2 left-0 h-0.5 bg-black -translate-y-1/2"
               initial={{ width: "0%" }}
-              animate={{ width: `${(activeEvent / (timelineEvents.length - 1)) * 100}%` }}
+              animate={{
+                width: `${(activeEvent / (timelineEvents.length - 1)) * 100}%`,
+              }}
               transition={{ duration: 0.5 }}
             />
 
@@ -99,7 +114,10 @@ export function History() {
                   whileTap={{ scale: 0.9 }}
                 >
                   {activeEvent === index && (
-                    <motion.div className="w-2 h-2 bg-black rounded-full" layoutId="activeIndicator" />
+                    <motion.div
+                      className="w-2 h-2 bg-black rounded-full"
+                      layoutId="activeIndicator"
+                    />
                   )}
                 </motion.div>
                 <motion.span
@@ -179,5 +197,5 @@ export function History() {
         </div>
       </div>
     </section>
-  )
+  );
 }
