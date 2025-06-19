@@ -50,7 +50,6 @@ const Footer = () => {
   return (
     <div className="bg-white text-black border-t">
       <div className="container mx-auto py-10 grid md:grid-cols-4 gap-8">
-        {/* Logo & Social */}
         <div className="px-4 flex flex-col justify-between space-y-4">
           <div className="font-bold text-xl">FROM LUXWATCH INC</div>
           <div>THE LUXURIOUS WATCH</div>
@@ -78,7 +77,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Routes */}
         <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 px-4 md:px-0 gap-4">
           {routes.map((route, index) => (
             <div key={index}>
@@ -100,7 +98,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom info */}
       <div className="border-t mt-6">
         <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between items-center text-sm px-4">
           <p>tranhailoc7@gmail.com</p>

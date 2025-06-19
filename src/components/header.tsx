@@ -44,7 +44,7 @@ const Header = () => {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            {rh.map((item: any, ind) => (
+            {rh.map((item, ind) => (
               <div key={ind}>
                 {ind !== 2 ? (
                   <Tooltip>
