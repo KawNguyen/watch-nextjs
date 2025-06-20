@@ -48,6 +48,14 @@ export interface Watch {
   movement: Movement;
   poster: WatchPoster[];
   rating: number;
+  banner:WatchBanner;
+}
+export interface WatchBanner{
+  id: string;
+  url: string;
+  watchId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Meta {
@@ -63,6 +71,14 @@ export interface ApiResponse<T> {
   message: string;
   data: {
     items: T[];
+  };
+  meta: Meta;
+}
+export interface ApiResponseItem<T> {
+  status: number;
+  message: string;
+  data: {
+    item:T;
   };
   meta: Meta;
 }

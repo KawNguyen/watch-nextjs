@@ -1,6 +1,6 @@
 import React from "react";
-import { ReviewCard } from "./ReviewCard";
-import { ReviewForm } from "./ReviewForm";
+import { ReviewCard } from "./review-card";
+import { ReviewForm } from "./review-form";
 export function Review() {
   const reviews = [
     {

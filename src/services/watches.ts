@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/fetcher";
-import { Watch, ApiResponse } from "@/types/watch";
+import { Watch, ApiResponse, ApiResponseItem } from "@/types/watch";
 
 export const watchesApi = {
   fetchAll: async (page: number = 1): Promise<ApiResponse<Watch>> => {
@@ -15,4 +15,9 @@ export const watchesApi = {
     );
     return data;
   },
+  fetchBySlug: async (slug: string): Promise<ApiResponseItem<Watch>> => {
+    const data = await fetcher<ApiResponseItem<Watch>>(`/watch/${slug}`);
+    return data;
+  }
+  
 };
