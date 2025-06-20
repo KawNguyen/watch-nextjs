@@ -18,10 +18,10 @@ export default function WatchBrand({ brands }: WatchBrandProps) {
       <Link
         className={cn(
           buttonVariants({
-            variant: pathname === "/watches" ? "default" : "outline",
+            variant: pathname === "/collections" ? "default" : "outline",
           }),
         )}
-        href="/watches"
+        href="/collections"
       >
         All
       </Link>
@@ -31,10 +31,10 @@ export default function WatchBrand({ brands }: WatchBrandProps) {
           className={cn(
             buttonVariants({
               variant:
-                pathname === `/${brand.slug}/watches` ? "default" : "outline",
+                pathname === `/${brand.slug}/collections` ? "default" : "outline",
             }),
           )}
-          href={`/${brand.slug}/watches`}
+          href={`/${brand.slug}/collections`}
         >
           {brand.name}
         </Link>

@@ -4,7 +4,7 @@ import { ProductImages } from "@/components/details/product-images";
 import { ProductInfo } from "@/components/details/product-info";
 import { ProductName } from "@/components/details/product-name";
 import { ProductTabs } from "@/components/details/product-tab";
-import RevelentProduct from "@/components/details/revelent-products";
+// import RevelentProduct from "@/components/details/revelent-products";
 import ReviewProduct from "@/components/details/review-products";
 import { useWatchQuery } from "@/queries";
 import React from "react";
