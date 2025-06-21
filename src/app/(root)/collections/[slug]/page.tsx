@@ -4,7 +4,7 @@ import { ProductImages } from "@/components/details/product-images";
 import { ProductInfo } from "@/components/details/product-info";
 import { ProductName } from "@/components/details/product-name";
 import { ProductTabs } from "@/components/details/product-tab";
-import RevelentProduct from "@/components/details/revelent-products";
+// import RevelentProduct from "@/components/details/revelent-products";
 import ReviewProduct from "@/components/details/review-products";
 import { useWatchQuery } from "@/queries";
 import React from "react";
@@ -13,7 +13,7 @@ const DetailsPage = ({ params }: { params: { slug: string } }) => {
   const { data } = useWatchQuery(params.slug);
   return (
     <div className="container mx-auto">
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-12 my-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 my-8">
         <ProductImages posters={data?.poster || []} />
         <div className="flex flex-col h-full">
           <ProductName name={data?.name || ""} />
@@ -30,13 +30,13 @@ const DetailsPage = ({ params }: { params: { slug: string } }) => {
               waterResistance={data?.waterResistance}
             />
           </div>
-          <ProductInfo price={data?.price} />
+          <ProductInfo price={data?.price ?? 0} />
         </div>
-      </div> */}
+      </div>
       <div>
-        {/* <ProductFeatures watch={data} /> */}
+        <ProductFeatures watch={data} />
         {/* <RevelentProduct /> */}
-        <ReviewProduct />
+        <ReviewProduct slug={data?.slug || ""} />
       </div>
     </div>
   );

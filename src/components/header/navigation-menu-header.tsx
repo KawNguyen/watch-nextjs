@@ -40,6 +40,9 @@ const NavigationMenuHeader = () => {
             <NavigationMenuItem>
               <Link href={"/"}>Contact</Link>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href={"/support/about-us"}>About Us</Link>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>

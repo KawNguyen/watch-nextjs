@@ -3,32 +3,11 @@ import { Minus, Plus, Heart } from "lucide-react";
 import { useState } from "react";
 
 interface ProductInfoProps {
-  watchId: string;
-  price: number ;
-  stock: any[];
-  onAddToCart: (id: string, quantity: number) => void;
-  onFavorite: (id: string) => void;
-  isLoadingAddingToCart?: boolean;
-  isLoadingAddingToFavorite?: boolean;
+  price: number;
 }
-
-export function ProductInfo({
-  watchId,
-  price,
-  stock,
-  onAddToCart,
-  isLoadingAddingToCart,
-  isLoadingAddingToFavorite,
-  onFavorite,
-}: ProductInfoProps) {
+export function ProductInfo({ price }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
-
   const totalPrice = price * quantity;
-
-  const isOutOfStock =
-  !stock || stock.length === 0 || (stock[0] && stock[0].quantity === 0);
-
-
   return (
     <div className="space-y-6 mt-6">
       <div className="flex items-center justify-around">
@@ -57,31 +36,8 @@ export function ProductInfo({
       </div>
       <div className="space-y-6">
         <div className="flex items-center gap-4">
-          {isOutOfStock ? (
-            <Button
-              variant={"secondary"}
-              disabled={isOutOfStock}
-              onClick={() => onAddToCart(watchId, quantity)}
-              className="flex-1 h-12 text-base"
-            >
-              Out of Stock
-            </Button>
-          ) : (
-            <Button
-              disabled={isLoadingAddingToCart}
-              onClick={() => onAddToCart(watchId, quantity)}
-              className="flex-1 h-12 text-base"
-            >
-              Add to Cart
-            </Button>
-          )}
-          <Button
-            disabled={isLoadingAddingToFavorite}
-            variant="outline"
-            size="icon"
-            className="h-12 w-12"
-            onClick={() => onFavorite(watchId)}
-          >
+          <Button className="flex-1 h-12 text-base">Add to Cart</Button>
+          <Button className="h-12 w-12" variant="outline">
             <Heart className="h-5 w-5" />
           </Button>
         </div>
