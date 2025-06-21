@@ -1,6 +1,11 @@
 "use client";
+
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 const ContactPage = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -8,7 +13,7 @@ const ContactPage = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -33,80 +38,75 @@ const ContactPage = () => {
         We would love to hear from you! Fill out the form below or reach us
         directly via phone, email, or visit our store.
       </p>
+
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-4xl">
-        {/* Contact Info Cards */}
         <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-4 bg-white rounded-xl shadow p-4 hover:shadow-lg transition">
-            <Phone className="text-indigo-600" />
-            <div>
-              <div className="font-semibold">Phone</div>
-              <div className="text-gray-500 text-sm">+1 234 567 890</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 bg-white rounded-xl shadow p-4 hover:shadow-lg transition">
-            <Mail className="text-indigo-600" />
-            <div>
-              <div className="font-semibold">Email</div>
-              <div className="text-gray-500 text-sm">
-                contact@luxurywatch.com
+          <Card className="hover:shadow-lg transition">
+            <CardHeader className="flex flex-row items-center gap-4">
+              <Phone className="text-indigo-600" />
+              <div>
+                <CardTitle className="text-base">Phone</CardTitle>
+                <p className="text-sm text-gray-500">+1 234 567 890</p>
               </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 bg-white rounded-xl shadow p-4 hover:shadow-lg transition">
-            <MapPin className="text-indigo-600" />
-            <div>
-              <div className="font-semibold">Address</div>
-              <div className="text-gray-500 text-sm">
-                123 KronLux Ave, New York, NY
+            </CardHeader>
+          </Card>
+          <Card className="hover:shadow-lg transition">
+            <CardHeader className="flex flex-row items-center gap-4">
+              <Mail className="text-indigo-600" />
+              <div>
+                <CardTitle className="text-base">Email</CardTitle>
+                <p className="text-sm text-gray-500">contact@luxurywatch.com</p>
               </div>
-            </div>
-          </div>
+            </CardHeader>
+          </Card>
+          <Card className="hover:shadow-lg transition">
+            <CardHeader className="flex flex-row items-center gap-4">
+              <MapPin className="text-indigo-600" />
+              <div>
+                <CardTitle className="text-base">Address</CardTitle>
+                <p className="text-sm text-gray-500">
+                  123 KronLux Ave, New York, NY
+                </p>
+              </div>
+            </CardHeader>
+          </Card>
         </div>
-        {/* Contact Form */}
+
         <form
           onSubmit={handleSubmit}
           className="bg-white rounded-xl shadow p-8 flex flex-col gap-5 animate-fade-in"
         >
-          <input
+          <Input
             type="text"
             name="name"
             placeholder="Your Name"
             value={form.name}
             onChange={handleChange}
             required
-            className="border-b-2 border-gray-200 focus:border-indigo-500 outline-none py-2 px-1 transition-all bg-transparent"
           />
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="Your Email"
             value={form.email}
             onChange={handleChange}
             required
-            className="border-b-2 border-gray-200 focus:border-indigo-500 outline-none py-2 px-1 transition-all bg-transparent"
           />
-          <textarea
+          <Textarea
             name="message"
             placeholder="Your Message"
             value={form.message}
             onChange={handleChange}
             required
             rows={4}
-            className="border-b-2 border-gray-200 focus:border-indigo-500 outline-none py-2 px-1 transition-all bg-transparent resize-none"
           />
-          <button
-            type="submit"
-            disabled={loading}
-            className="flex items-center justify-center gap-2 bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition disabled:opacity-60"
-          >
-            {loading ? (
-              "Sending..."
-            ) : (
+          <Button type="submit" disabled={loading}>
+            {loading ? "Sending..." : (
               <>
-                <Send size={18} /> Send Message
+                <Send size={18} className="mr-2" /> Send Message
               </>
             )}
-          </button>
+          </Button>
           {sent && (
             <div className="text-green-600 text-center font-medium mt-2">
               Thank you! Your message has been sent.

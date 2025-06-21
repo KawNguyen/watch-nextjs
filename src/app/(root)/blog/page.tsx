@@ -12,44 +12,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-
-const allPosts = [
-  {
-    title: "Intro to ML",
-    category: "Men Watch",
-    image: "/images/logo.png",
-  },
-  {
-    title: "All",
-    category: "All",
-    image: "/images/logo.png",
-  },
-  {
-    title: "Why Open Source Matters",
-    category: "Open source",
-    image: "/images/logo.png",
-  },
-  {
-    title: "GPT vs BERT in NLP",
-    category: "Natural language processing",
-    image: "/images/logo.png",
-  },
-  {
-    title: "Our Hardware Journey",
-    category: "Hardware",
-    image: "/images/logo.png",
-  },
-  {
-    title: "Vision Transformers",
-    category: "Women Watch",
-    image: "/images/logo.png",
-  },
-  {
-    title: "AI Research Roadmap 2025",
-    category: "Research",
-    image: "/images/logo.png",
-  },
-];
+import { allPosts } from "@/constant/routes";
 
 export default function BlogPage() {
   const plugin = React.useRef(
@@ -63,7 +26,7 @@ export default function BlogPage() {
       : allPosts.filter((post) => post.category === selectedCategory);
 
   return (
-    <main className="min-h-screen w-full  py-6 bg-white">
+    <div className="min-h-screen w-full  py-6 bg-white">
       <h1 className="text-4xl font-bold mb-4 text-center ">
         Welcome to our KronLux blog
       </h1>
@@ -126,6 +89,6 @@ export default function BlogPage() {
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 }

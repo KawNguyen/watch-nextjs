@@ -1,33 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
-
-const faqs = [
-  {
-    question: "How do I place an order?",
-    answer:
-      "Browse our collection, add your desired watch to the cart, and proceed to checkout. Follow the on-screen instructions to complete your purchase.",
-  },
-  {
-    question: "What payment methods are accepted?",
-    answer: "We accept major credit cards, PayPal, and bank transfers.",
-  },
-  {
-    question: "How can I track my order?",
-    answer:
-      "Once your order is shipped, you will receive a tracking number via email. Use it to track your shipment on our website or the courier's site.",
-  },
-  {
-    question: "What is your return policy?",
-    answer:
-      "You can return any unworn watch within 14 days of delivery for a full refund. Please see our Return Policy page for details.",
-  },
-  {
-    question: "Do you offer international shipping?",
-    answer:
-      "Yes, we ship worldwide. Shipping fees and delivery times vary by destination.",
-  },
-];
+import { Button } from "@/components/ui/button";
+import { faqs } from "@/constant/routes";
 
 const FAQPage = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -50,7 +25,7 @@ const FAQPage = () => {
             key={idx}
             className="bg-white rounded-xl shadow p-5 transition-all"
           >
-            <button
+            <Button
               className="flex justify-between items-center w-full text-left text-lg font-semibold text-gray-800 focus:outline-none"
               onClick={() => toggleFAQ(idx)}
               aria-expanded={openIndex === idx}
@@ -61,7 +36,7 @@ const FAQPage = () => {
               ) : (
                 <ChevronDown className="text-indigo-600" />
               )}
-            </button>
+            </Button>
             <div
               className={`overflow-hidden transition-all duration-300 ${openIndex === idx ? "max-h-40 mt-3 opacity-100" : "max-h-0 opacity-0"}`}
             >

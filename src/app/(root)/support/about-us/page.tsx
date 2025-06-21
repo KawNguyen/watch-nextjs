@@ -1,31 +1,13 @@
 "use client";
 
+import { team } from "@/constant/routes";
 import { Users, Star, Gem, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-
-const team = [
-  {
-    name: "Anna Nguyen",
-    role: "Founder & CEO",
-    image: "",
-  },
-  {
-    name: "David Tran",
-    role: "Chief Watchmaker",
-    image: "",
-  },
-  {
-    name: "Linh Pham",
-    role: "Customer Experience Lead",
-    image: "",
-  },
-];
 
 export default function AboutUs() {
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12 max-w-5xl">
-        {/* Header */}
         <div className="text-center mb-12">
           <Gem className="w-8 h-8 mx-auto mb-4 text-emerald-600" />
           <h1 className="text-3xl font-light mb-3">About KronLux</h1>
@@ -34,7 +16,6 @@ export default function AboutUs() {
           </p>
         </div>
 
-        {/* Brand Story */}
         <div className="bg-gray-50 p-6 rounded-lg mb-12">
           <h2 className="text-xl font-light mb-4 flex items-center gap-2">
             <Star className="w-5 h-5 text-yellow-500" /> Our Story
@@ -47,7 +28,6 @@ export default function AboutUs() {
           </p>
         </div>
 
-        {/* Mission Section */}
         <div className="bg-white p-6 rounded-lg mb-12 border">
           <h2 className="text-xl font-light mb-4 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-blue-500" /> Our Mission
@@ -60,7 +40,6 @@ export default function AboutUs() {
           </p>
         </div>
 
-        {/* Team Section */}
         <div className="mb-12">
           <h2 className="text-xl font-light mb-6 flex items-center gap-2">
             <Users className="w-5 h-5 text-purple-500" /> Meet Our Team
@@ -86,7 +65,6 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Contact CTA */}
         <div className="text-center mt-12">
           <p className="text-gray-600">
             Want to know more or collaborate? Reach out at{" "}

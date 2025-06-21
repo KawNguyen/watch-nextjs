@@ -26,7 +26,7 @@ const NavigationMenuHeader = () => {
             <NavigationGender gender={navigation.gender} />
 
             <NavigationMenuItem>
-              <Link href={"/"}>Promotion</Link>
+              <Link href={"/promotion"}>Promotion</Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
@@ -34,7 +34,7 @@ const NavigationMenuHeader = () => {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <Link href={"/"}>Contact</Link>
+              <Link href={"/contact"}>Contact</Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

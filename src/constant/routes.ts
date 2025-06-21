@@ -120,3 +120,86 @@ export const navigation = {
     },
   ],
 };
+
+export const faqs = [
+  {
+    question: "How do I place an order?",
+    answer:
+      "Browse our collection, add your desired watch to the cart, and proceed to checkout. Follow the on-screen instructions to complete your purchase.",
+  },
+  {
+    question: "What payment methods are accepted?",
+    answer: "We accept major credit cards, PayPal, and bank transfers.",
+  },
+  {
+    question: "How can I track my order?",
+    answer:
+      "Once your order is shipped, you will receive a tracking number via email. Use it to track your shipment on our website or the courier's site.",
+  },
+  {
+    question: "What is your return policy?",
+    answer:
+      "You can return any unworn watch within 14 days of delivery for a full refund. Please see our Return Policy page for details.",
+  },
+  {
+    question: "Do you offer international shipping?",
+    answer:
+      "Yes, we ship worldwide. Shipping fees and delivery times vary by destination.",
+  },
+];
+
+export const allPosts = [
+  {
+    title: "Intro to ML",
+    category: "Men Watch",
+    image: "/images/logo.png",
+  },
+  {
+    title: "All",
+    category: "All",
+    image: "/images/logo.png",
+  },
+  {
+    title: "Why Open Source Matters",
+    category: "Open source",
+    image: "/images/logo.png",
+  },
+  {
+    title: "GPT vs BERT in NLP",
+    category: "Natural language processing",
+    image: "/images/logo.png",
+  },
+  {
+    title: "Our Hardware Journey",
+    category: "Hardware",
+    image: "/images/logo.png",
+  },
+  {
+    title: "Vision Transformers",
+    category: "Women Watch",
+    image: "/images/logo.png",
+  },
+  {
+    title: "AI Research Roadmap 2025",
+    category: "Research",
+    image: "/images/logo.png",
+  },
+];
+
+export const team = [
+  {
+    name: "Anna Nguyen",
+    role: "Founder & CEO",
+    image: "",
+  },
+  {
+    name: "David Tran",
+    role: "Chief Watchmaker",
+    image: "",
+  },
+  {
+    name: "Linh Pham",
+    role: "Customer Experience Lead",
+    image: "",
+  },
+];
