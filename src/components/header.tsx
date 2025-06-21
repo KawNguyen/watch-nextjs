@@ -78,7 +78,7 @@ const Header = () => {
                             {profile?.firstName} {profile?.lastName}
                           </DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => router.push("/")}>
+                          <DropdownMenuItem onClick={() => router.push("/account")}>
                             <UserCog />
                             Profile
                           </DropdownMenuItem>
