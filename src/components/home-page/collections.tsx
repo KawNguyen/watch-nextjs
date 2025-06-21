@@ -56,18 +56,17 @@ const Collections = () => {
         <div className="w-full overflow-x-auto scroll-smooth mb-12 no-scrollbar">
           <div className="flex justify-start sm:justify-center w-fit mx-auto gap-4 sm:gap-6 md:gap-8 px-4 py-2">
             {categories.map((category) => (
-              <button
+              <Button
                 key={category.path}
                 onClick={() => setActiveCategory(category)}
                 className={`px-6 py-3 text-sm sm:text-base font-medium rounded-full whitespace-nowrap transition-all duration-300 
-                  ${
-                    activeCategory.path === category.path
-                      ? "bg-gray-900 text-white shadow-md transform scale-105"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ${activeCategory.path === category.path
+                    ? "bg-gray-900 text-white shadow-md transform scale-105"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
               >
                 {category.name}
-              </button>
+              </Button>
             ))}
           </div>
         </div>

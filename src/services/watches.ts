@@ -8,10 +8,10 @@ export const watchesApi = {
   },
   fetchByBrand: async (
     page: number = 1,
-    brand: string,
+    brand: string
   ): Promise<ApiResponse<Watch>> => {
     const data = await fetcher<ApiResponse<Watch>>(
-      `/watch/brand/${brand}?page=${page}`,
+      `/watch?brand=${brand}&page=${page}`
     );
     return data;
   },
