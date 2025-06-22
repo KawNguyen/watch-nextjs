@@ -9,9 +9,6 @@ import { useEffect, useState } from "react"
 
 export default function Component() {
   const [isVisible, setIsVisible] = useState(false)
-  const saleEnd = new Date();
-  saleEnd.setDate(saleEnd.getDate() + 1); // 1 day from now
-
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -20,9 +17,13 @@ export default function Component() {
   });
 
   useEffect(() => {
+    const saleEnd = new Date();
+    saleEnd.setDate(saleEnd.getDate() + 1); 
+
     const updateCountdown = () => {
       const now = new Date();
       const diff = saleEnd.getTime() - now.getTime();
+
       if (diff > 0) {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -61,7 +62,7 @@ export default function Component() {
     }
   }
 
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white">
 
@@ -114,7 +115,7 @@ export default function Component() {
               <div className="text-2xl">:</div>
               <div className="text-center">
                 <div className="text-3xl font-bold">{String(timeLeft.seconds).padStart(2, "10")}</div>
-                <div className="text-sm">Minutes</div>
+                <div className="text-sm">Seconds</div>
               </div>
 
             </div>
@@ -301,7 +302,7 @@ export default function Component() {
           >
             SECURE YOUR WATCH NOW - $149
           </Button>
-          <p className="text-base mt-6 text-gray-300 opacity-80 tracking-wide">
+          <div className="text-base mt-6 text-gray-300 opacity-80 tracking-wide">
             ⚡ Sale ends in <span className="font-semibold text-yellow-400"><div className="flex justify-center space-x-4">
               <div className="text-center">
                 <div className="text-3xl font-bold">{String(timeLeft.days).padStart(2, "10")}</div>
@@ -320,12 +321,12 @@ export default function Component() {
               <div className="text-2xl">:</div>
               <div className="text-center">
                 <div className="text-3xl font-bold">{String(timeLeft.seconds).padStart(2, "10")}</div>
-                <div className="text-sm">Minutes</div>
+                <div className="text-sm">Seconds</div>
               </div>
 
             </div>
             </span>
-          </p>
+          </div>
         </div>
       </section>
 
