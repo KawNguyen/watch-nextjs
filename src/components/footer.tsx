@@ -7,10 +7,10 @@ const routes = [
   {
     title: "Our Products",
     children: [
-      { path: "/products", title: "All products" },
-      { path: "/products?gender=Men", title: "Men" },
-      { path: "/products?gender=Women", title: "Women" },
-      { path: "/products?gender=Unisex", title: "Unisex" },
+      { path: "/collections", title: "All products" },
+      { path: "/collections?gender=Men", title: "Men" },
+      { path: "/collections?gender=Women", title: "Women" },
+      { path: "/collections?gender=Unisex", title: "Unisex" },
     ],
   },
   {

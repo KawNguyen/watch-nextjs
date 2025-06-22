@@ -53,7 +53,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "tnktravel.com.vn",
+      },
     ],
   },
 };

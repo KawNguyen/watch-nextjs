@@ -186,24 +186,22 @@ export const allPosts = [
   },
 ];
 
-export const team = [
-  {
-    name: "Anna Nguyen",
-    role: "Founder & CEO",
-    image: "",
-  },
-  {
-    name: "David Tran",
-    role: "Chief Watchmaker",
-    image: "",
-  },
-  {
-    name: "Linh Pham",
-    role: "Customer Experience Lead",
-    image: "",
-  },
-];
-
+export const teamMembers = [
+    {
+      name: "Trần Hải Lộc",
+      role: "CEO & Founder",
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+      bio: "He leads our technology team with expertise in AI and cloud architecture.",
+    },
+    {
+      name: "Nguyễn Ngọc Đăng Khoa",
+      role: "Design Director",
+      image:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+      bio: "He brings creativity and user-centered design principles to all our products.",
+    },
+  ];
 
 export const featuredWatches = [
     {

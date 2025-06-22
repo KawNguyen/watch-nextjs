@@ -1,52 +1,84 @@
-"use client";
-import React, { useState } from "react";
-import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { faqs } from "@/constant/routes";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-const FAQPage = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleFAQ = (idx: number) => {
-    setOpenIndex(openIndex === idx ? null : idx);
-  };
-
+const FAQ = () => {
   return (
-    <div className="min-h-[80vh] bg-gradient-to-br from-gray-50 to-gray-200 flex flex-col items-center py-12 px-4">
-      <div className="flex items-center gap-3 mb-6">
-        <HelpCircle className="text-indigo-600" size={32} />
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-          Frequently Asked Questions
-        </h1>
-      </div>
-      <div className="w-full max-w-2xl space-y-4">
-        {faqs.map((faq, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-xl shadow p-5 transition-all"
-          >
-            <Button
-              className="flex justify-between items-center w-full text-left text-lg font-semibold text-gray-800 focus:outline-none"
-              onClick={() => toggleFAQ(idx)}
-              aria-expanded={openIndex === idx}
-            >
-              {faq.question}
-              {openIndex === idx ? (
-                <ChevronUp className="text-indigo-600" />
-              ) : (
-                <ChevronDown className="text-indigo-600" />
-              )}
-            </Button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ${openIndex === idx ? "max-h-40 mt-3 opacity-100" : "max-h-0 opacity-0"}`}
-            >
-              <p className="text-gray-600 text-base">{faq.answer}</p>
-            </div>
+    <div className="container mx-auto py-20 px-4 lg:py-4">
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 lg:col-span-5">
+          <h1 className="w-full lg:w-[80%] text-2xl font-bold lg:text-4xl lg:ml-2 ">
+            Frequently Asked Question
+          </h1>
+          <div className="w-full mt-10 text-xl lg:w-[80%] lg:ml-2 ">
+            Here is a list of frequently asked questions. You can also contact us
+            if you have any questions.
           </div>
-        ))}
+        </div>
+        <div className=" col-span-11 mt-6 xl:col-span-7">
+          <div className="w-full">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>How can I place an order?</AccordionTrigger>
+                <AccordionContent>
+                  You can place an order directly on our website by adding the
+                  item to your cart and filling in your shipping details. We’ll
+                  contact you to confirm before shipping.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>Do you ship nationwide?</AccordionTrigger>
+                <AccordionContent>
+                  Yes, we offer nationwide shipping through trusted couriers
+                  like Giao Hàng Nhanh and Viettel Post.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>
+                  How long does delivery take?
+                </AccordionTrigger>
+                <AccordionContent>
+                  Inner city areas: 1–2 business days
+                </AccordionContent>
+                <AccordionContent>
+                  Other provinces: 3–5 business days
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger>
+                  Can I check the product before paying?
+                </AccordionTrigger>
+                <AccordionContent>
+                  Yes, we support product inspection before payment (COD) in
+                  most areas.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-5">
+                <AccordionTrigger>Are your watches authentic?</AccordionTrigger>
+                <AccordionContent>
+                  We guarantee 100% authentic products. If you find any
+                  counterfeit items, we will refund 10 times the value of your
+                  order.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-6">
+                <AccordionTrigger>
+                  Can I return or exchange if I’m not satisfied?
+                </AccordionTrigger>
+                <AccordionContent>
+                  Yes, you can return or exchange the product within 7 days if
+                  it is unused and in its original packaging.{" "}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default FAQPage;
+export default FAQ;
