@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.0.1",
+    "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
     "@radix-ui/react-avatar": "^1.1.9",
     "@radix-ui/react-dialog": "^1.1.14",
@@ -37,11 +37,11 @@
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.5",
-    "react-hook-form": "^7.56.4",
+    "react-hook-form": "^7.58.1",
     "react-router-dom": "^7.6.1",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.25.41",
+    "zod": "^3.25.67",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
