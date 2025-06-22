@@ -137,8 +137,8 @@ export default function Component() {
       <section id="featured-deal" className="py-16 px-4 bg-slate-800/50 scroll-mt-20">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">🎯 TODAY'S FEATURED DEAL</h2>
-            <p className="text-gray-300">The watch everyone's talking about - now at its lowest price ever</p>
+            <h2 className="text-3xl font-bold mb-4">🎯 {"TODAY'S FEATURED DEAL"}</h2>
+            <p className="text-gray-300">{"The watch everyone's talking about - now at its lowest price ever"}</p>
           </div>
 
           <div className="max-w-4xl mx-auto">
@@ -229,7 +229,7 @@ export default function Component() {
                 ))}
               </div>
               <p className="text-gray-300 mb-4">
-                "Amazing quality for the price. Looks exactly like watches costing 10x more!"
+                {"Amazing quality for the price. Looks exactly like watches costing 10x more!"}
               </p>
               <p className="text-sm text-gray-400">- Tran Hai Ta, Verified Buyer</p>
             </div>
@@ -240,7 +240,7 @@ export default function Component() {
                 ))}
               </div>
               <p className="text-gray-300 mb-4">
-                "Fast shipping, excellent customer service. Will definitely buy again!"
+                {"Fast shipping, excellent customer service. Will definitely buy again!"}
               </p>
               <p className="text-sm text-gray-400">- Huynh Kim Tan, Verified Buyer</p>
             </div>
@@ -251,7 +251,7 @@ export default function Component() {
                 ))}
               </div>
               <p className="text-gray-300 mb-4">
-                "Perfect gift for my husband. He absolutely loves it and gets compliments daily."
+                {"Perfect gift for my husband. He absolutely loves it and gets compliments daily."}
               </p>
               <p className="text-sm text-gray-400">- Nguyen Ngoc Dang Ky, Verified Buyer </p>
             </div>
@@ -271,10 +271,10 @@ export default function Component() {
               <Gift className="h-12 w-12 text-slate-900" />
             </div>
             <h2 className="text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
-              Don't Miss Out!
+              {"Don't Miss Out!"}
             </h2>
             <p className="text-2xl mb-6 text-gray-200 opacity-90 max-w-2xl mx-auto">
-              <span className="font-semibold text-yellow-400">70% OFF</span> — our biggest sale of the year. Once its gone, it won't be back until next Black Friday.
+              <span className="font-semibold text-yellow-400">70% OFF</span> {"— our biggest sale of the year. Once its gone, it won't be back until next Black Friday."}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
