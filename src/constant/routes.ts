@@ -203,3 +203,37 @@ export const team = [
     image: "",
   },
 ];
+
+
+export const featuredWatches = [
+    {
+      id: 1,
+      name: "Classic Heritage",
+      price: 299,
+      originalPrice: 399,
+      image: "/images/logo.png",
+      rating: 4.8,
+      reviews: 124,
+      badge: "Best Seller",
+    },
+    {
+      id: 2,
+      name: "Sport Elite",
+      price: 449,
+      originalPrice: 599,
+      image: "/images/logo.png",
+      rating: 4.9,
+      reviews: 89,
+      badge: "Limited Edition",
+    },
+    {
+      id: 3,
+      name: "Luxury Gold",
+      price: 899,
+      originalPrice: 1199,
+      image: "/images/logo.png",
+      rating: 5.0,
+      reviews: 56,
+      badge: "Premium",
+    },
+  ]
