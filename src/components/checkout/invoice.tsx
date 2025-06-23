@@ -33,7 +33,7 @@ export const Invoice = () => {
     invoiceDetails.subtotal + invoiceDetails.shipping + invoiceDetails.tax;
 
   return ( 
-      <Card className="border p-4">
+      <Card className="p-4 bg-gray-100">
         <CardHeader className="flex flex-row justify-between items-start">
           <div>
             <CardTitle className="text-lg">Invoice</CardTitle>

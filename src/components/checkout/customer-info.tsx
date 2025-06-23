@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Form,
@@ -7,24 +7,32 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { useForm } from "react-hook-form"
-
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 type FormValues = {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  street: string
-  district: string
-  ward: string
-  city: string
-  country: string
-  payment:string
-}
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  street: string;
+  district: string;
+  ward: string;
+  city: string;
+  country: string;
+  payment: string;
+};
 
 export const CustomerInfo = () => {
   const form = useForm<FormValues>({
@@ -38,16 +46,16 @@ export const CustomerInfo = () => {
       ward: "",
       city: "",
       country: "",
-      payment:"",
+      payment: "",
     },
-  })
+  });
 
   const onSubmit = (data: FormValues) => {
-    console.log("Customer Data", data)
-  }
+    console.log("Customer Data", data);
+  };
 
   return (
-    <Card className="p-4 border">
+    <Card className="p-4 bg-gray-100">
       <h2 className="text-lg font-semibold text-gray-900 mb-6">
         Customer Information
       </h2>
@@ -96,7 +104,11 @@ export const CustomerInfo = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="john@example.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="john@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -199,20 +211,35 @@ export const CustomerInfo = () => {
                   </FormItem>
                 )}
               />
-               <FormField
-                control={form.control}
-                name="payment"
-                rules={{ required: "Payment is required" }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Payment</FormLabel>
-                    <FormControl>
-                      <Input placeholder="COD" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+             <FormField
+  control={form.control}
+  name="payment"
+  rules={{ required: "Payment is required" }}
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Payment Method</FormLabel>
+      <Select
+        onValueChange={field.onChange}
+        defaultValue={field.value}
+      >
+        <FormControl>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select payment method" />
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Payments</SelectLabel>
+            <SelectItem value="cod">Cash on Delivery (COD)</SelectItem>
+            <SelectItem value="momo">MOMO</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
             </div>
           </div>
           <Button
@@ -224,5 +251,5 @@ export const CustomerInfo = () => {
         </form>
       </Form>
     </Card>
-  )
-}
+  );
+};

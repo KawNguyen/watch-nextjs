@@ -28,18 +28,18 @@ export const OrderSummary = () => {
   ];
 
   return (
-    <Card className="p-4 border">
+    <Card className="p-4 bg-gray-100">
       <h2 className="text-lg font-semibold text-gray-900 mb-4">
         Order Summary
       </h2>
-      <div className="space-y-2 overflow-y-scroll h-[150px] pr-1">
+      <div className="space-y-2 overflow-y-scroll h-[150px]">
         {order.map((product, index) => (
-          <Card key={index} className="flex gap-4 items-start">
+          <Card key={index} className="flex gap-4 items-start bg-gray-100 ">
             <div className="w-24 h-24 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
               <Image
                 src={product.image}
                 alt={product.item}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover "
                 width={160}
                 height={160}
               />
