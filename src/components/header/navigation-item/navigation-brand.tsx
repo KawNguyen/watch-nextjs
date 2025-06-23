@@ -55,6 +55,7 @@ const NavigationBrand = ({ brands }: NavigationBrandProps) => {
                 src={currentBrand.logo}
                 alt={`${currentBrand.name} logo`}
                 fill
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 200px"
                 className="object-contain p-4 transition-opacity duration-300"
               />
             </AspectRatio>

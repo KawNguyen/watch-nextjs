@@ -10,13 +10,12 @@ export interface RegisterTypes {
   password: string;
 }
 
-export interface UserTypes {
-  email: string;
-  profile: ProfileTypes;
-}
 
-export interface ProfileTypes {
+
+export interface UserProps {
   firstName: string;
   lastName: string;
-  avatar: string;
+  email: string;
+  phone?: string | null;
+  avatar?: string | null;
 }

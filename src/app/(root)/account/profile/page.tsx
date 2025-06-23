@@ -1,5 +1,8 @@
-const Profile = () => {
-  return <div>Profile</div>;
-};
+"use client";
+import { ProfileInfo } from "@/components/profile/profile-info";
+import { useProfile } from "@/components/providers/profile-context";
 
-export default Profile;
+export default function InfoPage() {
+  const user = useProfile();
+  return <ProfileInfo user={user} />;
+}

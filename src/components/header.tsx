@@ -65,11 +65,12 @@ const Header = () => {
                         >
                           <Avatar>
                             <AvatarImage
-                              src={profile?.avatar}
+                              src={profile?.avatar ?? undefined}
                               className="object-cover"
                             />
                             <AvatarFallback>
                               {profile?.firstName?.charAt(0).toUpperCase()}
+                              {profile?.lastName?.charAt(0).toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
                         </DropdownMenuTrigger>
@@ -78,7 +79,7 @@ const Header = () => {
                             {profile?.firstName} {profile?.lastName}
                           </DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => router.push("/account")}>
+                          <DropdownMenuItem onClick={() => router.push("/account/profile")}>
                             <UserCog />
                             Profile
                           </DropdownMenuItem>

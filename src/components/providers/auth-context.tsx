@@ -2,13 +2,13 @@
 
 import { useUser } from "@/queries/user";
 import { authApi } from "@/services/auth";
-import { ProfileTypes, RegisterTypes, SignInTypes } from "@/types/auth";
+import { RegisterTypes, SignInTypes, UserProps } from "@/types/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
-  profile: ProfileTypes | null;
+  profile: UserProps | null;
   isAuthenticated: boolean;
   step: "1" | "2";
   setStep: (step: "1" | "2") => void;
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         data.firstName,
         data.lastName,
         data.email,
-        data.password,
+        data.password
       ),
     onSuccess: () => {
       setStep("2");
