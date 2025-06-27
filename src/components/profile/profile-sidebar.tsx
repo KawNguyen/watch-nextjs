@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, MapPin, Package, Settings, User } from "lucide-react";
+import { Heart, LockKeyholeIcon, MapPin, Package, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,8 +11,8 @@ const menuItems = [
   { id: "profile", label: "Profile Information", icon: User },
   { id: "orders", label: "Order History", icon: Package },
   { id: "addresses", label: "Addresses", icon: MapPin },
-  { id: "wishlist", label: "Wishlist", icon: Heart },
-  { id: "settings", label: "Account Settings", icon: Settings },
+  { id: "favorites", label: "Favorites", icon: Heart },
+  { id: "password", label: "Password", icon: LockKeyholeIcon },
 ];
 
 export function ProfileSidebar({ user }: { user: UserProps | null }) {
@@ -23,18 +23,25 @@ export function ProfileSidebar({ user }: { user: UserProps | null }) {
 
   return (
     <Card>
-      <CardContent className="p-6">
+      <CardContent className="p-6 overflow-hidden">
         <div className="flex items-center gap-4 mb-6">
           <Avatar className="h-16 w-16">
-            <AvatarImage src={user?.avatar ?? undefined} alt="Profile" />
+            <AvatarImage
+              src={user?.avatar?.absolute_url ?? undefined}
+              alt="Profile"
+            />
             <AvatarFallback>
               {user?.firstName?.charAt(0).toUpperCase()}
               {user?.lastName?.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <div>
-            <h3 className="font-semibold">John Doe</h3>
-            <p className="text-sm text-muted-foreground">{user?.email || ""}</p>
+          <div className="overflow-hidden">
+            <h3 className="font-semibold">
+              {user?.firstName} {user?.lastName}
+            </h3>
+            <p className="text-sm text-muted-foreground text-ellipsis overflow-hidden whitespace-nowrap">
+              {user?.email || ""}
+            </p>
           </div>
         </div>
         <nav className="space-y-2">

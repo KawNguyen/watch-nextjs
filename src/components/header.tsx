@@ -65,7 +65,7 @@ const Header = () => {
                         >
                           <Avatar>
                             <AvatarImage
-                              src={profile?.avatar ?? undefined}
+                              src={profile?.avatar?.absolute_url ?? undefined}
                               className="object-cover"
                             />
                             <AvatarFallback>
@@ -79,7 +79,9 @@ const Header = () => {
                             {profile?.firstName} {profile?.lastName}
                           </DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => router.push("/account/profile")}>
+                          <DropdownMenuItem
+                            onClick={() => router.push("/account/profile")}
+                          >
                             <UserCog />
                             Profile
                           </DropdownMenuItem>

@@ -1,5 +1,4 @@
 import { Headset } from "lucide-react";
-import TimeLocation from "../time-location";
 import SaleSlider from "./sale-slider";
 
 const PanelWrapper = () => {
@@ -24,13 +23,6 @@ const PanelWrapper = () => {
             <span className="hidden sm:flex justify-center items-center">
               <Headset size={16} />: 1900-1234
             </span>
-            <span className="hidden md:block">|</span>
-            {/* <div className="flex items-center gap-2">
-                <Button variant={"ghost"}>VN</Button>
-                <span>/</span>
-                <Button variant={"ghost"}>EN</Button>
-              </div> */}
-            <TimeLocation />
           </div>
         </div>
       </div>

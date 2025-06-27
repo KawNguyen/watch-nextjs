@@ -1,7 +1,6 @@
 "use client";
 
-import { Edit, Home, MapPin, Plus, Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Edit, Home, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,28 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AddressProps } from "@/types/auth";
 
-const addresses = [
-  {
-    id: 1,
-    type: "Home",
-    icon: Home,
-    isDefault: true,
-    address: "123 Main Street\nApartment 4B\nNew York, NY 10001\nUnited States",
-  },
-  {
-    id: 2,
-    type: "Work",
-    icon: MapPin,
-    isDefault: false,
-    address: "456 Business Ave\nSuite 200\nNew York, NY 10002\nUnited States",
-  },
-];
-
-export function AddressManagement() {
+export function AddressManagement({
+  addresses,
+}: {
+  addresses: AddressProps[] | null;
+}) {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between p-4">
         <div>
           <CardTitle>Saved Addresses</CardTitle>
           <CardDescription>
@@ -44,23 +31,19 @@ export function AddressManagement() {
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {addresses.map((address) => {
-            const Icon = address.icon;
-            return (
+        {addresses && addresses.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {addresses.map((address, index) => (
               <Card key={address.id}>
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-2">
-                        <Icon className="h-4 w-4" />
-                        <span className="font-medium">{address.type}</span>
-                        {address.isDefault && (
-                          <Badge variant="secondary">Default</Badge>
-                        )}
+                        <Home className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium">Address {index + 1}</span>
                       </div>
                       <p className="text-sm text-muted-foreground whitespace-pre-line">
-                        {address.address}
+                        {`${address.street}, Ward ${address.ward}, District ${address.district}, ${address.city}, ${address.country}`}
                       </p>
                     </div>
                     <div className="flex gap-2">
@@ -74,9 +57,13 @@ export function AddressManagement() {
                   </div>
                 </CardContent>
               </Card>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            No addresses saved yet.
+          </p>
+        )}
       </CardContent>
     </Card>
   );
