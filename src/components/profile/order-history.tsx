@@ -237,29 +237,47 @@ export function OrderHistory() {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="pl-6 pt-4"> 
         <CardTitle>Order History</CardTitle>
         <CardDescription>View and track your orders by status</CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="all" className="text-xs">
+          <TabsList className="w-full p-0 bg-background justify-start border-b rounded-none gap-1">
+            <TabsTrigger
+              value="all"
+              className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary"
+            >
               All ({getOrderCount()})
             </TabsTrigger>
-            <TabsTrigger value="pending" className="text-xs">
+            <TabsTrigger
+              value="pending"
+              className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary"
+            >
               Pending ({getOrderCount(OrderStatus.PENDING)})
             </TabsTrigger>
-            <TabsTrigger value="processing" className="text-xs">
+            <TabsTrigger
+              value="processing"
+              className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary"
+            >
               Processing ({getOrderCount(OrderStatus.PROCESSING)})
             </TabsTrigger>
-            <TabsTrigger value="shipped" className="text-xs">
+            <TabsTrigger
+              value="shipped"
+              className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary"
+            >
               Shipped ({getOrderCount(OrderStatus.SHIPPED)})
             </TabsTrigger>
-            <TabsTrigger value="delivered" className="text-xs">
+            <TabsTrigger
+              value="delivered"
+              className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary"
+            >
               Delivered ({getOrderCount(OrderStatus.DELIVERED)})
             </TabsTrigger>
-            <TabsTrigger value="canceled" className="text-xs">
+            <TabsTrigger
+              value="canceled"
+              className="rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary"
+            >
               Canceled ({getOrderCount(OrderStatus.CANCELED)})
             </TabsTrigger>
           </TabsList>

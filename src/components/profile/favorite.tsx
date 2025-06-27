@@ -10,17 +10,48 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useFavoriteQuery } from "@/queries/favorite";
+import { favoriteItem } from "@/types/favorite";
 
 export function Favorite() {
   const { data, isLoading } = useFavoriteQuery();
 
+  const SkeletonCard = () => (
+    <Card>
+      <CardContent className="p-4 space-y-3">
+        <div className="aspect-square bg-muted rounded-lg relative overflow-hidden">
+          <Skeleton className="h-full w-full" />
+        </div>
+
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-5 w-1/2" />
+        </div>
+
+          <Skeleton className="h-8 w-full rounded-md" />
+      </CardContent>
+    </Card>
+  );
+
   if (isLoading) {
     return (
       <Card>
-        <CardHeader>
-          <CardTitle>Loading...</CardTitle>
+        <CardHeader className="pl-6 pt-4">
+          <CardTitle>
+            <Skeleton className="h-7 w-1/4" />
+          </CardTitle>
+          <CardDescription>
+            <Skeleton className="h-4 w-2/4 mt-2" />
+          </CardDescription>
         </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[...Array(6)].map((_, index) => (
+              <SkeletonCard key={index} />
+            ))}
+          </div>
+        </CardContent>
       </Card>
     );
   }
@@ -44,7 +75,7 @@ export function Favorite() {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.map((item: any) => {
+          {data.map((item: favoriteItem) => {
             const imageUrl = item.images[0]?.absolute_url;
             return (
               <Card key={item.id}>

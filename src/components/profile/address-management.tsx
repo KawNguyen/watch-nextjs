@@ -18,7 +18,7 @@ export function AddressManagement({
 }) {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between p-4">
+      <CardHeader className="flex flex-row items-center justify-between pl-6 pt-4">
         <div>
           <CardTitle>Saved Addresses</CardTitle>
           <CardDescription>
