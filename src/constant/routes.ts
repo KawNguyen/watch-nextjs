@@ -153,36 +153,57 @@ export const allPosts = [
     title: "Intro to ML",
     category: "Men Watch",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Discover the world of machine learning with our comprehensive guide. From theory to practical applications, we'll walk you through the fundamentals and show you how to build your own models.",
   },
   {
     title: "All",
     category: "All",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Discover the world of machine learning with our comprehensive guide. From theory to practical applications, we'll walk you through the fundamentals and show you how to build your own models.",
   },
   {
     title: "Why Open Source Matters",
     category: "Open source",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Open source software has become an essential part of modern technology. Learn why it matters and how you can contribute to the future of software development.",
   },
   {
     title: "GPT vs BERT in NLP",
     category: "Natural language processing",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Explore the differences between GPT and BERT in natural language processing. Understand their strengths and use cases for different tasks.",
   },
   {
     title: "Our Hardware Journey",
     category: "Hardware",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Uncover the fascinating world of hardware with our guide. From the basics to advanced topics, we'll explore the evolution of hardware and its impact on our daily lives.",
   },
   {
     title: "Vision Transformers",
     category: "Women Watch",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Learn about the revolutionary Vision Transformers and how they're transforming computer vision.",
   },
   {
     title: "AI Research Roadmap 2025",
     category: "Research",
     image: "/images/logo.png",
+    date: "2023-08-15",
+    description:
+      "Get a clear view of the future of AI research with our roadmap. Discover the latest breakthroughs and areas of interest.",
   },
 ];
 

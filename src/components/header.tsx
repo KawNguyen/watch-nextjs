@@ -18,6 +18,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import PanelWrapper from "./header/pannel-wrapper";
 import { rh } from "@/constant/routes";
 import NavigationMenuHeader from "./header/navigation-menu-header";
+import { CartSheet } from "./cart-sheet";
 
 const Header = () => {
   const router = useRouter();
@@ -49,7 +50,11 @@ const Header = () => {
                 {ind !== 2 ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Link href={item.path}>{<item.icon />}</Link>
+                      {item.path === "/cart" ? (
+                        <CartSheet />
+                      ) : (
+                        <Link href={item.path}>{<item.icon />}</Link>
+                      )}
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>{item.hover}</p>
