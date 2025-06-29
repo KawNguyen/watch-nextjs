@@ -31,11 +31,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useProvinces } from "@/queries/address";
 import { addressAPI } from "@/services/address";
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "@/lib/axiosInstance";
+import { Edit } from "lucide-react";
 
 const addFormSchema = z.object({
-  address: z.string().min(1, "Address is required"),
+  street: z.string().min(1, "Address is required"),
   ward: z.string().min(1, "Ward is required"),
   district: z.string().min(1, "District is required"),
   city: z.string().min(1, "City is required"),
@@ -43,13 +42,20 @@ const addFormSchema = z.object({
 });
 type FormValue = z.infer<typeof addFormSchema>;
 
-// ✅ API lấy địa chỉ của user
-const getMyAddress = async () => {
-  const res = await axiosInstance.get("/api/address/me");
-  return res.data;
-};
+interface AddAddressModalProps {
+  data?: AddressData;
+  type: "create" | "edit";
+}
 
-export const AddAddressModal = () => {
+interface AddressData {
+  street: string;
+  district: string;
+  ward: string;
+  city: string;
+  country: string;
+}
+
+export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
   const { data: provinces = [] } = useProvinces();
   const [districts, setDistricts] = useState<any[]>([]);
   const [wards, setWards] = useState<any[]>([]);
@@ -57,7 +63,7 @@ export const AddAddressModal = () => {
   const form = useForm<FormValue>({
     resolver: zodResolver(addFormSchema),
     defaultValues: {
-      address: "",
+      street: "",
       ward: "",
       district: "",
       city: "",
@@ -65,72 +71,67 @@ export const AddAddressModal = () => {
     },
   });
 
-  const { data: userAddress } = useQuery({
-    queryKey: ["provinces"],
-    queryFn: getMyAddress,
-  });
+  // const selectedCity = form.watch("city");
+  // const selectedDistrict = form.watch("district");
 
-  const selectedCity = form.watch("city");
-  const selectedDistrict = form.watch("district");
-
-  // 🧠 Reset form khi có data từ API
   useEffect(() => {
-    if (userAddress) {
+    if (data) {
       form.reset({
-        address: userAddress.address || "",
-        ward: userAddress.ward || "",
-        district: userAddress.district || "",
-        city: userAddress.city || "",
-        country: userAddress.country || "Việt Nam",
+        street: data.street || "",
+        ward: data.ward || "",
+        district: data.district || "",
+        city: data.city || "",
+        country: data.country || "Việt Nam",
       });
 
-      // Load districts
-      if (userAddress.city) {
-        addressAPI.getDistrict(userAddress.city).then((data) => {
-          setDistricts(data.districts || []);
-        });
-      }
+      //   if (data.city) {
+      //     addressAPI.getDistrict(data.city).then((data) => {
+      //       setDistricts(data.districts || []);
+      //     });
+      //   }
 
-      // Load wards
-      if (userAddress.district) {
-        addressAPI.getWard(userAddress.district).then((data) => {
-          setWards(data.wards || []);
-        });
-      }
+      //   if (userAddress.district) {
+      //     addressAPI.getWard(userAddress.district).then((data) => {
+      //       setWards(data.wards || []);
+      //     });
+      //   }
     }
-  }, [userAddress]);
+  }, [data]);
 
-  // Khi chọn lại tỉnh
-  useEffect(() => {
-    if (selectedCity) {
-      addressAPI.getDistrict(selectedCity).then((data) => {
-        setDistricts(data.districts || []);
-        setWards([]);
-        form.setValue("district", "");
-        form.setValue("ward", "");
-      });
-    }
-  }, [selectedCity]);
+  // useEffect(() => {
+  //   if (selectedCity) {
+  //     addressAPI.getDistrict(selectedCity).then((data) => {
+  //       setDistricts(data.districts || []);
+  //       setWards([]);
+  //       form.setValue("district", "");
+  //       form.setValue("ward", "");
+  //     });
+  //   }
+  // }, [selectedCity]);
 
-  // Khi chọn lại quận
-  useEffect(() => {
-    if (selectedDistrict) {
-      addressAPI.getWard(selectedDistrict).then((data) => {
-        setWards(data.wards || []);
-        form.setValue("ward", "");
-      });
-    }
-  }, [selectedDistrict]);
+  // useEffect(() => {
+  //   if (selectedDistrict) {
+  //     addressAPI.getWard(selectedDistrict).then((data) => {
+  //       setWards(data.wards || []);
+  //       form.setValue("ward", "");
+  //     });
+  //   }
+  // }, [selectedDistrict]);
 
   const onSubmit = (values: FormValue) => {
     console.log("Submit form:", values);
-    // Gửi API cập nhật địa chỉ nếu cần
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Address</Button>
+        {type === "create" ? (
+          <Button variant="outline">Add Address</Button>
+        ) : (
+          <Button variant="ghost">
+            <Edit />
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -141,7 +142,6 @@ export const AddAddressModal = () => {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* City */}
             <FormField
               control={form.control}
               name="city"
@@ -155,7 +155,7 @@ export const AddAddressModal = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {provinces.map((p) => (
+                      {provinces.map((p: any) => (
                         <SelectItem key={p.code} value={p.code.toString()}>
                           {p.name}
                         </SelectItem>
@@ -167,7 +167,6 @@ export const AddAddressModal = () => {
               )}
             />
 
-            {/* District */}
             <FormField
               control={form.control}
               name="district"
@@ -197,7 +196,6 @@ export const AddAddressModal = () => {
               )}
             />
 
-            {/* Ward */}
             <FormField
               control={form.control}
               name="ward"
@@ -227,10 +225,9 @@ export const AddAddressModal = () => {
               )}
             />
 
-            {/* Address */}
             <FormField
               control={form.control}
-              name="address"
+              name="street"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Địa chỉ cụ thể</FormLabel>

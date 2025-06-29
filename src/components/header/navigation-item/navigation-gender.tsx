@@ -11,7 +11,7 @@ interface NavItem {
 }
 
 interface NavSection {
-  title: string; // e.g., "Brands" or "Styles"
+  title: string;
   items: NavItem[];
 }
 

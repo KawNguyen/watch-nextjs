@@ -6,7 +6,9 @@ export const useFavoriteQuery = () => {
   return useQuery<favoriteItem[]>({
     queryKey: ["favorite"],
     queryFn: async () => {
-      const res = await favoriteApi.getFavoriteMe();
+      const res = await favoriteApi
+        .getFavoriteMe()
+        .then((res) => res.data.items);
       return res;
     },
   });

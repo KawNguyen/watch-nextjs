@@ -1,12 +1,10 @@
 import axiosInstance from "@/lib/axiosInstance";
 
 export const uploadImage = async (
-  file: File,
-  
+  file: File
 ): Promise<{ absolute_url: string; public_id: string }> => {
   const formData = new FormData();
   formData.append("file", file);
- 
 
   const url = `/cloudinary/upload-single?width=300&height=300`;
 
@@ -16,7 +14,7 @@ export const uploadImage = async (
     },
   });
   return {
-    absolute_url: response.data.data.secure_url,
-    public_id: response.data.data.public_id,
+    absolute_url: response.data.data.item.secure_url,
+    public_id: response.data.data.item.public_id,
   };
 };

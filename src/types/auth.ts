@@ -45,7 +45,6 @@ export interface UpdateUserProps {
   firstName?: string;
   lastName?: string;
   phone?: string | null;
-  avatar?: string | null;
   gender?: UserGender;
 }
 

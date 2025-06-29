@@ -33,9 +33,7 @@ export const userAPI = {
   ) => {
     const response = await axiosInstance.patch(
       `/user/change-avatar/${userId}`,
-      {
-        avatar,
-      }
+      { avatar }
     );
     return response.data;
   },

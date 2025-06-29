@@ -1,4 +1,3 @@
-// ChangePhotoModal.tsx
 "use client";
 
 import type React from "react";
@@ -38,7 +37,6 @@ export function ChangePhotoModal({
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState<string | null>(null);
 
   const displayImage = previewImage || currentImage;
 
@@ -47,8 +45,8 @@ export function ChangePhotoModal({
     onSuccess: (uploadedImage) => {
       changeAvatarMutation.mutate(uploadedImage);
     },
-    onError: () => {
-      setError("Upload failed. Please try again.");
+    onError: (error: any) => {
+      console.error("Upload failed. Please try again.", error);
     },
   });
 
@@ -59,15 +57,14 @@ export function ChangePhotoModal({
       queryClient.invalidateQueries({ queryKey: ["me"] });
       handleClose();
     },
-    onError: () => {
-      setError("Failed to update avatar.");
+    onError: (error: any) => {
+      console.error("Failed to update avatar.", error);
     },
   });
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setError(null);
       setSelectedFile(file);
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -81,7 +78,6 @@ export function ChangePhotoModal({
   const handleRemovePreview = () => {
     setPreviewImage(null);
     setSelectedFile(null);
-    setError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -101,7 +97,6 @@ export function ChangePhotoModal({
   const handleClose = () => {
     setPreviewImage(null);
     setSelectedFile(null);
-    setError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -159,14 +154,6 @@ export function ChangePhotoModal({
               </Button>
             )}
           </div>
-
-          {error && (
-            <Alert className="border-red-200 bg-red-50">
-              <AlertDescription className="text-red-800">
-                {error}
-              </AlertDescription>
-            </Alert>
-          )}
         </div>
 
         <DialogFooter>

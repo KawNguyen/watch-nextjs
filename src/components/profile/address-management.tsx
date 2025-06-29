@@ -26,13 +26,16 @@ export function AddressManagement({
             Manage your shipping and billing addresses
           </CardDescription>
         </div>
-        <AddAddressModal />
+        <AddAddressModal type="create" />
       </CardHeader>
       <CardContent className="space-y-4">
         {addresses && addresses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {addresses?.map((address, index) => (
-              <Card key={address.id} className="border hover:shadow-sm transition-shadow">
+              <Card
+                key={address.id}
+                className="border hover:shadow-sm transition-shadow"
+              >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div>
@@ -46,7 +49,7 @@ export function AddressManagement({
                     </div>
                     <div className="flex gap-2">
                       <Button variant="ghost" size="sm">
-                        <Edit className="h-4 w-4" />
+                        <AddAddressModal type="edit" data={address}/>
                       </Button>
                       <Button variant="ghost" size="sm">
                         <Trash2 className="h-4 w-4" />

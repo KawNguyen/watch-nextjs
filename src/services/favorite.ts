@@ -3,7 +3,7 @@ import axiosInstance from "@/lib/axiosInstance";
 export const favoriteApi = {
   getFavoriteMe: async () => {
     const response = await axiosInstance.get("/favorite/me-favorite");
-    return response.data.data.item.items;
+    return response.data;
   },
 
   addToFavorites: async (favoriteId: string) => {

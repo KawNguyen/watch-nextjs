@@ -19,15 +19,15 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { useFavoriteQuery } from "@/queries/favorite";
 import { favoriteItem } from "@/types/favorite";
 import { favoriteApi } from "@/services/favorite";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { queryClient } from "../providers/providers";
+import { useFavoriteQuery } from "@/queries/favorite";
 
 export function Favorite() {
   const { data, isLoading, isError } = useFavoriteQuery();
-  const queryClient = useQueryClient();
 
   const removeFromWishlist = useMutation({
     mutationFn: (id: string) => favoriteApi.removeFromFavorites(id),
@@ -96,9 +96,7 @@ export function Favorite() {
                   <div className="flex gap-4 p-4">
                     <div className="relative w-24 h-24 sm:w-32 sm:h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                       <Image
-                        src={
-                          item.images?.[0]?.absolute_url || "/placeholder.svg"
-                        }
+                        src={item.images[0]?.absolute_url || "/placeholder.svg"}
                         alt={item.name}
                         fill
                         className="object-cover"

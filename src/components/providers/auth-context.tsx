@@ -70,29 +70,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     onSuccess: () => {
       setStep("2");
     },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
   const mutateSignIn = useMutation({
     mutationFn: (data: SignInTypes) =>
       authApi.signIn(data.email, data.password),
-    onSuccess: () => {
-      setStep("2");
+    onSuccess: (data) => {
+      router.push("/");
+      if (data.message === "Login successfully") {
+        refetch();
+        setIsAuthenticated(true);
+      }
+    },
+    onError: (error) => {
+      console.error(error);
     },
   });
 
   const mutateVerifyOTP = useMutation({
     mutationFn: ({ email, otp }: { email: string; otp: string }) =>
       authApi.verifyOTP(email, otp),
-    onSuccess: () => {
+    onSuccess: (data) => {
       router.push("/");
+      if (data.message === "Login successfully") {
+        refetch();
+        setIsAuthenticated(true);
+      }
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
     },
   });
 
   const mutateLogout = useMutation({
     mutationFn: () => authApi.logout(),
+    onSuccess: () => {
+      setIsAuthenticated(false);
+      setStep("1");
+      refetch();
+    },
   });
 
   const register = (data: RegisterTypes) => {
@@ -105,14 +124,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const verifyOTP = (email: string, otp: string) => {
     mutateVerifyOTP.mutate({ email, otp });
-    refetch();
   };
 
   const logout = () => {
     mutateLogout.mutate();
-    setIsAuthenticated(false);
-    setStep("1");
-    refetch();
   };
 
   const value: AuthContextType = {

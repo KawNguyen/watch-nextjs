@@ -72,7 +72,6 @@ export function ProfileInfo({ user }: { user: UserProps | null }) {
     mutateUpdateUser.mutate({
       id: user?.id || "",
       data: {
-        avatar: formData.avatar,
         firstName: formData.firstName,
         lastName: formData.lastName,
         phone: formData.phone,
