@@ -1,305 +1,266 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
-import { MapPin, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+  DialogContent,
+  DialogHeader,
+  DialogDescription,
+  DialogTitle,
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AddressProps } from "@/types/auth";
+  SelectContent,
+  SelectItem,
+} from "../ui/select";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useProvinces } from "@/queries/address";
+import { addressAPI } from "@/services/address";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "@/lib/axiosInstance";
 
-interface AddAddressModalProps {
-  //   onAddAddress: (
-  //     address: Omit<AddressProps, "id" | "createdAt" | "updatedAt" | "userId">
-  //   ) => void;
-  trigger?: React.ReactNode;
-}
+const addFormSchema = z.object({
+  address: z.string().min(1, "Address is required"),
+  ward: z.string().min(1, "Ward is required"),
+  district: z.string().min(1, "District is required"),
+  city: z.string().min(1, "City is required"),
+  country: z.string().min(1, "Country is required"),
+});
+type FormValue = z.infer<typeof addFormSchema>;
 
-const vietnameseCities = [
-  "TP HCM",
-  "Hà Nội",
-  "Đà Nẵng",
-  "Hải Phòng",
-  "Cần Thơ",
-  "An Giang",
-  "Bà Rịa - Vũng Tàu",
-  "Bắc Giang",
-  "Bắc Kạn",
-  "Bạc Liêu",
-  "Bắc Ninh",
-  "Bến Tre",
-  "Bình Định",
-  "Bình Dương",
-  "Bình Phước",
-  "Bình Thuận",
-  "Cà Mau",
-  "Cao Bằng",
-  "Đắk Lắk",
-  "Đắk Nông",
-  "Điện Biên",
-  "Đồng Nai",
-  "Đồng Tháp",
-  "Gia Lai",
-  "Hà Giang",
-  "Hà Nam",
-  "Hà Tĩnh",
-  "Hải Dương",
-  "Hậu Giang",
-  "Hòa Bình",
-  "Hưng Yên",
-  "Khánh Hòa",
-  "Kiên Giang",
-  "Kon Tum",
-  "Lai Châu",
-  "Lâm Đồng",
-  "Lạng Sơn",
-  "Lào Cai",
-  "Long An",
-  "Nam Định",
-  "Nghệ An",
-  "Ninh Bình",
-  "Ninh Thuận",
-  "Phú Thọ",
-  "Phú Yên",
-  "Quảng Bình",
-  "Quảng Nam",
-  "Quảng Ngãi",
-  "Quảng Ninh",
-  "Quảng Trị",
-  "Sóc Trăng",
-  "Sơn La",
-  "Tây Ninh",
-  "Thái Bình",
-  "Thái Nguyên",
-  "Thanh Hóa",
-  "Thừa Thiên Huế",
-  "Tiền Giang",
-  "Trà Vinh",
-  "Tuyên Quang",
-  "Vĩnh Long",
-  "Vĩnh Phúc",
-  "Yên Bái",
-];
+// ✅ API lấy địa chỉ của user
+const getMyAddress = async () => {
+  const res = await axiosInstance.get("/api/address/me");
+  return res.data;
+};
 
-export function AddAddressModal({
-  //   onAddAddress,
-  trigger,
-}: AddAddressModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export const AddAddressModal = () => {
+  const { data: provinces = [] } = useProvinces();
+  const [districts, setDistricts] = useState<any[]>([]);
+  const [wards, setWards] = useState<any[]>([]);
 
-  const [formData, setFormData] = useState({
-    street: "",
-    district: "",
-    ward: "",
-    city: "",
-    country: "Viet Nam",
+  const form = useForm<FormValue>({
+    resolver: zodResolver(addFormSchema),
+    defaultValues: {
+      address: "",
+      ward: "",
+      district: "",
+      city: "",
+      country: "Việt Nam",
+    },
   });
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    setError(null);
-  };
+  const { data: userAddress } = useQuery({
+    queryKey: ["provinces"],
+    queryFn: getMyAddress,
+  });
 
-  const validateForm = (): string | null => {
-    if (!formData.street.trim()) return "Street address is required";
-    if (!formData.district.trim()) return "District is required";
-    if (!formData.ward.trim()) return "Ward is required";
-    if (!formData.city.trim()) return "City is required";
-    if (!formData.country.trim()) return "Country is required";
-    return null;
-  };
+  const selectedCity = form.watch("city");
+  const selectedDistrict = form.watch("district");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      //   onAddAddress({
-      //     ...formData,
-      //   });
-
-      setFormData({
-        street: "",
-        district: "",
-        ward: "",
-        city: "",
-        country: "Viet Nam",
+  // 🧠 Reset form khi có data từ API
+  useEffect(() => {
+    if (userAddress) {
+      form.reset({
+        address: userAddress.address || "",
+        ward: userAddress.ward || "",
+        district: userAddress.district || "",
+        city: userAddress.city || "",
+        country: userAddress.country || "Việt Nam",
       });
-      setIsOpen(false);
-    } catch (error) {
-      setError("Failed to add address. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  const handleClose = () => {
-    setFormData({
-      street: "",
-      district: "",
-      ward: "",
-      city: "",
-      country: "Viet Nam",
-    });
-    setError(null);
-    setIsOpen(false);
+      // Load districts
+      if (userAddress.city) {
+        addressAPI.getDistrict(userAddress.city).then((data) => {
+          setDistricts(data.districts || []);
+        });
+      }
+
+      // Load wards
+      if (userAddress.district) {
+        addressAPI.getWard(userAddress.district).then((data) => {
+          setWards(data.wards || []);
+        });
+      }
+    }
+  }, [userAddress]);
+
+  // Khi chọn lại tỉnh
+  useEffect(() => {
+    if (selectedCity) {
+      addressAPI.getDistrict(selectedCity).then((data) => {
+        setDistricts(data.districts || []);
+        setWards([]);
+        form.setValue("district", "");
+        form.setValue("ward", "");
+      });
+    }
+  }, [selectedCity]);
+
+  // Khi chọn lại quận
+  useEffect(() => {
+    if (selectedDistrict) {
+      addressAPI.getWard(selectedDistrict).then((data) => {
+        setWards(data.wards || []);
+        form.setValue("ward", "");
+      });
+    }
+  }, [selectedDistrict]);
+
+  const onSubmit = (values: FormValue) => {
+    console.log("Submit form:", values);
+    // Gửi API cập nhật địa chỉ nếu cần
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        {trigger || (
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Address
-          </Button>
-        )}
+        <Button variant="outline">Add Address</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-blue-600" />
-            Add New Address
-          </DialogTitle>
+          <DialogTitle>Add Address</DialogTitle>
           <DialogDescription>
-            Add a new shipping or billing address to your account.
+            Add a new address to your account
           </DialogDescription>
         </DialogHeader>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Error Message */}
-          {error && (
-            <Alert className="border-red-200 bg-red-50">
-              <AlertDescription className="text-red-800">
-                {error}
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Street Address */}
-          <div className="space-y-2">
-            <Label htmlFor="street">Street Address *</Label>
-            <Textarea
-              id="street"
-              placeholder="Enter your street address (e.g., 123 Nguyen Hue Street, Apartment 4B)"
-              value={formData.street}
-              onChange={(e) => handleInputChange("street", e.target.value)}
-              rows={2}
-              required
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* City */}
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tỉnh/Thành phố</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Chọn tỉnh/thành" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {provinces.map((p) => (
+                        <SelectItem key={p.code} value={p.code.toString()}>
+                          {p.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          {/* District and Ward */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="district">District *</Label>
-              <Input
-                id="district"
-                placeholder="District (e.g., District 1)"
-                value={formData.district}
-                onChange={(e) => handleInputChange("district", e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="ward">Ward *</Label>
-              <Input
-                id="ward"
-                placeholder="Ward (e.g., Ben Nghe Ward)"
-                value={formData.ward}
-                onChange={(e) => handleInputChange("ward", e.target.value)}
-                required
-              />
-            </div>
-          </div>
+            {/* District */}
+            <FormField
+              control={form.control}
+              name="district"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quận/Huyện</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    disabled={!districts.length}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Chọn quận/huyện" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {districts.map((d) => (
+                        <SelectItem key={d.code} value={d.code.toString()}>
+                          {d.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {/* City */}
-          <div className="space-y-2">
-            <Label htmlFor="city">City/Province *</Label>
-            <Select
-              value={formData.city}
-              onValueChange={(value) => handleInputChange("city", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select city/province" />
-              </SelectTrigger>
-              <SelectContent>
-                {vietnameseCities.map((city) => (
-                  <SelectItem key={city} value={city}>
-                    {city}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            {/* Ward */}
+            <FormField
+              control={form.control}
+              name="ward"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phường/Xã</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    disabled={!wards.length}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Chọn phường/xã" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {wards.map((w) => (
+                        <SelectItem key={w.code} value={w.name}>
+                          {w.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {/* Country */}
-          <div className="space-y-2">
-            <Label htmlFor="country">Country *</Label>
-            <Select
-              value={formData.country}
-              onValueChange={(value) => handleInputChange("country", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select country" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Viet Nam">Viet Nam</SelectItem>
-                <SelectItem value="Thailand">Thailand</SelectItem>
-                <SelectItem value="Singapore">Singapore</SelectItem>
-                <SelectItem value="Malaysia">Malaysia</SelectItem>
-                <SelectItem value="Philippines">Philippines</SelectItem>
-                <SelectItem value="Indonesia">Indonesia</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            {/* Address */}
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Địa chỉ cụ thể</FormLabel>
+                  <FormControl>
+                    <Input placeholder="123 Đường ABC..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Adding..." : "Add Address"}
-            </Button>
-          </DialogFooter>
-        </form>
+            {/* Country */}
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quốc gia</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Việt Nam" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit">Lưu địa chỉ</Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
-}
+};

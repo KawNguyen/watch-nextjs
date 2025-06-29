@@ -10,19 +10,39 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { useFavoriteQuery } from "@/queries/favorite";
 import { favoriteItem } from "@/types/favorite";
+import { favoriteApi } from "@/services/favorite";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function Favorite() {
-  const { data } = useFavoriteQuery();
+  const { data, isLoading, isError } = useFavoriteQuery();
+  const queryClient = useQueryClient();
 
-  const handleRemoveFromWishlist = (id: string) => {
-    console.log("Remove from wishlist:", id);
-  };
+  const removeFromWishlist = useMutation({
+    mutationFn: (id: string) => favoriteApi.removeFromFavorites(id),
+    onSuccess: () => {
+      toast.success("Item removed from wishlist");
+      queryClient.invalidateQueries({ queryKey: ["favorite"] });
+    },
+    onError: () => {
+      toast.error("Failed to remove item. Please try again.");
+    },
+  });
 
-  const handleAddToCart = (id: string) => {
-    console.log("Add to cart:", id);
-  };
+  // const handleAddToCart = (id: string) => {
+  //   toast.success("Item added to cart");
+  // };
 
   const renderStars = (rating: number) => {
     return (
@@ -42,13 +62,17 @@ export function Favorite() {
     );
   };
 
+  if (isLoading) return <div className="p-4">Loading wishlist...</div>;
+  if (isError)
+    return <div className="p-4 text-red-500">Failed to load wishlist.</div>;
+
   return (
     <Card>
       <CardHeader className="pl-6 pt-4">
         <CardTitle className="flex items-center gap-2">
           My Wishlist ({data?.length} items)
         </CardTitle>
-        <CardDescription>Items you've saved for later</CardDescription>
+        <CardDescription>Items you have saved for later</CardDescription>
       </CardHeader>
       <CardContent>
         {data?.length === 0 ? (
@@ -64,7 +88,10 @@ export function Favorite() {
         ) : (
           <div className="space-y-4">
             {data?.map((item: favoriteItem) => (
-              <Card key={item.id} className="overflow-hidden border border-gray-200 hover:shadow-sm transition-shadow">
+              <Card
+                key={item.id}
+                className="overflow-hidden border border-gray-200 hover:shadow-sm transition-shadow"
+              >
                 <CardContent className="p-0">
                   <div className="flex gap-4 p-4">
                     <div className="relative w-24 h-24 sm:w-32 sm:h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
@@ -85,15 +112,43 @@ export function Favorite() {
                             <h4 className="font-semibold text-lg mb-1 line-clamp-1">
                               {item.name}
                             </h4>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="text-red-500 hover:bg-red-50"
-                              onClick={() => handleRemoveFromWishlist(item.id)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="text-red-500 hover:bg-red-50"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>
+                                    Xác nhận xoá sản phẩm khỏi wishlist?
+                                  </DialogTitle>
+                                </DialogHeader>
+                                <DialogFooter>
+                                  <DialogClose asChild>
+                                    <Button variant="outline">Huỷ</Button>
+                                  </DialogClose>
+                                  <Button
+                                    variant="destructive"
+                                    onClick={() =>
+                                      removeFromWishlist.mutate(item.id)
+                                    }
+                                    disabled={removeFromWishlist.isPending}
+                                  >
+                                    {removeFromWishlist.isPending
+                                      ? "Đang xoá..."
+                                      : "Xác nhận"}
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
                           </div>
+
                           <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                             {item.description || "No description available."}
                           </p>
@@ -108,20 +163,17 @@ export function Favorite() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <span className="text-xl font-bold text-green-600">
-                                ${item.price.toFixed(2)}
+                                ${item.price}
                               </span>
                             </div>
 
                             <div className="flex gap-2">
                               <Button
-                                onClick={() => handleAddToCart(item.id)}
+                                // onClick={() => handleAddToCart(item.id)}
                                 size="sm"
                               >
                                 <ShoppingCart className="h-4 w-4 mr-2" />
                                 Add to Cart
-                              </Button>
-                              <Button variant="outline" size="sm">
-                                View Details
                               </Button>
                             </div>
                           </div>

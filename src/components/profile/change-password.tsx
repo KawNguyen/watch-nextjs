@@ -1,10 +1,5 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
-import { Eye, EyeOff, Lock, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,78 +7,102 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+  Form,
+} from "@/components/ui/form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export function ChangePassword({ onBack }: { onBack?: () => void }) {
-  const [formData, setFormData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Eye, EyeOff, Lock, ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { userAPI } from "@/services/user";
+
+const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Current password is required"),
+    newPassword: z
+      .string()
+      .min(6, "New password must be at least 6 characters"),
+    confirmPassword: z.string().min(1, "Please confirm new password"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  })
+  .refine((data) => data.currentPassword !== data.newPassword, {
+    message: "New password must be different from current",
+    path: ["newPassword"],
   });
+
+type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+
+export function ChangePassword({userId} : {userId: string | undefined}) {
   const [showPasswords, setShowPasswords] = useState({
     current: false,
     new: false,
     confirm: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
+
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
   } | null>(null);
 
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const form = useForm<ChangePasswordInput>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
+  const changePasswordMutation = useMutation({
+    mutationFn: ({
+      userId,
+      currentPassword,
+      newPassword,
+    }: {
+      userId: string;
+      currentPassword: string;
+      newPassword: string;
+    }) => userAPI.changePassword(userId, currentPassword, newPassword),
+
+    onSuccess: () => {
+      setMessage({ type: "success", text: "Password changed successfully!" });
+      form.reset();
+    },
+
+    onError: (error: any) => {
+      setMessage({
+        type: "error",
+        text: error?.response?.data?.message || "Something went wrong!",
+      });
+    },
+  });
+
+  const onSubmit = (values: ChangePasswordInput) => {
     setMessage(null);
+    changePasswordMutation.mutate({
+      userId: userId || "",
+      currentPassword: values.currentPassword,
+      newPassword: values.newPassword,
+    });
   };
 
   const togglePasswordVisibility = (field: keyof typeof showPasswords) => {
     setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (formData.newPassword.length < 6) {
-      setMessage({
-        type: "error",
-        text: "New password must be at least 6 characters long",
-      });
-      return;
-    }
-
-    if (formData.newPassword !== formData.confirmPassword) {
-      setMessage({ type: "error", text: "New passwords do not match" });
-      return;
-    }
-
-    if (formData.currentPassword === formData.newPassword) {
-      setMessage({
-        type: "error",
-        text: "New password must be different from current password",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setMessage({ type: "success", text: "Password changed successfully!" });
-      setFormData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
-    } catch (error) {
-      setMessage({
-        type: "error",
-        text: `Failed to change password. Please try again. ${error}`,
-      });
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -91,14 +110,9 @@ export function ChangePassword({ onBack }: { onBack?: () => void }) {
       <Card>
         <CardHeader>
           <div className="flex items-center gap-4">
-            {onBack && (
-              <Button variant="ghost" size="sm" onClick={onBack}>
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-            )}
             <div className="flex items-center gap-3">
-              <Lock className="h-5 w-5 text-blue-600" />
-              <div>
+              <Lock className="h-5 w-5 text-black-600" />
+              <div className="mb-2">
                 <CardTitle>Change Password</CardTitle>
                 <CardDescription>Update your account password</CardDescription>
               </div>
@@ -124,118 +138,130 @@ export function ChangePassword({ onBack }: { onBack?: () => void }) {
             </Alert>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="currentPassword">Current Password</Label>
-              <div className="relative">
-                <Input
-                  id="currentPassword"
-                  type={showPasswords.current ? "text" : "password"}
-                  value={formData.currentPassword}
-                  onChange={(e) =>
-                    handleInputChange("currentPassword", e.target.value)
-                  }
-                  placeholder="Enter current password"
-                  required
-                />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {/* Current Password */}
+              <FormField
+                control={form.control}
+                name="currentPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Current Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type={showPasswords.current ? "text" : "password"}
+                          placeholder="Enter current password"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                          onClick={() => togglePasswordVisibility("current")}
+                        >
+                          {showPasswords.current ? (
+                            <Eye className="h-4 w-4 text-gray-400" />
+                          ) : (
+                            <EyeOff className="h-4 w-4 text-gray-400" />
+                          )}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* New Password */}
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type={showPasswords.new ? "text" : "password"}
+                          placeholder="Enter new password"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                          onClick={() => togglePasswordVisibility("new")}
+                        >
+                          {showPasswords.new ? (
+                            <Eye className="h-4 w-4 text-gray-400" />
+                          ) : (
+                            <EyeOff className="h-4 w-4 text-gray-400" />
+                          )}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Confirm Password */}
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm New Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type={showPasswords.confirm ? "text" : "password"}
+                          placeholder="Confirm new password"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                          onClick={() => togglePasswordVisibility("confirm")}
+                        >
+                          {showPasswords.confirm ? (
+                            <Eye className="h-4 w-4 text-gray-400" />
+                          ) : (
+                            <EyeOff className="h-4 w-4 text-gray-400" />
+                          )}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex gap-3 pt-4">
                 <Button
                   type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                  onClick={() => togglePasswordVisibility("current")}
+                  variant="outline"
+                  className="flex-1"
                 >
-                  {showPasswords.current ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
+                  Cancel
                 </Button>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">New Password</Label>
-              <div className="relative">
-                <Input
-                  id="newPassword"
-                  type={showPasswords.new ? "text" : "password"}
-                  value={formData.newPassword}
-                  onChange={(e) =>
-                    handleInputChange("newPassword", e.target.value)
-                  }
-                  placeholder="Enter new password"
-                  required
-                />
                 <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                  onClick={() => togglePasswordVisibility("new")}
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  className="flex-1"
                 >
-                  {showPasswords.new ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
+                  {form.formState.isSubmitting
+                    ? "Changing..."
+                    : "Change Password"}
                 </Button>
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showPasswords.confirm ? "text" : "password"}
-                  value={formData.confirmPassword}
-                  onChange={(e) =>
-                    handleInputChange("confirmPassword", e.target.value)
-                  }
-                  placeholder="Confirm new password"
-                  required
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                  onClick={() => togglePasswordVisibility("confirm")}
-                >
-                  {showPasswords.confirm ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
-                </Button>
-              </div>
-            </div>
-
-            {/* Submit Buttons */}
-            <div className="flex gap-3 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onBack}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={
-                  !formData.currentPassword ||
-                  !formData.newPassword ||
-                  !formData.confirmPassword ||
-                  isLoading
-                }
-                className="flex-1"
-              >
-                {isLoading ? "Changing..." : "Change Password"}
-              </Button>
-            </div>
-          </form>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>

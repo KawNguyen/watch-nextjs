@@ -17,7 +17,7 @@ export const userAPI = {
     currentPassword: string,
     newPassword: string
   ) => {
-    const response = await axiosInstance.post(
+    const response = await axiosInstance.patch(
       `/user/change-password/${userId}`,
       {
         currentPassword,

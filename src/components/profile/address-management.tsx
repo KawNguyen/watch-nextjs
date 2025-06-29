@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit, Home, Plus, Trash2 } from "lucide-react";
+import { Edit, Home, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
