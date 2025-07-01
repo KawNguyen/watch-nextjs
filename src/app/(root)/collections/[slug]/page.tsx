@@ -14,7 +14,7 @@ const DetailsPage = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 my-8">
-        <ProductImages posters={data?.poster || []} />
+        <ProductImages images={data?.images || []} name={data?.name || ""} />
         <div className="flex flex-col h-full">
           <ProductName name={data?.name || ""} />
           <div className="flex-grow">

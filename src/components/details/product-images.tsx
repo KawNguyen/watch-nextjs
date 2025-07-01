@@ -5,24 +5,24 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { WatchPoster } from "@/types/watch";
+import { WatchImage } from "@/types/watch";
 import Image from "next/image";
 
 interface PossibleImages {
-  posters: WatchPoster[];
+  images: WatchImage[];
+  name: string
 }
 
-export function ProductImages({ posters }: PossibleImages) {
-    console.log(posters);
+export function ProductImages({ images, name }: PossibleImages) {
   return (
     <div className="relative bg-gray-100 rounded-lg p-6">
       <Carousel className="w-full">
         <CarouselContent>
-          {posters.map((poster, index) => (
+          {images.map((image, index) => (
             <CarouselItem key={index}>
               <div className="aspect-square relative rounded-lg overflow-hidden">
                 <Image
-                  src={poster.url}
+                  src={image.absolute_url}
                   alt={`${name} - ${index + 1}`}
                   width={1000}
                   height={1000}
@@ -36,7 +36,6 @@ export function ProductImages({ posters }: PossibleImages) {
         <CarouselPrevious className="left-2" />
         <CarouselNext className="right-2" />
       </Carousel>
-
     </div>
   );
 }
