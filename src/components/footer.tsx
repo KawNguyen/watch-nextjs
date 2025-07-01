@@ -77,7 +77,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 px-4 md:px-0 gap-4">
+        <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-4 px-4 md:px-0 gap-4">
           {routes.map((route, index) => (
             <div key={index}>
               <div className="mb-4 font-bold text-xl">{route.title}</div>
@@ -95,6 +95,15 @@ const Footer = () => {
               </div>
             </div>
           ))}
+          <div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.3779998049076!2d106.67510361062003!3d10.737439289364799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752fad3fb62a95%3A0xa9576c84a879d1fe!2zMTgwIENhbyBM4buXLCBQaMaw4budbmcgNCwgUXXhuq1uIDgsIEjhu5MgQ2jDrSBNaW5oIDcwMDAwLCBWaWV0bmFt!5e1!3m2!1sen!2s!4v1750660661217!5m2!1sen!2s"
+              width="600"
+              height="200"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </div>
 
