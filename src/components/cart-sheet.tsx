@@ -137,14 +137,14 @@ export function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="link" className="relative">
+        <div className="relative h-full w-full">
           <ShoppingBag />
           {cartItems.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
               {selectedCount}
             </span>
           )}
-        </Button>
+        </div>
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader>
