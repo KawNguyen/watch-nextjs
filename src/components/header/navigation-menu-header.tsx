@@ -34,7 +34,7 @@ const NavigationMenuHeader = () => {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <Link href={"/contact"}>Contact</Link>
+              <Link href={"/support/contact"}>Contact</Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
