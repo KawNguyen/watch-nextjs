@@ -29,7 +29,7 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useProvinces } from "@/queries/address";
+import { useDistricts, useProvinces, useWards } from "@/queries/address";
 import { addressAPI } from "@/services/address";
 import { Edit } from "lucide-react";
 
@@ -57,8 +57,7 @@ interface AddressData {
 
 export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
   const { data: provinces = [] } = useProvinces();
-  const [districts, setDistricts] = useState<any[]>([]);
-  const [wards, setWards] = useState<any[]>([]);
+
 
   const form = useForm<FormValue>({
     resolver: zodResolver(addFormSchema),
@@ -70,9 +69,10 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
       country: "Việt Nam",
     },
   });
-
-  // const selectedCity = form.watch("city");
-  // const selectedDistrict = form.watch("district");
+  const provinceCode=form.watch("city");
+  const districtCode=form.watch("district")
+  const {data:districts=[]} = useDistricts(provinceCode);
+  const {data:wards} = useWards(districtCode);
 
   useEffect(() => {
     if (data) {
@@ -83,40 +83,8 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
         city: data.city || "",
         country: data.country || "Việt Nam",
       });
-
-      //   if (data.city) {
-      //     addressAPI.getDistrict(data.city).then((data) => {
-      //       setDistricts(data.districts || []);
-      //     });
-      //   }
-
-      //   if (userAddress.district) {
-      //     addressAPI.getWard(userAddress.district).then((data) => {
-      //       setWards(data.wards || []);
-      //     });
-      //   }
     }
   }, [data]);
-
-  // useEffect(() => {
-  //   if (selectedCity) {
-  //     addressAPI.getDistrict(selectedCity).then((data) => {
-  //       setDistricts(data.districts || []);
-  //       setWards([]);
-  //       form.setValue("district", "");
-  //       form.setValue("ward", "");
-  //     });
-  //   }
-  // }, [selectedCity]);
-
-  // useEffect(() => {
-  //   if (selectedDistrict) {
-  //     addressAPI.getWard(selectedDistrict).then((data) => {
-  //       setWards(data.wards || []);
-  //       form.setValue("ward", "");
-  //     });
-  //   }
-  // }, [selectedDistrict]);
 
   const onSubmit = (values: FormValue) => {
     console.log("Submit form:", values);
@@ -176,7 +144,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
                   <Select
                     onValueChange={field.onChange}
                     value={field.value}
-                    disabled={!districts.length}
+                    // disabled={!districts.length}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -184,7 +152,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {districts.map((d) => (
+                      {districts.districts?.map((d) => (
                         <SelectItem key={d.code} value={d.code.toString()}>
                           {d.name}
                         </SelectItem>
@@ -205,7 +173,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
                   <Select
                     onValueChange={field.onChange}
                     value={field.value}
-                    disabled={!wards.length}
+                    // disabled={!wards.length}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -213,7 +181,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {wards.map((w) => (
+                      {wards?.wards?.map((w) => (
                         <SelectItem key={w.code} value={w.name}>
                           {w.name}
                         </SelectItem>

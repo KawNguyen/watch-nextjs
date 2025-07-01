@@ -7,3 +7,17 @@ export const useProvinces = () => {
     queryFn: addressAPI.getProvince,
   });
 };
+export const useDistricts = (provinceId: string) => {
+  return useQuery({
+    queryKey: ["districts", provinceId],
+    queryFn: () => addressAPI.getDistrict(provinceId),
+    enabled: !!provinceId,
+  });
+};
+export const useWards = (districtId: string) => {
+  return useQuery({
+    queryKey: ["wards", districtId],
+    queryFn: () => addressAPI.getWard(districtId),
+    enabled: !!districtId,
+  });
+};
