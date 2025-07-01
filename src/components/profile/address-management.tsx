@@ -1,6 +1,7 @@
 "use client";
 
 import { Edit, Home, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,29 +14,36 @@ import { AddressProps } from "@/types/auth";
 import { AddAddressModal } from "./add-address-modal";
 
 export function AddressManagement({
-  addresses,
+  initialAddresses,
+  userId,
 }: {
-  addresses: AddressProps[] | null;
+  initialAddresses: AddressProps[] | null;
+  userId: string;
 }) {
+  const [addressList, setAddressList] = useState<AddressProps[]>(initialAddresses || []);
+
+  // const handleAddSuccess = (newAddress: AddressProps) => {
+  //   setAddressList((prev) => [...prev, newAddress]);
+  // };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pl-6 pt-4">
         <div>
           <CardTitle>Saved Addresses</CardTitle>
-          <CardDescription>
-            Manage your shipping and billing addresses
-          </CardDescription>
+          <CardDescription>Manage your shipping and billing addresses</CardDescription>
         </div>
-        <AddAddressModal type="create" />
+        <AddAddressModal
+          type="create"
+          userId={userId}
+          // onSuccess={handleAddSuccess}
+        />
       </CardHeader>
       <CardContent className="space-y-4">
-        {addresses && addresses.length > 0 ? (
+        {addressList.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {addresses?.map((address, index) => (
-              <Card
-                key={address.id}
-                className="border hover:shadow-sm transition-shadow"
-              >
+            {addressList.map((address, index) => (
+              <Card key={address.id} className="border hover:shadow-sm transition-shadow">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div>
@@ -48,9 +56,12 @@ export function AddressManagement({
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="ghost" size="sm">
-                        <AddAddressModal type="edit" data={address}/>
-                      </Button>
+                      <AddAddressModal
+                        type="edit"
+                        data={address}
+                        userId={userId}
+                        // onSuccess={() => {}}
+                      />
                       <Button variant="ghost" size="sm">
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -61,9 +72,7 @@ export function AddressManagement({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">
-            No addresses saved yet.
-          </p>
+          <p className="text-sm text-muted-foreground">No addresses saved yet.</p>
         )}
       </CardContent>
     </Card>

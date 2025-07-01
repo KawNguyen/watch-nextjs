@@ -32,6 +32,8 @@ import { useForm } from "react-hook-form";
 import { useDistricts, useProvinces, useWards } from "@/queries/address";
 import { addressAPI } from "@/services/address";
 import { Edit } from "lucide-react";
+import { toast } from "sonner";
+import { Toaster } from "../ui/sonner";
 
 const addFormSchema = z.object({
   street: z.string().min(1, "Address is required"),
@@ -45,6 +47,7 @@ type FormValue = z.infer<typeof addFormSchema>;
 interface AddAddressModalProps {
   data?: AddressData;
   type: "create" | "edit";
+  userId: string; 
 }
 
 interface AddressData {
@@ -55,7 +58,7 @@ interface AddressData {
   country: string;
 }
 
-export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
+export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) => {
   const { data: provinces = [] } = useProvinces();
 
 
@@ -86,9 +89,16 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
     }
   }, [data]);
 
-  const onSubmit = (values: FormValue) => {
-    console.log("Submit form:", values);
-  };
+ const onSubmit = async (values: FormValue) => {
+  try {
+    if (type === "create") {
+      await addressAPI.create(userId, values);
+      toast.success("Address created successfully");
+    }
+  } catch (error) {
+    toast.error("Address created unsuccessfully");
+  }
+};
 
   return (
     <Dialog>
@@ -115,11 +125,11 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tỉnh/Thành phố</FormLabel>
+                  <FormLabel>City/Province</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Chọn tỉnh/thành" />
+                        <SelectValue placeholder="Choose city/province" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -140,7 +150,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
               name="district"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Quận/Huyện</FormLabel>
+                  <FormLabel>District</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     value={field.value}
@@ -148,11 +158,11 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Chọn quận/huyện" />
+                        <SelectValue placeholder="Choose district" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {districts.districts?.map((d) => (
+                      {districts.districts?.map((d:any) => (
                         <SelectItem key={d.code} value={d.code.toString()}>
                           {d.name}
                         </SelectItem>
@@ -169,7 +179,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
               name="ward"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phường/Xã</FormLabel>
+                  <FormLabel>Ward</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     value={field.value}
@@ -177,11 +187,11 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Chọn phường/xã" />
+                        <SelectValue placeholder="Choose ward" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {wards?.wards?.map((w) => (
+                      {wards?.wards?.map((w:any) => (
                         <SelectItem key={w.code} value={w.name}>
                           {w.name}
                         </SelectItem>
@@ -198,9 +208,9 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
               name="street"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Địa chỉ cụ thể</FormLabel>
+                  <FormLabel>Address number</FormLabel>
                   <FormControl>
-                    <Input placeholder="123 Đường ABC..." {...field} />
+                    <Input placeholder="123/123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -213,7 +223,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Quốc gia</FormLabel>
+                  <FormLabel>Country</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Việt Nam" />
                   </FormControl>
@@ -222,7 +232,7 @@ export const AddAddressModal = ({ data, type }: AddAddressModalProps) => {
               )}
             />
 
-            <Button type="submit">Lưu địa chỉ</Button>
+            <Button className="w-full" type="submit">Save</Button>
           </form>
         </Form>
       </DialogContent>
