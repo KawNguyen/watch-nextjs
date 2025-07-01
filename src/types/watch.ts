@@ -16,12 +16,9 @@ export interface Movement {
   updatedAt: string;
 }
 
-export interface WatchPoster {
-  id: string;
-  url: string;
-  watchId: string;
-  createdAt: string;
-  updatedAt: string;
+export interface WatchImage {
+  absolute_url: string;
+  public_id: string;
 }
 
 export interface Watch {
@@ -46,8 +43,16 @@ export interface Watch {
   material: Material;
   bandMaterial: Material;
   movement: Movement;
-  poster: WatchPoster[];
+  images: WatchImage[];
   rating: number;
+  banner: WatchBanner;
+}
+export interface WatchBanner {
+  id: string;
+  url: string;
+  watchId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Meta {
@@ -63,6 +68,14 @@ export interface ApiResponse<T> {
   message: string;
   data: {
     items: T[];
+  };
+  meta: Meta;
+}
+export interface ApiResponseItem<T> {
+  status: number;
+  message: string;
+  data: {
+    item: T;
   };
   meta: Meta;
 }

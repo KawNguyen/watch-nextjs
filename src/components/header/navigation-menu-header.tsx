@@ -21,6 +21,10 @@ const NavigationMenuHeader = () => {
               </Link>
             </NavigationMenuItem>
 
+            <NavigationMenuItem>
+              <Link href={"/collections"}>Collections</Link>
+            </NavigationMenuItem>
+
             <NavigationBrand brands={navigation.brand} />
 
             <NavigationGender gender={navigation.gender} />
@@ -35,6 +39,9 @@ const NavigationMenuHeader = () => {
 
             <NavigationMenuItem>
               <Link href={"/contact"}>Contact</Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href={"/support/about-us"}>About Us</Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

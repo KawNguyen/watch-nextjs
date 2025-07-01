@@ -10,7 +10,7 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
     <div className="group relative overflow-hidden rounded-lg border bg-background p-2">
       <div className="relative rounded-md aspect-square overflow-hidden bg-zinc-100">
         <Image
-          src={watchData.poster[0]?.url}
+          src={watchData.images[0]?.absolute_url}
           alt={watchData.name}
           fill
           sizes="25vw"

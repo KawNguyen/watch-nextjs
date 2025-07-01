@@ -6,6 +6,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -72,16 +74,10 @@ export default function Blogs() {
           News and insights from our blog.
         </p>
       </div>
-      <Carousel
-        opts={{
-          align: "start",
-        }}
-        orientation="vertical"
-        className="container mx-auto"
-      >
-        <CarouselContent className="mt-4 max-h-[440px] md:min-h-[500px] p-1">
+      <Carousel>
+        <CarouselContent className="mt-4 max-h-[440px]  md:min-h-[500px] p-1">
           {articles.map((item, index) => (
-            <CarouselItem key={index} className="md:pt-2 md:basis-1/2 ">
+            <CarouselItem key={index} className="md:pt-2">
               <div>
                 <Card className="grid grid-cols-1 md:grid-cols-12 border-collapse md:h-[450px] border-2 p-1 border-gray-200">
                   <div className="md:col-span-7 p-1 md:p-4">
@@ -120,6 +116,8 @@ export default function Blogs() {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious className="hidden md:block" />
+        <CarouselNext className="hidden md:block"/> 
       </Carousel>
     </div>
   );

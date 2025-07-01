@@ -1,10 +1,11 @@
-import Blogs from "@/components/HomePage/Blogs";
-import Category from "@/components/HomePage/Category";
-import Collections from "@/components/HomePage/Collections";
-import Features from "@/components/HomePage/Features";
-import { HomeHero } from "@/components/HomePage/HomeHero";
-import { Promotion } from "@/components/HomePage/Promotion";
-import { Review } from "@/components/HomePage/ReviewRating/Review";
+import Blogs from "@/components/home-page/blogs";
+import Category from "@/components/home-page/category";
+import Collections from "@/components/home-page/collections";
+import Features from "@/components/home-page/features";
+import { HomeHero } from "@/components/home-page/home-hero";
+import { Promotion } from "@/components/home-page/promotion";
+import { Review } from "@/components/home-page/review-rating/review";
+
 
 const page = () => {
   return (
