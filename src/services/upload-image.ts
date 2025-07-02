@@ -1,4 +1,4 @@
-import axiosInstance from "@/lib/axiosInstance";
+import axiosInstance from "@/lib/axios-instance";
 
 export const uploadImage = async (
   file: File

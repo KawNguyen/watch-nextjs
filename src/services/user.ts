@@ -1,4 +1,4 @@
-import axiosInstance from "@/lib/axiosInstance";
+import axiosInstance from "@/lib/axios-instance";
 import { UpdateUserProps } from "@/types/auth";
 
 export const userAPI = {

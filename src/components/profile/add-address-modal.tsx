@@ -33,13 +33,11 @@ import { useDistricts, useProvinces, useWards } from "@/queries/address";
 import { addressAPI } from "@/services/address";
 import { Edit } from "lucide-react";
 import { toast } from "sonner";
-import { Toaster } from "../ui/sonner";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../providers/providers";
 import { Address } from "@/types/address";
 
 const addFormSchema = z.object({
-  id: z.string().min(1, "Address id"),
   street: z.string().min(1, "Address is required"),
   ward: z.string().min(1, "Ward is required"),
   district: z.string().min(1, "District is required"),
@@ -49,19 +47,25 @@ const addFormSchema = z.object({
 type FormValue = z.infer<typeof addFormSchema>;
 
 interface AddAddressModalProps {
+  userId: string | "";
+  addressId?: string;
   data?: Address;
   type: "create" | "edit";
-  userId: string | "";
 }
 
 export const AddAddressModal = ({
   userId,
+  addressId,
   data,
   type,
 }: AddAddressModalProps) => {
+  const [open, setOpen] = useState(false);
   const [cityCode, setCityCode] = useState("");
   const [districtCode, setDistrictCode] = useState("");
-  const { data: provinces } = useProvinces();
+
+  const { data: provinces = [] } = useProvinces();
+  const { data: districts = { districts: [] } } = useDistricts(cityCode);
+  const { data: wards = { wards: [] } } = useWards(districtCode);
 
   const form = useForm<FormValue>({
     resolver: zodResolver(addFormSchema),
@@ -74,18 +78,34 @@ export const AddAddressModal = ({
     },
   });
 
-  const { data: districts } = useDistricts(cityCode);
-  const { data: wards } = useWards(districtCode);
+  useEffect(() => {
+    if (!data || !provinces.length) return;
+
+    const selectedProvince = provinces.find((p: any) => p.name === data.city);
+    if (selectedProvince && !cityCode) {
+      setCityCode(selectedProvince.code.toString());
+      form.setValue("city", selectedProvince.name);
+    }
+  }, [data, provinces]);
+
+  useEffect(() => {
+    if (!data || !districts?.districts?.length) return;
+
+    const selectedDistrict = districts.districts.find(
+      (d: any) => d.name === data.district
+    );
+    if (selectedDistrict && !districtCode) {
+      setDistrictCode(selectedDistrict.code.toString());
+      form.setValue("district", selectedDistrict.name);
+    }
+  }, [data, districts]);
 
   useEffect(() => {
     if (data) {
-      form.reset({
-        street: data.street || "",
-        ward: data.ward || "",
-        district: data.district || "",
-        city: data.city || "",
-        country: data.country || "Việt Nam",
-      });
+      form.setValue("street", data.street);
+      form.setValue("ward", data.ward);
+      form.setValue("district", data.district);
+      form.setValue("country", data.country);
     }
   }, [data]);
 
@@ -95,7 +115,7 @@ export const AddAddressModal = ({
       id,
       data,
     }: {
-      userId: string | "";
+      userId: string;
       id?: string;
       data: Address;
     }) =>
@@ -103,29 +123,22 @@ export const AddAddressModal = ({
         ? addressAPI.create(userId, data)
         : addressAPI.update(userId, id ?? "", data),
     onSuccess: () => {
-      toast.success("Address created successfully");
+      form.reset();
+      toast.success("Address saved successfully");
       queryClient.invalidateQueries({ queryKey: ["my-address"] });
+      setOpen(false);
     },
     onError: () => {
-      toast.error("Address created unsuccessfully");
+      toast.error("Failed to save address");
     },
   });
 
-  const onSubmit = async (values: FormValue) => {
-    // try {
-    //   if (type === "create") {
-    //     await addressAPI.create(userId, values);
-
-    //     toast.success("Address created successfully");
-    //   }
-    // } catch (error) {
-    //   toast.error("Address created unsuccessfully");
-    // }
-    mutation.mutate({ userId, id: values.id, data: values });
+  const onSubmit = (values: FormValue) => {
+    mutation.mutate({ userId, id: addressId, data: values });
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {type === "create" ? (
           <Button variant="outline">Add Address</Button>
@@ -137,86 +150,84 @@ export const AddAddressModal = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Address</DialogTitle>
+          <DialogTitle>
+            {type === "create" ? "Add" : "Edit"} Address
+          </DialogTitle>
           <DialogDescription>
-            Add a new address to your account
+            Provide your detailed address information
           </DialogDescription>
         </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>City/Province</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      const selected = provinces.find(
-                        (p: any) => p.code.toString() === value
-                      );
-                      if (selected) {
-                        setCityCode(selected.code.toString());
-                        field.onChange(selected.name);
-                      }
-                    }}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choose city/province" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {provinces.map((p: any) => (
-                        <SelectItem key={p.code} value={p.code.toString()}>
-                          {p.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* City/Province */}
+            <FormItem>
+              <FormLabel>City / Province</FormLabel>
+              <Select
+                onValueChange={(value) => {
+                  const selected = provinces.find(
+                    (p: any) => p.code.toString() === value
+                  );
+                  if (selected) {
+                    setCityCode(selected.code.toString());
+                    form.setValue("city", selected.name);
+                    form.setValue("district", "");
+                    form.setValue("ward", "");
+                    setDistrictCode(""); // reset when city changes
+                  }
+                }}
+                value={cityCode}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose city/province" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {provinces.map((p: any) => (
+                    <SelectItem key={p.code} value={p.code.toString()}>
+                      {p.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
 
-            <FormField
-              control={form.control}
-              name="district"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>District</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      const selected = districts?.districts?.find(
-                        (d: any) => d.code.toString() === value
-                      );
-                      if (selected) {
-                        setDistrictCode(selected.code.toString());
-                        field.onChange(selected.name);
-                      }
-                    }}
-                    value={field.value}
-                    // disabled={!districts.length}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choose district" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {districts?.districts?.map((d: any) => (
-                        <SelectItem key={d.code} value={d.code.toString()}>
-                          {d.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* District */}
+            <FormItem>
+              <FormLabel>District</FormLabel>
+              <Select
+                onValueChange={(value) => {
+                  const selected = districts.districts.find(
+                    (d: any) => d.code.toString() === value
+                  );
+                  if (selected) {
+                    setDistrictCode(selected.code.toString());
+                    form.setValue("district", selected.name);
+                    form.setValue("ward", "");
+                  }
+                }}
+                value={districtCode}
+                disabled={!cityCode}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose district" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {districts.districts.map((d: any) => (
+                    <SelectItem key={d.code} value={d.code.toString()}>
+                      {d.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
 
+            {/* Ward */}
             <FormField
               control={form.control}
               name="ward"
@@ -224,9 +235,9 @@ export const AddAddressModal = ({
                 <FormItem>
                   <FormLabel>Ward</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => field.onChange(value)}
                     value={field.value}
-                    // disabled={!wards.length}
+                    disabled={!districtCode}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -234,7 +245,7 @@ export const AddAddressModal = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {wards?.wards?.map((w: any) => (
+                      {wards.wards.map((w: any) => (
                         <SelectItem key={w.code} value={w.name}>
                           {w.name}
                         </SelectItem>
@@ -246,14 +257,15 @@ export const AddAddressModal = ({
               )}
             />
 
+            {/* Street */}
             <FormField
               control={form.control}
               name="street"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address number</FormLabel>
+                  <FormLabel>Address number / Street</FormLabel>
                   <FormControl>
-                    <Input placeholder="123/123" {...field} />
+                    <Input placeholder="123/45 Street ABC" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -268,14 +280,14 @@ export const AddAddressModal = ({
                 <FormItem>
                   <FormLabel>Country</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Việt Nam" />
+                    <Input placeholder="Việt Nam" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button className="w-full" type="submit">
+            <Button type="submit" className="w-full">
               Save
             </Button>
           </form>

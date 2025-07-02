@@ -1,4 +1,4 @@
-import axiosInstance from "@/lib/axiosInstance";
+import axiosInstance from "@/lib/axios-instance";
 import { Address } from "@/types/address";
 import axios from "axios";
 const API_THANHPHO =
@@ -27,7 +27,7 @@ export const addressAPI = {
 
   create: async (userId: string, data: Address) => {
     const response = await axiosInstance.post(
-      `/address/users/${userId}/add`,
+      `/address/user/${userId}/add`,
       data
     );
     return response.data;
@@ -35,14 +35,14 @@ export const addressAPI = {
 
   delete: async (userId: string, id: string) => {
     const response = await axiosInstance.delete(
-      `/address/users/${userId}/delete/${id}`
+      `/address/user/${userId}/delete/${id}`
     );
     return response.data;
   },
 
   update: async (userId: string, id: string, data: Partial<Address>) => {
     const response = await axiosInstance.patch(
-      `/address/users/${userId}/update/${id}`,
+      `/address/user/${userId}/update/${id}`,
       data
     );
     return response.data;

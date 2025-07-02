@@ -13,10 +13,40 @@ import { AddAddressModal } from "./add-address-modal";
 import { useProfile } from "../providers/profile-context";
 import { AddressProps } from "@/types/auth";
 import { useMyAddresses } from "@/queries/address";
+import { useMutation } from "@tanstack/react-query";
+import { addressAPI } from "@/services/address";
+import { queryClient } from "../providers/providers";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function AddressManagement() {
   const user = useProfile();
   const { data: addresses } = useMyAddresses();
+
+  const mutation = useMutation({
+    mutationFn: ({
+      userId,
+      addressId,
+    }: {
+      userId: string;
+      addressId: string;
+    }) => addressAPI.delete(userId, addressId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-address"] });
+    },
+    onError: (error: any) => {
+      console.error("Address deleted error", error);
+    },
+  });
 
   return (
     <Card>
@@ -45,18 +75,52 @@ export function AddressManagement() {
                         <span className="font-medium">Address {index + 1}</span>
                       </div>
                       <p className="text-sm text-muted-foreground whitespace-pre-line">
-                        {`${address.street}, Ward ${address.ward}, District ${address.district}, ${address.city}, ${address.country}`}
+                        {`${address.street}, ${address.ward}, ${address.district}, ${address.city}, ${address.country}`}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <AddAddressModal
-                        type="edit"
-                        data={address}
                         userId={user?.id ?? ""}
+                        addressId={address.id}
+                        data={address}
+                        type="edit"
                       />
-                      <Button variant="ghost" size="sm">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="sm">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              You are about to delete the following address:
+                              <br />
+                              <span className="font-medium block mt-2">
+                                {`${address.street}, ${address.ward}, ${address.district}, ${address.city}, ${address.country}`}
+                              </span>
+                              <br />
+                              This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() =>
+                                mutation.mutate({
+                                  userId: user?.id ?? "",
+                                  addressId: address.id,
+                                })
+                              }
+                            >
+                              Yes, delete it
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
                 </CardContent>
