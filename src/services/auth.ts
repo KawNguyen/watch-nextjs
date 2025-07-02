@@ -1,4 +1,4 @@
-import axiosInstance from "@/lib/axiosInstance";
+import axiosInstance from "@/lib/axios-instance";
 
 export const authApi = {
   signIn: async (email: string, password: string) => {
@@ -8,11 +8,12 @@ export const authApi = {
     });
     return response.data;
   },
+
   register: async (
     firstName: string,
     lastName: string,
     email: string,
-    password: string,
+    password: string
   ) => {
     const response = await axiosInstance.post("/auth/register", {
       firstName,
@@ -22,6 +23,7 @@ export const authApi = {
     });
     return response.data;
   },
+
   verifyOTP: async (email: string, otp: string) => {
     const response = await axiosInstance.post("/auth/verify-otp", {
       email,

@@ -10,13 +10,45 @@ export interface RegisterTypes {
   password: string;
 }
 
-export interface UserTypes {
-  email: string;
-  profile: ProfileTypes;
+export interface AddressProps {
+  id: string;
+  street: string;
+  district: string;
+  ward: string;
+  city: string;
+  country: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
 }
 
-export interface ProfileTypes {
+export interface UserProps {
+  id: string;
   firstName: string;
   lastName: string;
-  avatar: string;
+  email: string;
+  gender: string;
+  phone?: string | null;
+  avatar?: {
+    absolute_url: string;
+    public_id: string;
+  };
+  addresses?: AddressProps[];
+}
+
+export interface ChangePasswordProps {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface UpdateUserProps {
+  firstName?: string;
+  lastName?: string;
+  phone?: string | null;
+  gender?: UserGender;
+}
+
+export enum UserGender {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
 }

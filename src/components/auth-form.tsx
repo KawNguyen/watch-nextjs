@@ -145,7 +145,7 @@ export function AuthForm({
                   <span className="text-muted-foreground">
                     Don&apos;t have an account?{" "}
                   </span>
-                  <Link href="/register">Sign Up</Link>
+                  <Link href="/sign-up">Sign Up</Link>
                 </div>
               )}
 
