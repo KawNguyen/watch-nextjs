@@ -2,7 +2,7 @@ import axiosInstance from "@/lib/axiosInstance";
 
 export const favoriteApi = {
   getFavoriteMe: async () => {
-    const response = await axiosInstance.get("/favorite/me-favorite");
+    const response = await axiosInstance.get("/favorite/my-favorite");
     return response.data;
   },
 

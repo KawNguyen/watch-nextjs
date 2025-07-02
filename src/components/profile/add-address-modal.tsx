@@ -34,8 +34,12 @@ import { addressAPI } from "@/services/address";
 import { Edit } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "../ui/sonner";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../providers/providers";
+import { Address } from "@/types/address";
 
 const addFormSchema = z.object({
+  id: z.string().min(1, "Address id"),
   street: z.string().min(1, "Address is required"),
   ward: z.string().min(1, "Ward is required"),
   district: z.string().min(1, "District is required"),
@@ -45,22 +49,19 @@ const addFormSchema = z.object({
 type FormValue = z.infer<typeof addFormSchema>;
 
 interface AddAddressModalProps {
-  data?: AddressData;
+  data?: Address;
   type: "create" | "edit";
-  userId: string; 
+  userId: string | "";
 }
 
-interface AddressData {
-  street: string;
-  district: string;
-  ward: string;
-  city: string;
-  country: string;
-}
-
-export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) => {
-  const { data: provinces = [] } = useProvinces();
-
+export const AddAddressModal = ({
+  userId,
+  data,
+  type,
+}: AddAddressModalProps) => {
+  const [cityCode, setCityCode] = useState("");
+  const [districtCode, setDistrictCode] = useState("");
+  const { data: provinces } = useProvinces();
 
   const form = useForm<FormValue>({
     resolver: zodResolver(addFormSchema),
@@ -72,10 +73,9 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
       country: "Việt Nam",
     },
   });
-  const provinceCode=form.watch("city");
-  const districtCode=form.watch("district")
-  const {data:districts=[]} = useDistricts(provinceCode);
-  const {data:wards} = useWards(districtCode);
+
+  const { data: districts } = useDistricts(cityCode);
+  const { data: wards } = useWards(districtCode);
 
   useEffect(() => {
     if (data) {
@@ -89,16 +89,40 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
     }
   }, [data]);
 
- const onSubmit = async (values: FormValue) => {
-  try {
-    if (type === "create") {
-      await addressAPI.create(userId, values);
+  const mutation = useMutation({
+    mutationFn: ({
+      userId,
+      id,
+      data,
+    }: {
+      userId: string | "";
+      id?: string;
+      data: Address;
+    }) =>
+      type === "create"
+        ? addressAPI.create(userId, data)
+        : addressAPI.update(userId, id ?? "", data),
+    onSuccess: () => {
       toast.success("Address created successfully");
-    }
-  } catch (error) {
-    toast.error("Address created unsuccessfully");
-  }
-};
+      queryClient.invalidateQueries({ queryKey: ["my-address"] });
+    },
+    onError: () => {
+      toast.error("Address created unsuccessfully");
+    },
+  });
+
+  const onSubmit = async (values: FormValue) => {
+    // try {
+    //   if (type === "create") {
+    //     await addressAPI.create(userId, values);
+
+    //     toast.success("Address created successfully");
+    //   }
+    // } catch (error) {
+    //   toast.error("Address created unsuccessfully");
+    // }
+    mutation.mutate({ userId, id: values.id, data: values });
+  };
 
   return (
     <Dialog>
@@ -126,7 +150,18 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>City/Province</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select
+                    onValueChange={(value) => {
+                      const selected = provinces.find(
+                        (p: any) => p.code.toString() === value
+                      );
+                      if (selected) {
+                        setCityCode(selected.code.toString());
+                        field.onChange(selected.name);
+                      }
+                    }}
+                    value={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Choose city/province" />
@@ -152,7 +187,15 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
                 <FormItem>
                   <FormLabel>District</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      const selected = districts?.districts?.find(
+                        (d: any) => d.code.toString() === value
+                      );
+                      if (selected) {
+                        setDistrictCode(selected.code.toString());
+                        field.onChange(selected.name);
+                      }
+                    }}
                     value={field.value}
                     // disabled={!districts.length}
                   >
@@ -162,7 +205,7 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {districts.districts?.map((d:any) => (
+                      {districts?.districts?.map((d: any) => (
                         <SelectItem key={d.code} value={d.code.toString()}>
                           {d.name}
                         </SelectItem>
@@ -191,7 +234,7 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {wards?.wards?.map((w:any) => (
+                      {wards?.wards?.map((w: any) => (
                         <SelectItem key={w.code} value={w.name}>
                           {w.name}
                         </SelectItem>
@@ -232,7 +275,9 @@ export const AddAddressModal = ({ userId ,data, type }: AddAddressModalProps) =>
               )}
             />
 
-            <Button className="w-full" type="submit">Save</Button>
+            <Button className="w-full" type="submit">
+              Save
+            </Button>
           </form>
         </Form>
       </DialogContent>

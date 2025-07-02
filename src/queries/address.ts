@@ -7,6 +7,7 @@ export const useProvinces = () => {
     queryFn: addressAPI.getProvince,
   });
 };
+
 export const useDistricts = (provinceId: string) => {
   return useQuery({
     queryKey: ["districts", provinceId],
@@ -14,10 +15,19 @@ export const useDistricts = (provinceId: string) => {
     enabled: !!provinceId,
   });
 };
+
 export const useWards = (districtId: string) => {
   return useQuery({
     queryKey: ["wards", districtId],
     queryFn: () => addressAPI.getWard(districtId),
     enabled: !!districtId,
+  });
+};
+
+export const useMyAddresses = () => {
+  return useQuery({
+    queryKey: ["my-address"],
+    queryFn: () =>
+      addressAPI.getAllAddressByUserId().then((res) => res.data.items),
   });
 };
