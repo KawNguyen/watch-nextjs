@@ -1,12 +1,7 @@
-import CheckoutSuccess from '@/components/checkout-success/checkout-success'
-import React from 'react'
+import CheckoutSuccess from "@/components/checkout-success/checkout-success";
 
 const page = () => {
-    return (
-        <>
-        <CheckoutSuccess />
-        </>
-    )
-}
+  return <CheckoutSuccess />;
+};
 
-export default page
+export default page;

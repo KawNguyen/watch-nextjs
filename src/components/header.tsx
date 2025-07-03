@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Search, UserCog } from "lucide-react";
+import { Heart, LogOut, Search, User, UserCog } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -45,72 +45,66 @@ const Header = () => {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            {rh.map((item, ind) => (
-              <div key={ind}>
-                {ind !== 2 ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      {item.path === "/cart" ? (
-                        <CartSheet />
-                      ) : (
-                        <Link href={item.path}>{<item.icon />}</Link>
-                      )}
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{item.hover}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <>
-                    {isAuthenticated ? (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger
-                          className="flex items-center outline-none"
-                          asChild
-                        >
-                          <Avatar>
-                            <AvatarImage
-                              src={profile?.avatar?.absolute_url ?? undefined}
-                              className="object-cover"
-                            />
-                            <AvatarFallback>
-                              {profile?.firstName?.charAt(0).toUpperCase()}
-                              {profile?.lastName?.charAt(0).toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuLabel>
-                            {profile?.firstName} {profile?.lastName}
-                          </DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            onClick={() => router.push("/account/profile")}
-                          >
-                            <UserCog />
-                            Profile
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={logout}>
-                            <LogOut className="mr-2 h-4 w-4" />
-                            Log out
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    ) : (
-                      <Tooltip key={ind}>
-                        <TooltipTrigger asChild>
-                          <Link href={item.path}>{<item.icon />}</Link>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{item.hover}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/wishlist">
+                  <Heart />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Yêu thích</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <CartSheet />
+
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  className="flex items-center outline-none cursor-pointer"
+                  asChild
+                >
+                  <Avatar>
+                    <AvatarImage
+                      src={profile?.avatar?.absolute_url ?? undefined}
+                      className="object-cover"
+                    />
+                    <AvatarFallback>
+                      {profile?.firstName?.charAt(0).toUpperCase()}
+                      {profile?.lastName?.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>
+                    {profile?.firstName} {profile?.lastName}
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => router.push("/account/profile")}
+                  >
+                    <UserCog className="mr-2 h-4 w-4" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/sign-in">
+                    <User />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Đăng nhập</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
           </div>
         </div>
       </div>

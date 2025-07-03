@@ -4,7 +4,7 @@ export const rh = [
   {
     icon: Heart,
     hover: "Favorite",
-    path: "/favorite",
+    path: "profile/favorite",
   },
   {
     icon: ShoppingBag,

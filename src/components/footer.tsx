@@ -101,7 +101,7 @@ const Footer = () => {
               width="600"
               height="200"
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
         </div>

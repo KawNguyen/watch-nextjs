@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Checkbox } from "./ui/checkbox";
 import { Separator } from "./ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 type CartItem = {
   id: number;
@@ -26,27 +27,27 @@ type CartItem = {
 const mockProducts: CartItem[] = [
   {
     id: 1,
-    name: "Đồng hồ Rolex Datejust",
+    name: "Rolex Datejust Watch",
     price: 250000000,
     image: "/images/watch.jpg",
     quantity: 1,
-    selected: true, // Mặc định được chọn
+    selected: true,
   },
   {
     id: 2,
-    name: "Đồng hồ Omega Seamaster",
+    name: "Omega Seamaster Watch",
     price: 180000000,
     image: "/images/watch.jpg",
     quantity: 1,
-    selected: true, // Mặc định được chọn
+    selected: true,
   },
   {
     id: 3,
-    name: "Đồng hồ Cartier Tank",
+    name: "Cartier Tank Watch",
     price: 150000000,
     image: "/images/watch.jpg",
     quantity: 1,
-    selected: true, // Mặc định được chọn
+    selected: true,
   },
 ];
 
@@ -81,7 +82,7 @@ function CartItemCard({
         <div className="flex-1">
           <h3 className="font-medium">{item.name}</h3>
           <p className="text-gray-600">
-            {new Intl.NumberFormat("vi-VN", {
+            {new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "VND",
             }).format(item.price)}
@@ -136,19 +137,27 @@ export function CartSheet() {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <div className="relative h-full w-full">
-          <ShoppingBag />
-          {cartItems.length > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-              {selectedCount}
-            </span>
-          )}
-        </div>
-      </SheetTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <SheetTrigger asChild>
+            <div className="relative h-full w-full cursor-pointer">
+              <ShoppingBag />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {selectedCount}
+                </span>
+              )}
+            </div>
+          </SheetTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Cart</p>
+        </TooltipContent>
+      </Tooltip>
+
       <SheetContent className="flex flex-col">
         <SheetHeader>
-          <SheetTitle>Giỏ hàng</SheetTitle>
+          <SheetTitle>Shopping Cart</SheetTitle>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto py-4">
           {cartItems.length > 0 ? (
@@ -164,22 +173,24 @@ export function CartSheet() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 text-gray-500">Giỏ hàng trống</div>
+            <div className="text-center py-8 text-gray-500">
+              Your cart is empty
+            </div>
           )}
         </div>
         {cartItems.length > 0 && (
           <div className="border-t pt-4">
             <div className="flex justify-between items-center mb-4">
-              <span className="font-medium">Tổng tiền:</span>
+              <span className="font-medium">Total:</span>
               <span className="font-bold text-lg">
-                {new Intl.NumberFormat("vi-VN", {
+                {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "VND",
                 }).format(totalPrice)}
               </span>
             </div>
             <Button className="w-full" size="lg">
-              Thanh toán ({selectedCount})
+              Checkout ({selectedCount})
             </Button>
           </div>
         )}

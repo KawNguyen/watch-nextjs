@@ -1,7 +1,6 @@
 import { CustomerInfo } from "@/components/checkout/customer-info";
 import { Invoice } from "@/components/checkout/invoice";
 import { OrderSummary } from "@/components/checkout/order-summary";
-import React from "react";
 
 const CheckoutPage = () => {
   return (
@@ -14,8 +13,8 @@ const CheckoutPage = () => {
           <CustomerInfo />
         </div>
         <div className="col-span-5 space-y-4">
-            <OrderSummary/>
-            <Invoice/>
+          <OrderSummary />
+          <Invoice />
         </div>
       </div>
     </div>

@@ -26,8 +26,11 @@ import { useMutation } from "@tanstack/react-query";
 import { userAPI } from "@/services/user";
 import { queryClient } from "../providers/providers";
 import { ChangePhotoModal } from "./change-photo-modal";
+import { useProfile } from "../providers/profile-context";
 
-export function ProfileInfo({ user }: { user: UserProps | null }) {
+export function ProfileInfo() {
+  const user = useProfile();
+
   const [isEditing, setIsEditing] = useState(false);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const [formData, setFormData] = useState({
