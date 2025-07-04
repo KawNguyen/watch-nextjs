@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, LogOut, Search, User, UserCog } from "lucide-react";
+import { Heart, LogOut, User, UserCog } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -13,12 +13,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./providers/auth-context";
-import { Input } from "./ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import PanelWrapper from "./header/pannel-wrapper";
-import { rh } from "@/constant/routes";
+
 import NavigationMenuHeader from "./header/navigation-menu-header";
 import { CartSheet } from "./cart-sheet";
+import SearchBar from "./sreach/sreach";
+import NotificationDropdown from "./notifications/notifications";
+
 
 const Header = () => {
   const router = useRouter();
@@ -34,16 +36,7 @@ const Header = () => {
               KronLux
             </Link>
           </div>
-          <div className="flex-1 max-w-xl">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                type="search"
-                placeholder="What are you looking for"
-                className="pl-10 pr-4 w-full"
-              />
-            </div>
-          </div>
+          <SearchBar />
           <div className="flex items-center gap-4">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -52,12 +45,16 @@ const Header = () => {
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Yêu thích</p>
+                <p>Favorites</p>
               </TooltipContent>
+
+
             </Tooltip>
 
             <CartSheet />
 
+            <NotificationDropdown />
+            
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
@@ -101,7 +98,7 @@ const Header = () => {
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Đăng nhập</p>
+                  <p>Log in</p>
                 </TooltipContent>
               </Tooltip>
             )}
