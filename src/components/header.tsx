@@ -16,7 +16,6 @@ import { useAuth } from "./providers/auth-context";
 import { Input } from "./ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import PanelWrapper from "./header/pannel-wrapper";
-import { rh } from "@/constant/routes";
 import NavigationMenuHeader from "./header/navigation-menu-header";
 import { CartSheet } from "./cart-sheet";
 
@@ -47,12 +46,12 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link href="/wishlist">
+                <Link href="/account/favorites">
                   <Heart />
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Yêu thích</p>
+                <p>Favorite</p>
               </TooltipContent>
             </Tooltip>
 
@@ -101,7 +100,7 @@ const Header = () => {
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Đăng nhập</p>
+                  <p>Sign In</p>
                 </TooltipContent>
               </Tooltip>
             )}

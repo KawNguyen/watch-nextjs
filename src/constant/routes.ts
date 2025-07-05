@@ -1,23 +1,3 @@
-import { Heart, LogIn, ShoppingBag } from "lucide-react";
-
-export const rh = [
-  {
-    icon: Heart,
-    hover: "Favorite",
-    path: "profile/favorite",
-  },
-  {
-    icon: ShoppingBag,
-    hover: "Cart",
-    path: "/cart",
-  },
-  {
-    icon: LogIn,
-    hover: "Sign In",
-    path: "/sign-in",
-  },
-];
-
 export const navigation = {
   brand: [
     {
