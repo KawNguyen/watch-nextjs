@@ -204,3 +204,64 @@ export const team = [
     image: "",
   },
 ];
+
+
+export const orderData = {
+    orderNumber: "WTH-2024-001234",
+    status: "In Transit",
+    estimatedDelivery: "January 15, 2024",
+    trackingNumber: "1Z999AA1234567890",
+    orderDate: "January 8, 2024",
+    totalAmount: "$2,499.00",
+    shippingAddress: {
+      name: "John Smith",
+      address: "123 Main Street",
+      city: "New York, NY 10001",
+      phone: "+1 (555) 123-4567",
+    },
+    product: {
+      name: "Chronograph Master Elite",
+      model: "CME-2024-BLK",
+      price: "$2,299.00",
+      image: "/images/auth2.webp",
+    },
+    timeline: [
+      {
+        status: "Order Confirmed",
+        date: "Jan 8, 2024 - 2:30 PM",
+        description: "Your order has been confirmed and is being prepared",
+        completed: true,
+      },
+      {
+        status: "Processing",
+        date: "Jan 9, 2024 - 10:15 AM",
+        description: "Your watch is being carefully inspected and packaged",
+        completed: true,
+      },
+      {
+        status: "Shipped",
+        date: "Jan 10, 2024 - 4:45 PM",
+        description: "Your order has been shipped and is on its way",
+        completed: true,
+      },
+      {
+        status: "In Transit",
+        date: "Jan 12, 2024 - 8:20 AM",
+        description: "Package is currently in transit to your location",
+        completed: true,
+        current: true,
+      },
+      {
+        status: "Out for Delivery",
+        date: "Expected Jan 15, 2024",
+        description: "Package will be out for delivery",
+        completed: false,
+      },
+      {
+        status: "Delivered",
+        date: "Expected Jan 15, 2024",
+        description: "Package will be delivered to your address",
+        completed: false,
+      },
+    ],
+  }
