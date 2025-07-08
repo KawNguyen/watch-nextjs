@@ -56,11 +56,10 @@ export interface WatchBanner {
 }
 
 export interface Meta {
-  total: number;
+  limit: number;
   page: number;
+  totalItems: number;
   totalPages: number;
-  lastPage: number;
-  itemsPerPage: number;
 }
 
 export interface ApiResponse<T> {

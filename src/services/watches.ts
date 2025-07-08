@@ -4,22 +4,36 @@ import { Watch, ApiResponse, ApiResponseItem } from "@/types/watch";
 export const watchesApi = {
   fetchAll: async (
     page: number = 1,
-    filters: any
+    filters: {
+      minPrice?: number;
+      maxPrice?: number;
+      brands?: string[];
+      movements?: string[];
+      materials?: string[];
+      bandMaterials?: string[];
+    }
   ): Promise<ApiResponse<Watch>> => {
     const params = new URLSearchParams();
 
     params.append("page", page.toString());
 
-    if (filters?.material) {
-      params.append("material", filters.material);
+    if (filters.minPrice !== undefined) {
+      params.append("minPrice", filters.minPrice.toString());
     }
-
-    if (filters?.bandMaterial) {
-      params.append("bandMaterial", filters.bandMaterial);
+    if (filters.maxPrice !== undefined) {
+      params.append("maxPrice", filters.maxPrice.toString());
     }
-
-    if (filters?.movement) {
-      params.append("movement", filters.movement);
+    if (filters.brands && filters.brands.length > 0) {
+      params.append("brands", filters.brands.join(","));
+    }
+    if (filters.movements && filters.movements.length > 0) {
+      params.append("movements", filters.movements.join(","));
+    }
+    if (filters.materials && filters.materials.length > 0) {
+      params.append("materials", filters.materials.join(","));
+    }
+    if (filters.bandMaterials && filters.bandMaterials.length > 0) {
+      params.append("bandMaterials", filters.bandMaterials.join(","));
     }
 
     const data = await fetcher<ApiResponse<Watch>>(

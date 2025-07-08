@@ -1,7 +1,14 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import {
+  useQueryStates,
+  parseAsInteger,
+  parseAsArrayOf,
+  parseAsString,
+} from "nuqs";
+import { useCallback, useMemo } from "react";
+
+export type Gender = "men" | "women" | "unisex";
 
 export interface WatchFilters {
   priceRange: [number, number];
@@ -9,253 +16,263 @@ export interface WatchFilters {
   selectedMovements: string[];
   selectedMaterials: string[];
   selectedBandMaterials: string[];
+  selectedGenders: Gender[];
 }
 
+// Default values
+const DEFAULT_MIN_PRICE = 0;
+const DEFAULT_MAX_PRICE = 10000;
+
 export function useWatchFilters() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  // Initialize filters from URL params
-  const [priceRange, setPriceRangeState] = useState<[number, number]>(() => {
-    const minPrice = searchParams.get("minPrice");
-    const maxPrice = searchParams.get("maxPrice");
-    return [
-      minPrice ? parseInt(minPrice) : 0,
-      maxPrice ? parseInt(maxPrice) : 10000,
-    ];
+  const [filters, setFilters] = useQueryStates({
+    minPrice: parseAsInteger.withDefault(DEFAULT_MIN_PRICE),
+    maxPrice: parseAsInteger.withDefault(DEFAULT_MAX_PRICE),
+    brands: parseAsArrayOf(parseAsString, ",").withDefault([]),
+    movements: parseAsArrayOf(parseAsString, ",").withDefault([]),
+    materials: parseAsArrayOf(parseAsString, ",").withDefault([]),
+    bandMaterials: parseAsArrayOf(parseAsString, ",").withDefault([]),
+    genders: parseAsArrayOf(parseAsString, ",").withDefault([]),
   });
 
-  const [selectedBrands, setSelectedBrands] = useState<string[]>(() => {
-    const brands = searchParams.get("brands");
-    return brands ? brands.split(",") : [];
-  });
-
-  const [selectedMovements, setSelectedMovements] = useState<string[]>(() => {
-    const movements = searchParams.get("movements");
-    return movements ? movements.split(",") : [];
-  });
-
-  const [selectedMaterials, setSelectedMaterials] = useState<string[]>(() => {
-    const materials = searchParams.get("materials");
-    return materials ? materials.split(",") : [];
-  });
-
-  const [selectedBandMaterials, setSelectedBandMaterials] = useState<string[]>(
-    () => {
-      const bandMaterials = searchParams.get("bandMaterials");
-      return bandMaterials ? bandMaterials.split(",") : [];
-    }
+  // Computed price range
+  const priceRange = useMemo<[number, number]>(
+    () => [filters.minPrice, filters.maxPrice],
+    [filters.minPrice, filters.maxPrice]
   );
 
-  // Update URL when filters change
-  const updateUrl = useCallback(
-    (currentFilters: WatchFilters, updatedParams: Partial<WatchFilters>) => {
-      const params = new URLSearchParams();
-
-      // Get current state with updates applied
-      const finalState = { ...currentFilters, ...updatedParams };
-
-      // Handle price range
-      const [min, max] = finalState.priceRange;
-      if (min > 0) {
-        params.set("minPrice", min.toString());
-      }
-      if (max < 10000) {
-        params.set("maxPrice", max.toString());
-      }
-
-      // Handle array filters
-      const arrayFilters = [
-        { key: "brands", value: finalState.selectedBrands },
-        { key: "movements", value: finalState.selectedMovements },
-        { key: "materials", value: finalState.selectedMaterials },
-        { key: "bandMaterials", value: finalState.selectedBandMaterials },
-      ];
-
-      arrayFilters.forEach(({ key, value }) => {
-        if (value && value.length > 0) {
-          params.set(key, value.join(","));
-        }
-      });
-
-      // Update URL without page reload
-      const newUrl = params.toString() ? `?${params.toString()}` : "";
-      router.push(newUrl, { scroll: false });
-    },
-    [router]
-  );
-
-  // Price range handlers
+  // Price range handler
   const setPriceRange = useCallback(
     (range: [number, number]) => {
-      setPriceRangeState(range);
-
-      // Create current state snapshot
-      const currentState = {
-        priceRange: range,
-        selectedBrands,
-        selectedMovements,
-        selectedMaterials,
-        selectedBandMaterials,
-      };
-
-      updateUrl(currentState, { priceRange: range });
+      const [min, max] = range;
+      setFilters({
+        minPrice: min > DEFAULT_MIN_PRICE ? min : null,
+        maxPrice: max < DEFAULT_MAX_PRICE ? max : null,
+      });
     },
-    [
-      selectedBrands,
-      selectedMovements,
-      selectedMaterials,
-      selectedBandMaterials,
-      updateUrl,
-    ]
+    [setFilters]
   );
 
-  // Generic toggle function for array filters
+  // Generic toggle function
   const toggleArrayFilter = useCallback(
-    (
-      currentItems: string[],
-      setter: (items: string[]) => void,
-      itemId: string,
-      filterKey: keyof WatchFilters
-    ) => {
+    (filterKey: keyof typeof filters, itemId: string) => {
+      const currentItems = filters[filterKey] as string[];
       const newItems = currentItems.includes(itemId)
         ? currentItems.filter((id) => id !== itemId)
         : [...currentItems, itemId];
 
-      setter(newItems);
-
-      // Create current state snapshot with the updated array
-      const currentState = {
-        priceRange,
-        selectedBrands,
-        selectedMovements,
-        selectedMaterials,
-        selectedBandMaterials,
-        [filterKey]: newItems,
-      };
-
-      updateUrl(currentState, { [filterKey]: newItems });
+      setFilters({
+        [filterKey]: newItems.length > 0 ? newItems : null,
+      });
     },
-    [
-      priceRange,
-      selectedBrands,
-      selectedMovements,
-      selectedMaterials,
-      selectedBandMaterials,
-      updateUrl,
-    ]
+    [filters, setFilters]
   );
 
   // Individual toggle functions
   const toggleBrand = useCallback(
     (brandId: string) => {
-      toggleArrayFilter(
-        selectedBrands,
-        setSelectedBrands,
-        brandId,
-        "selectedBrands"
-      );
+      toggleArrayFilter("brands", brandId);
     },
-    [selectedBrands, toggleArrayFilter]
+    [toggleArrayFilter]
   );
 
   const toggleMovement = useCallback(
     (movementId: string) => {
-      toggleArrayFilter(
-        selectedMovements,
-        setSelectedMovements,
-        movementId,
-        "selectedMovements"
-      );
+      toggleArrayFilter("movements", movementId);
     },
-    [selectedMovements, toggleArrayFilter]
+    [toggleArrayFilter]
   );
 
   const toggleMaterial = useCallback(
     (materialId: string) => {
-      toggleArrayFilter(
-        selectedMaterials,
-        setSelectedMaterials,
-        materialId,
-        "selectedMaterials"
-      );
+      toggleArrayFilter("materials", materialId);
     },
-    [selectedMaterials, toggleArrayFilter]
+    [toggleArrayFilter]
   );
 
   const toggleBandMaterial = useCallback(
     (bandMaterialId: string) => {
-      toggleArrayFilter(
-        selectedBandMaterials,
-        setSelectedBandMaterials,
-        bandMaterialId,
-        "selectedBandMaterials"
-      );
+      toggleArrayFilter("bandMaterials", bandMaterialId);
     },
-    [selectedBandMaterials, toggleArrayFilter]
+    [toggleArrayFilter]
   );
 
-  // Clear all filters
-  const clearFilters = useCallback(() => {
-    setPriceRangeState([0, 10000]);
-    setSelectedBrands([]);
-    setSelectedMovements([]);
-    setSelectedMaterials([]);
-    setSelectedBandMaterials([]);
-    router.push("", { scroll: false });
-  }, [router]);
+  const toggleGender = useCallback(
+    (gender: Gender) => {
+      toggleArrayFilter("genders", gender);
+    },
+    [toggleArrayFilter]
+  );
+
+  // Clear all filters - comprehensive reset
+  const clearAll = useCallback(() => {
+    setFilters({
+      minPrice: null,
+      maxPrice: null,
+      brands: null,
+      movements: null,
+      materials: null,
+      bandMaterials: null,
+      genders: null,
+    });
+  }, [setFilters]);
+
+  // Clear specific filter categories
+  const clearPriceRange = useCallback(() => {
+    setFilters({
+      minPrice: null,
+      maxPrice: null,
+    });
+  }, [setFilters]);
+
+  const clearBrands = useCallback(() => {
+    setFilters({ brands: null });
+  }, [setFilters]);
+
+  const clearMovements = useCallback(() => {
+    setFilters({ movements: null });
+  }, [setFilters]);
+
+  const clearMaterials = useCallback(() => {
+    setFilters({ materials: null });
+  }, [setFilters]);
+
+  const clearBandMaterials = useCallback(() => {
+    setFilters({ bandMaterials: null });
+  }, [setFilters]);
+
+  const clearGenders = useCallback(() => {
+    setFilters({ genders: null });
+  }, [setFilters]);
+
+  // Reset to default values (alternative to clearAll)
+  const resetToDefaults = useCallback(() => {
+    setFilters({
+      minPrice: DEFAULT_MIN_PRICE,
+      maxPrice: DEFAULT_MAX_PRICE,
+      brands: [],
+      movements: [],
+      materials: [],
+      bandMaterials: [],
+      genders: [],
+    });
+  }, [setFilters]);
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
     return (
-      priceRange[0] > 0 ||
-      priceRange[1] < 10000 ||
-      selectedBrands.length > 0 ||
-      selectedMovements.length > 0 ||
-      selectedMaterials.length > 0 ||
-      selectedBandMaterials.length > 0
+      filters.minPrice > DEFAULT_MIN_PRICE ||
+      filters.maxPrice < DEFAULT_MAX_PRICE ||
+      filters.brands.length > 0 ||
+      filters.movements.length > 0 ||
+      filters.materials.length > 0 ||
+      filters.bandMaterials.length > 0 ||
+      filters.genders.length > 0
     );
-  }, [
-    priceRange,
-    selectedBrands,
-    selectedMovements,
-    selectedMaterials,
-    selectedBandMaterials,
-  ]);
+  }, [filters]);
+
+  // Check specific filter categories
+  const hasActivePriceFilter = useMemo(() => {
+    return (
+      filters.minPrice > DEFAULT_MIN_PRICE ||
+      filters.maxPrice < DEFAULT_MAX_PRICE
+    );
+  }, [filters.minPrice, filters.maxPrice]);
+
+  const hasActiveBrandFilter = useMemo(
+    () => filters.brands.length > 0,
+    [filters.brands]
+  );
+  const hasActiveMovementFilter = useMemo(
+    () => filters.movements.length > 0,
+    [filters.movements]
+  );
+  const hasActiveMaterialFilter = useMemo(
+    () => filters.materials.length > 0,
+    [filters.materials]
+  );
+  const hasActiveBandMaterialFilter = useMemo(
+    () => filters.bandMaterials.length > 0,
+    [filters.bandMaterials]
+  );
+  const hasActiveGenderFilter = useMemo(
+    () => filters.genders.length > 0,
+    [filters.genders]
+  );
 
   // Filter query object for API calls
   const filterQuery = useMemo(
     () => ({
-      minPrice: priceRange[0] > 0 ? priceRange[0] : undefined,
-      maxPrice: priceRange[1] < 10000 ? priceRange[1] : undefined,
-      brands: selectedBrands.length > 0 ? selectedBrands : undefined,
-      movements: selectedMovements.length > 0 ? selectedMovements : undefined,
-      materials: selectedMaterials.length > 0 ? selectedMaterials : undefined,
+      minPrice:
+        filters.minPrice > DEFAULT_MIN_PRICE ? filters.minPrice : undefined,
+      maxPrice:
+        filters.maxPrice < DEFAULT_MAX_PRICE ? filters.maxPrice : undefined,
+      brands: filters.brands.length > 0 ? filters.brands : undefined,
+      movements: filters.movements.length > 0 ? filters.movements : undefined,
+      materials: filters.materials.length > 0 ? filters.materials : undefined,
       bandMaterials:
-        selectedBandMaterials.length > 0 ? selectedBandMaterials : undefined,
+        filters.bandMaterials.length > 0 ? filters.bandMaterials : undefined,
+      genders: filters.genders.length > 0 ? filters.genders : undefined,
     }),
-    [
-      priceRange,
-      selectedBrands,
-      selectedMovements,
-      selectedMaterials,
-      selectedBandMaterials,
-    ]
+    [filters]
   );
 
+  // Get active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (hasActivePriceFilter) count++;
+    if (hasActiveBrandFilter) count++;
+    if (hasActiveMovementFilter) count++;
+    if (hasActiveMaterialFilter) count++;
+    if (hasActiveBandMaterialFilter) count++;
+    if (hasActiveGenderFilter) count++;
+    return count;
+  }, [
+    hasActivePriceFilter,
+    hasActiveBrandFilter,
+    hasActiveMovementFilter,
+    hasActiveMaterialFilter,
+    hasActiveBandMaterialFilter,
+    hasActiveGenderFilter,
+  ]);
+
   return {
+    // Current filter values
     priceRange,
-    selectedBrands,
-    selectedMovements,
-    selectedMaterials,
-    selectedBandMaterials,
+    selectedBrands: filters.brands,
+    selectedMovements: filters.movements,
+    selectedMaterials: filters.materials,
+    selectedBandMaterials: filters.bandMaterials,
+    selectedGenders: filters.genders as Gender[],
+
+    // Update functions
     setPriceRange,
     toggleBrand,
     toggleMovement,
     toggleMaterial,
     toggleBandMaterial,
-    clearFilters,
+    toggleGender,
+
+    // Clear functions
+    clearAll,
+    clearPriceRange,
+    clearBrands,
+    clearMovements,
+    clearMaterials,
+    clearBandMaterials,
+    clearGenders,
+    resetToDefaults,
+
+    // Status checks
     hasActiveFilters,
+    hasActivePriceFilter,
+    hasActiveBrandFilter,
+    hasActiveMovementFilter,
+    hasActiveMaterialFilter,
+    hasActiveBandMaterialFilter,
+    hasActiveGenderFilter,
+    activeFilterCount,
+
+    // API query object
     filterQuery,
   };
 }
