@@ -9,9 +9,9 @@ interface GenderFilterProps {
 }
 
 const genderOptions: { value: Gender; label: string }[] = [
-  { value: "men", label: "Men" },
-  { value: "women", label: "Women" },
-  { value: "unisex", label: "Unisex" },
+  { value: "MEN", label: "Men" },
+  { value: "WOMEN", label: "Women" },
+  { value: "UNISEX", label: "Unisex" },
 ];
 
 export default function GenderFilter({

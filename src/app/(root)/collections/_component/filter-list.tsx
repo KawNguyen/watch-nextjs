@@ -22,13 +22,13 @@ export default function FilterList({
       <span className="text-lg font-medium">{name}</span>
       <div className="flex items-center flex-wrap gap-2">
         {data.data.items.map((item: any) => {
-          const isSelected = selectedItems.includes(item.name);
+          const isSelected = selectedItems.includes(item.slug);
 
           return (
             <button
               type="button"
               key={item.id}
-              onClick={() => onToggleItem(item.name)}
+              onClick={() => onToggleItem(item.slug)}
               className={cn(
                 "font-medium duration-300 rounded-full border px-5 py-1 transition-colors",
                 isSelected

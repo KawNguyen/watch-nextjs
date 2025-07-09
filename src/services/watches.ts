@@ -11,6 +11,7 @@ export const watchesApi = {
       movements?: string[];
       materials?: string[];
       bandMaterials?: string[];
+      genders?: string[];
     }
   ): Promise<ApiResponse<Watch>> => {
     const params = new URLSearchParams();
@@ -34,6 +35,9 @@ export const watchesApi = {
     }
     if (filters.bandMaterials && filters.bandMaterials.length > 0) {
       params.append("bandMaterials", filters.bandMaterials.join(","));
+    }
+    if (filters.genders && filters.genders.length > 0) {
+      params.append("genders", filters.genders.join(","));
     }
 
     const data = await fetcher<ApiResponse<Watch>>(

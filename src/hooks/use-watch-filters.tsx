@@ -8,7 +8,7 @@ import {
 } from "nuqs";
 import { useCallback, useMemo } from "react";
 
-export type Gender = "men" | "women" | "unisex";
+export type Gender = "MEN" | "WOMEN" | "UNISEX";
 
 export interface WatchFilters {
   priceRange: [number, number];
