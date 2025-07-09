@@ -1,9 +1,9 @@
 "use client";
 
 import { AuthForm } from "@/components/auth-form";
-import { useAuth } from "@/components/providers/auth-context";
 import { Button } from "@/components/ui/button";
 import { VerifyOTP } from "@/components/verify-otp";
+import { useAuth } from "@/mutation/auth.mutation";
 import { SignInTypes } from "@/types/auth";
 import { useState } from "react";
 import { z } from "zod";
@@ -11,6 +11,7 @@ import { z } from "zod";
 const Page = () => {
   const [otp, setOtp] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+
   const { step, signIn, verifyOTP, pendingState } = useAuth();
 
   const handleSubmit = (data: SignInTypes) => {
@@ -18,8 +19,8 @@ const Page = () => {
     signIn(data);
   };
 
-  const handleSubmitOTP = (otp: string) => {
-    verifyOTP(email, otp);
+  const handleSubmitOTP = (otpCode: string) => {
+    verifyOTP(email, otpCode);
   };
 
   return (
@@ -28,7 +29,8 @@ const Page = () => {
         <div className="flex flex-col items-center justify-center px-4">
           <h1 className="text-2xl font-bold mb-4">Enter OTP</h1>
           <p className="text-sm text-gray-500 mb-6 text-center">
-            A 6-digit code was sent to {email}.
+            A 6-digit code was sent to{" "}
+            <span className="font-medium">{email}</span>.
           </p>
           <VerifyOTP length={6} onChange={setOtp} />
           <Button

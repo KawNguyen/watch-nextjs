@@ -40,10 +40,10 @@ export const reviews = [
     replies: 0,
   },
 ];
-interface ReviewSectionProps {
-  slug: string;
-}
-const ReviewProduct: React.FC<ReviewSectionProps> = ({ slug }) => {
+
+const ReviewProduct = ({ slug }: { slug: string }) => {
+  console.log(slug);
+
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="flex items-center justify-between mb-12">

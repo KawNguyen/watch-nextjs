@@ -5,7 +5,6 @@ import { useState, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Upload, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
@@ -15,9 +14,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { userAPI } from "@/services/user";
 import { uploadImage } from "@/services/upload-image";
-import { queryClient } from "../providers/providers";
+import { useUserMutation } from "@/mutation/user.mutation";
 
 interface ChangePhotoModalProps {
   isOpen: boolean;
@@ -32,35 +30,35 @@ export function ChangePhotoModal({
   onClose,
   currentImage,
   fallbackText = "U",
-  userId,
 }: ChangePhotoModalProps) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { changeAvatar } = useUserMutation();
 
   const displayImage = previewImage || currentImage;
 
   const uploadMutation = useMutation({
     mutationFn: (file: File) => uploadImage(file),
     onSuccess: (uploadedImage) => {
-      changeAvatarMutation.mutate(uploadedImage);
+      changeAvatar.mutate(uploadedImage);
     },
-    onError: (error: any) => {
+    onError: (error: string) => {
       console.error("Upload failed. Please try again.", error);
     },
   });
 
-  const changeAvatarMutation = useMutation({
-    mutationFn: (avatar: { absolute_url: string; public_id: string }) =>
-      userAPI.changeAvatar(userId, avatar),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["me"] });
-      handleClose();
-    },
-    onError: (error: any) => {
-      console.error("Failed to update avatar.", error);
-    },
-  });
+  // const changeAvatarMutation = useMutation({
+  //   mutationFn: (avatar: { absolute_url: string; public_id: string }) =>
+  //     userAPI.changeAvatar(userId, avatar),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["me"] });
+  //     handleClose();
+  //   },
+  //   onError: (error: string) => {
+  //     console.error("Failed to update avatar.", error);
+  //   },
+  // });
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -103,7 +101,7 @@ export function ChangePhotoModal({
     onClose();
   };
 
-  const isLoading = uploadMutation.isPending || changeAvatarMutation.isPending;
+  const isLoading = uploadMutation.isPending || changeAvatar.isPending;
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>

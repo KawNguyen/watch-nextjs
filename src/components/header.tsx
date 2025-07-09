@@ -12,27 +12,30 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
-import { useAuth } from "./providers/auth-context";
 import { Input } from "./ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import PanelWrapper from "./header/pannel-wrapper";
 import NavigationMenuHeader from "./header/navigation-menu-header";
-import { CartSheet } from "./cart-sheet";
+import { CartSheet } from "./cart/cart-sheet";
+import { useAuth } from "@/mutation/auth.mutation";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Header = () => {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const { isAuthenticated, profile, logout } = useAuth();
 
   return (
     <header className="w-full bg-white z-10">
-      <PanelWrapper />
+      {!isMobile && <PanelWrapper />}
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
-            <Link href={"/"} className="text-3xl">
+            <Link href="/" className="text-3xl">
               KronLux
             </Link>
           </div>
+
           <div className="flex-1 max-w-xl">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -43,6 +46,7 @@ const Header = () => {
               />
             </div>
           </div>
+
           <div className="flex items-center gap-4">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -86,7 +90,7 @@ const Header = () => {
                     Profile
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout}>
+                  <DropdownMenuItem onClick={() => logout()}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Log out
                   </DropdownMenuItem>
@@ -107,7 +111,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <NavigationMenuHeader />
+      {!isMobile && <NavigationMenuHeader />}
     </header>
   );
 };

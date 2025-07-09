@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { useCartMutation } from "@/mutation/cart.mutation";
 import { Minus, Plus, Heart } from "lucide-react";
 import { useState } from "react";
 
 interface ProductInfoProps {
+  id: string;
   price: number;
 }
-export function ProductInfo({ price }: ProductInfoProps) {
+export function ProductInfo({ id, price }: ProductInfoProps) {
+  const { addToCart } = useCartMutation();
   const [quantity, setQuantity] = useState(1);
   const totalPrice = price * quantity;
   return (
@@ -36,7 +39,12 @@ export function ProductInfo({ price }: ProductInfoProps) {
       </div>
       <div className="space-y-6">
         <div className="flex items-center gap-4">
-          <Button className="flex-1 h-12 text-base">Add to Cart</Button>
+          <Button
+            className="flex-1 h-12 text-base"
+            onClick={() => addToCart.mutate({ watchId: id, quantity })}
+          >
+            Add to Cart
+          </Button>
           <Button className="h-12 w-12" variant="outline">
             <Heart className="h-5 w-5" />
           </Button>

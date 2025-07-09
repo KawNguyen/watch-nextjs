@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useWatchesQuery } from "@/queries";
 import WatchFilters from "./watch-filters";
 import { Input } from "@/components/ui/input";
 import WatchList from "./watch-list";
@@ -10,6 +9,7 @@ import PaginationControl from "@/components/pagination-control";
 import { useState } from "react";
 import { useBrandQuery } from "@/queries/brand";
 import WatchBrand from "@/app/(root)/collections/_component/watch-brand";
+import { useWatchesQuery } from "@/queries/watches";
 
 export default function WatchesContainer({ brand }: { brand?: string }) {
   const [currentPage, setCurrentPage] = useState(1);

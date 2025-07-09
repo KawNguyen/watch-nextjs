@@ -52,11 +52,11 @@ export function ChangePasswordSection({
         confirmPassword: "",
       });
     },
-    onError: (error: any) => {
+    onError: (error: string) => {
       setMessage({
         type: "error",
         text:
-          error?.response?.data?.message ??
+          error ??
           "Failed to change password. Please try again.",
       });
     },
@@ -291,7 +291,7 @@ export function ChangePasswordSection({
                   Use a strong, unique password
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Choose a password that you don't use for other accounts
+                  Choose a password that you don&#39;t use for other accounts
                 </p>
               </div>
             </div>

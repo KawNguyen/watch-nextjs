@@ -1,26 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = (req: NextRequest) => {
-  const profileRoute = req.nextUrl.pathname.startsWith("/profile");
-  const signInRoute = req.nextUrl.pathname.startsWith("/sign-in");
-  const signUpRoute = req.nextUrl.pathname.startsWith("/sign-up");
+  const { pathname } = req.nextUrl;
   const isAuthenticated = req.cookies.get("accessToken");
 
-  if (profileRoute && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/sign-in", req.url));
+  const isAccountPage = pathname.startsWith("/account");
+  const isAuthPage = ["/sign-in", "/sign-up"].includes(pathname);
+
+  // if (!isAuthenticated) return redirectTo("/sign-in", req);
+
+  
+
+  if (isAccountPage && !isAuthenticated) {
+    return redirectTo("/sign-in", req);
   }
 
-  if (signInRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  if (signUpRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (isAuthPage && isAuthenticated) {
+    return redirectTo("/", req);
   }
 
   return NextResponse.next();
 };
 
+function redirectTo(path: string, req: NextRequest) {
+  return NextResponse.redirect(new URL(path, req.url));
+}
+
 export const config = {
-  matcher: ["/profile/:path*", "/sign-in", "/sign-up"],
+  matcher: ["/account/:path*", "/sign-in", "/sign-up"],
 };

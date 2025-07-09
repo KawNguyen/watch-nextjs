@@ -78,26 +78,6 @@ export const navigation = {
         },
       ],
     },
-    {
-      title: "Unisex",
-      value: "unisex",
-      navItems: [
-        {
-          title: "Brands",
-          items: [
-            { title: "Casio", value: "casio" },
-            { title: "Seiko", value: "seiko" },
-          ],
-        },
-        {
-          title: "Styles",
-          items: [
-            { title: "Casual", value: "casual" },
-            { title: "Digital", value: "digital" },
-          ],
-        },
-      ],
-    },
   ],
 };
 

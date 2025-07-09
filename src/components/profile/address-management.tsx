@@ -10,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AddAddressModal } from "./add-address-modal";
-import { useProfile } from "../providers/profile-context";
 import { AddressProps } from "@/types/auth";
 import { useMyAddresses } from "@/queries/address";
 import { useMutation } from "@tanstack/react-query";
@@ -27,9 +26,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+import { useAuthStore } from "@/store/auth.store";
 
 export function AddressManagement() {
-  const user = useProfile();
+  const { profile: user } = useAuthStore();
   const { data: addresses } = useMyAddresses();
 
   const mutation = useMutation({
@@ -42,9 +43,11 @@ export function AddressManagement() {
     }) => addressAPI.delete(userId, addressId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-address"] });
+      toast.success("Address deleted successfully");
     },
-    onError: (error: any) => {
+    onError: (error: string) => {
       console.error("Address deleted error", error);
+      toast.error("");
     },
   });
 

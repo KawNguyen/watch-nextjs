@@ -1,5 +1,6 @@
 import { ClockIcon, ShieldIcon, AwardIcon, RefreshCwIcon } from "lucide-react";
 import { ProductTrailer } from "./product-trailer";
+import { Watch } from "@/types/watch";
 
 const features = [
   {
@@ -41,7 +42,7 @@ const specifications = [
     value: "2 Years",
   },
 ];
-export const ProductFeatures = ({ watch }: any) => {
+export const ProductFeatures = ({ watch }: { watch: Watch }) => {
   return (
     <section className="py-16 my-4 rounded-md bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,7 +75,9 @@ export const ProductFeatures = ({ watch }: any) => {
             {specifications.map((spec, index) => (
               <div
                 key={index}
-                className={`text-left ${index !== specifications.length - 1 ? "mr-8" : ""}`}
+                className={`text-left ${
+                  index !== specifications.length - 1 ? "mr-8" : ""
+                }`}
               >
                 <p className="text-sm font-medium text-gray-900">
                   {spec.label}

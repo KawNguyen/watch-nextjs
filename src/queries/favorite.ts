@@ -4,12 +4,7 @@ import { favoriteItem } from "@/types/favorite";
 
 export const useFavoriteQuery = () => {
   return useQuery<favoriteItem[]>({
-    queryKey: ["favorite"],
-    queryFn: async () => {
-      const res = await favoriteApi
-        .getFavoriteMe()
-        .then((res) => res.data.items);
-      return res;
-    },
+    queryKey: ["my-favorite"],
+    queryFn: () => favoriteApi.getMyFavorite().then((res) => res.data.items),
   });
 };

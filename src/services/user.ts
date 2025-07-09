@@ -27,14 +27,10 @@ export const userAPI = {
     return response.data;
   },
 
-  changeAvatar: async (
-    userId: string,
-    avatar: { absolute_url: string; public_id: string }
-  ) => {
-    const response = await axiosInstance.patch(
-      `/user/change-avatar/${userId}`,
-      { avatar }
-    );
+  changeAvatar: async (avatar: { absolute_url: string; public_id: string }) => {
+    const response = await axiosInstance.patch(`/user/change-avatar`, {
+      avatar,
+    });
     return response.data;
   },
 };

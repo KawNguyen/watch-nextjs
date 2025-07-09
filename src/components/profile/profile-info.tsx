@@ -21,15 +21,14 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState, useEffect } from "react";
-import { UpdateUserProps, UserGender, UserProps } from "@/types/auth";
-import { useMutation } from "@tanstack/react-query";
-import { userAPI } from "@/services/user";
-import { queryClient } from "../providers/providers";
+import { UserGender } from "@/types/auth";
 import { ChangePhotoModal } from "./change-photo-modal";
-import { useProfile } from "../providers/profile-context";
+import { useAuthStore } from "@/store/auth.store";
+import { useUserMutation } from "@/mutation/user.mutation";
 
 export function ProfileInfo() {
-  const user = useProfile();
+  const { profile: user } = useAuthStore();
+  const { updateProfile } = useUserMutation();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
@@ -57,22 +56,8 @@ export function ProfileInfo() {
     setIsEditing(true);
   };
 
-  const mutateUpdateUser = useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: UpdateUserProps }) =>
-      await userAPI.updateUser(id, data),
-    onSuccess: () => {
-      setIsEditing(false);
-      queryClient.invalidateQueries({
-        queryKey: ["me"],
-      });
-    },
-    onError: (error) => {
-      console.error("Error updating user:", error);
-    },
-  });
-
   const handleSave = () => {
-    mutateUpdateUser.mutate({
+    updateProfile.mutate({
       id: user?.id || "",
       data: {
         firstName: formData.firstName,
@@ -82,6 +67,7 @@ export function ProfileInfo() {
           UserGender[formData.gender as keyof typeof UserGender] || undefined,
       },
     });
+    setIsEditing(false);
   };
 
   const handleCancel = () => {
