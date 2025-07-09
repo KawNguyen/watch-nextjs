@@ -3,9 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { popularSearches, Product, recentSearches, watchProducts } from "@/constant/routes";
+import {
+  popularSearches,
+  Product,
+  recentSearches,
+  watchProducts,
+} from "@/constant/routes";
 import { SearchDropdown } from "./search/search-dropdown";
-
 
 export default function WatchSearchBar() {
   const [searchQuery, setSearchQuery] = useState("");

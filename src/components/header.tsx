@@ -16,22 +16,22 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import PanelWrapper from "./header/pannel-wrapper";
 import NavigationMenuHeader from "./header/navigation-menu-header";
 import { useAuth } from "@/mutation/auth.mutation";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { CartSheet } from "./cart/cart-sheet";
 import NotificationDropdown from "./notifications/notifications";
 import SearchBar from "./search";
-import { useMediaQuery } from "@/hooks/use-media-query";
 
 const Header = () => {
   const router = useRouter();
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const isMobile = useIsMobile();
   const { isAuthenticated, profile, logout } = useAuth();
 
   return (
     <header className="w-full bg-white z-10">
-      {isDesktop && <PanelWrapper />}
+      {!isMobile && <PanelWrapper />}
       <div className="container mx-auto px-4 md:py-4 py-2">
         <div className="flex items-center justify-between">
-          {isDesktop && (
+          {!isMobile && (
             <div className="flex-shrink-0">
               <Link href="/" className="text-3xl">
                 KronLux
@@ -42,7 +42,7 @@ const Header = () => {
           <SearchBar />
 
           <div className="flex items-center gap-4">
-            {isDesktop && (
+            {!isMobile && (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link href="/account/favorites">
@@ -59,7 +59,7 @@ const Header = () => {
 
             <NotificationDropdown />
 
-            {isDesktop &&
+            {!isMobile &&
               (isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger
@@ -110,7 +110,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {isDesktop && <NavigationMenuHeader />}
+      {!isMobile && <NavigationMenuHeader />}
     </header>
   );
 };

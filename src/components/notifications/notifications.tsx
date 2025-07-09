@@ -54,7 +54,6 @@ const NotificationDropdown = () => {
   }
 
   const markAllAsRead = () => {
-    // This would typically update your state/database
     console.log("Mark all as read")
   }
 
