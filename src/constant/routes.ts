@@ -185,108 +185,271 @@ export const team = [
   },
 ];
 
-
 export const searchProducts = [
-    {
-      id: "1",
-      title: "Bo mạch chủ MSI PRO B760M-A WIFI DDR4",
-      price: 3490000,
-      originalPrice: 4190000,
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=80&h=80&fit=crop",
-      category: "Motherboard",
-      href: "/products/1",
-      inStock: true,
-    },
-    {
-      id: "2",
-      title: "Bo mạch chủ MSI A320M-A Pro",
-      price: 1390000,
-      originalPrice: 1550000,
-      image: "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=80&h=80&fit=crop",
-      category: "Motherboard",
-      href: "/products/2",
-      inStock: true,
-    },
-    {
-      id: "3",
-      title: "Bo mạch chủ ASUS PRIME A620M-A DDR5",
-      price: 3290000,
-      image: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=80&h=80&fit=crop",
-      category: "Motherboard",
-      href: "/products/3",
-      inStock: false,
-    },
-    {
-      id: "4",
-      title: "Bo mạch chủ MSI B450M-A PRO MAX II",
-      price: 1690000,
-      originalPrice: 1990000,
-      image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=80&h=80&fit=crop",
-      category: "Motherboard",
-      href: "/products/4",
-      inStock: true,
-    },
-    {
-      id: "5",
-      title: "Bo mạch chủ ASUS PRIME B650M-A-CSM DDR5",
-      price: 4690000,
-      image: "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=80&h=80&fit=crop",
-      category: "Motherboard",
-      href: "/products/5",
-      inStock: true,
-    },
-    {
-      id: "6",
-      title: "Classic Heritage Watch Premium Gold",
-      price: 2500000,
-      originalPrice: 3200000,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&h=80&fit=crop",
-      category: "Watch",
-      href: "/products/6",
-      inStock: true,
-    },
-    {
-      id: "7",
-      title: "Luxury Gold Watch Diamond Edition",
-      price: 8900000,
-      image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=80&h=80&fit=crop",
-      category: "Watch",
-      href: "/products/7",
-      inStock: true,
-    },
-    {
-      id: "8",
-      title: "Sport Elite Watch Titanium",
-      price: 1890000,
-      originalPrice: 2100000,
-      image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=80&h=80&fit=crop",
-      category: "Watch",
-      href: "/products/8",
-      inStock: true,
-    },
-  ]
+  {
+    id: "1",
+    title: "Bo mạch chủ MSI PRO B760M-A WIFI DDR4",
+    price: 3490000,
+    originalPrice: 4190000,
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=80&h=80&fit=crop",
+    category: "Motherboard",
+    href: "/products/1",
+    inStock: true,
+  },
+  {
+    id: "2",
+    title: "Bo mạch chủ MSI A320M-A Pro",
+    price: 1390000,
+    originalPrice: 1550000,
+    image:
+      "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=80&h=80&fit=crop",
+    category: "Motherboard",
+    href: "/products/2",
+    inStock: true,
+  },
+  {
+    id: "3",
+    title: "Bo mạch chủ ASUS PRIME A620M-A DDR5",
+    price: 3290000,
+    image:
+      "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=80&h=80&fit=crop",
+    category: "Motherboard",
+    href: "/products/3",
+    inStock: false,
+  },
+  {
+    id: "4",
+    title: "Bo mạch chủ MSI B450M-A PRO MAX II",
+    price: 1690000,
+    originalPrice: 1990000,
+    image:
+      "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=80&h=80&fit=crop",
+    category: "Motherboard",
+    href: "/products/4",
+    inStock: true,
+  },
+  {
+    id: "5",
+    title: "Bo mạch chủ ASUS PRIME B650M-A-CSM DDR5",
+    price: 4690000,
+    image:
+      "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=80&h=80&fit=crop",
+    category: "Motherboard",
+    href: "/products/5",
+    inStock: true,
+  },
+  {
+    id: "6",
+    title: "Classic Heritage Watch Premium Gold",
+    price: 2500000,
+    originalPrice: 3200000,
+    image:
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&h=80&fit=crop",
+    category: "Watch",
+    href: "/products/6",
+    inStock: true,
+  },
+  {
+    id: "7",
+    title: "Luxury Gold Watch Diamond Edition",
+    price: 8900000,
+    image:
+      "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=80&h=80&fit=crop",
+    category: "Watch",
+    href: "/products/7",
+    inStock: true,
+  },
+  {
+    id: "8",
+    title: "Sport Elite Watch Titanium",
+    price: 1890000,
+    originalPrice: 2100000,
+    image:
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=80&h=80&fit=crop",
+    category: "Watch",
+    href: "/products/8",
+    inStock: true,
+  },
+];
 
+export const mockNotifications = [
+  {
+    id: 1,
+    title: "Order Shipped",
+    description: "Your order #1234 has been shipped.",
+    time: "2 hours ago",
+    read: false,
+  },
+  {
+    id: 2,
+    title: "New Promotion",
+    description: "Get 20% off on your next purchase!",
+    time: "1 day ago",
+    read: true,
+  },
+  {
+    id: 3,
+    title: "Welcome!",
+    description: "Thanks for joining KronLux.",
+    time: "3 days ago",
+    read: true,
+  },
+];
 
-  export const mockNotifications = [
-    {
-      id: 1,
-      title: "Order Shipped",
-      description: "Your order #1234 has been shipped.",
-      time: "2 hours ago",
-      read: false,
-    },
-    {
-      id: 2,
-      title: "New Promotion",
-      description: "Get 20% off on your next purchase!",
-      time: "1 day ago",
-      read: true,
-    },
-    {
-      id: 3,
-      title: "Welcome!",
-      description: "Thanks for joining KronLux.",
-      time: "3 days ago",
-      read: true,
-    },
-  ];
+export interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  originalPrice: number;
+  image: string;
+  rating: number;
+  reviews: number;
+  category: string;
+  isNew: boolean;
+  discount: number;
+}
+
+export const watchProducts: Product[] = [
+  {
+    id: 1,
+    name: "Rolex Submariner Date",
+    brand: "Rolex",
+    price: 285000000,
+    originalPrice: 300000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.9,
+    reviews: 128,
+    category: "Men's Watch",
+    isNew: true,
+    discount: 5,
+  },
+  {
+    id: 2,
+    name: "Apple Watch Series 9",
+    brand: "Apple",
+    price: 12000000,
+    originalPrice: 15000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.7,
+    reviews: 256,
+    category: "Smart Watch",
+    isNew: true,
+    discount: 20,
+  },
+  {
+    id: 3,
+    name: "Casio G-Shock GA-2100",
+    brand: "Casio",
+    price: 3500000,
+    originalPrice: 4000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.6,
+    reviews: 89,
+    category: "Sports Watch",
+    isNew: false,
+    discount: 12,
+  },
+  {
+    id: 4,
+    name: "Omega Speedmaster Professional",
+    brand: "Omega",
+    price: 165000000,
+    originalPrice: 180000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.8,
+    reviews: 67,
+    category: "Men's Watch",
+    isNew: false,
+    discount: 8,
+  },
+  {
+    id: 5,
+    name: "Seiko Prospex Automatic",
+    brand: "Seiko",
+    price: 8500000,
+    originalPrice: 10000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.5,
+    reviews: 145,
+    category: "Automatic Watch",
+    isNew: true,
+    discount: 15,
+  },
+  {
+    id: 6,
+    name: "Tissot PRC 200 Chronograph",
+    brand: "Tissot",
+    price: 12500000,
+    originalPrice: 14000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.4,
+    reviews: 92,
+    category: "Men's Watch",
+    isNew: false,
+    discount: 11,
+  },
+  {
+    id: 7,
+    name: "Citizen Eco-Drive Ladies",
+    brand: "Citizen",
+    price: 6500000,
+    originalPrice: 7500000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.3,
+    reviews: 78,
+    category: "Women's Watch",
+    isNew: false,
+    discount: 13,
+  },
+  {
+    id: 8,
+    name: "TAG Heuer Formula 1",
+    brand: "TAG Heuer",
+    price: 28000000,
+    originalPrice: 32000000,
+    image: "/placeholder.svg?height=200&width=200",
+    rating: 4.7,
+    reviews: 54,
+    category: "Sports Watch",
+    isNew: true,
+    discount: 12,
+  },
+];
+
+export const watchBrands = [
+  "Rolex",
+  "Omega",
+  "Seiko",
+  "Casio",
+  "Citizen",
+  "Tissot",
+  "TAG Heuer",
+  "Breitling",
+  "Patek Philippe",
+  "Audemars Piguet",
+];
+
+export const watchCategories = [
+  "Men's Watch",
+  "Women's Watch",
+  "Sports Watch",
+  "Smart Watch",
+  "Automatic Watch",
+  "Digital Watch",
+  "Luxury Watch",
+  "Vintage Watch",
+];
+
+export const popularSearches = [
+  "Rolex Submariner",
+  "Apple Watch",
+  "Casio G-Shock",
+  "Omega Speedmaster",
+  "Seiko Automatic",
+  "Tissot PRC 200",
+  "Citizen Eco-Drive",
+];
+
+export const recentSearches = ["men's leather watch", "casio edifice", "omega seamaster", "rolex datejust"]

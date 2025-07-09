@@ -6,6 +6,7 @@ export const watchesApi = {
     const data = await fetcher<ApiResponse<Watch>>(`/watch?page=${page}`);
     return data;
   },
+  
   fetchByBrand: async (
     page: number = 1,
     brand: string
@@ -15,9 +16,9 @@ export const watchesApi = {
     );
     return data;
   },
+
   fetchBySlug: async (slug: string): Promise<ApiResponseItem<Watch>> => {
     const data = await fetcher<ApiResponseItem<Watch>>(`/watch/${slug}`);
     return data;
   }
-  
 };
