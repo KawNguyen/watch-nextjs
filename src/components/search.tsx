@@ -2,8 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Search, X } from "lucide-react";
 import Link from "next/link";
-import { Input } from "../ui/input";
-import { searchProducts } from "@/constant/routes"; // Import your products
+import { searchProducts } from "@/constant/routes";
+import { Input } from "./ui/input";
 
 const formatPrice = (price: number) =>
   new Intl.NumberFormat("vi-VN").format(price) + "đ";
@@ -35,7 +35,10 @@ const SearchBar = () => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setShowSearchDropdown(false);
       }
     }
@@ -112,7 +115,9 @@ const SearchBar = () => {
                           />
                           {!product.inStock && (
                             <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
-                              <span className="text-white text-xs font-medium">Out of Stock</span>
+                              <span className="text-white text-xs font-medium">
+                                Out of Stock
+                              </span>
                             </div>
                           )}
                         </div>
@@ -138,14 +143,21 @@ const SearchBar = () => {
                       </div>
                       <div className="flex flex-col items-end">
                         <div className="flex items-center gap-2">
-                          <span className="text-lg font-bold text-red-600">{formatPrice(product.price)}</span>
+                          <span className="text-lg font-bold text-red-600">
+                            {formatPrice(product.price)}
+                          </span>
                           {product.originalPrice && (
                             <div className="flex flex-col items-end">
                               <span className="text-sm text-gray-500 line-through">
                                 {formatPrice(product.originalPrice)}
                               </span>
                               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-600 text-white">
-                                -{getDiscountPercentage(product.price, product.originalPrice)}%
+                                -
+                                {getDiscountPercentage(
+                                  product.price,
+                                  product.originalPrice
+                                )}
+                                %
                               </span>
                             </div>
                           )}
@@ -161,11 +173,15 @@ const SearchBar = () => {
                   <Search className="h-8 w-8 mx-auto" />
                 </div>
                 <p className="text-gray-600 font-medium">No products found</p>
-                <p className="text-sm text-gray-500 mt-1">Try different keywords or check spelling</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Try different keywords or check spelling
+                </p>
               </div>
             ) : (
               <div className="px-4 py-6">
-                <h3 className="text-sm font-medium text-gray-900 mb-3">Popular Searches</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-3">
+                  Popular Searches
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {["Motherboard", "Watch", "Gaming", "Premium"].map((tag) => (
                     <button

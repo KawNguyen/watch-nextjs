@@ -13,3 +13,15 @@ export const formatTime = (date: Date) => {
     second: "2-digit",
   });
 };
+
+export function formatMoney(
+  amount: number,
+  locale = "vi-VN",
+  currency = "VND"
+): string {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 0,
+  }).format(amount);
+}

@@ -1,9 +1,10 @@
 "use client";
+
 import { ChangePasswordSection } from "@/components/profile/change-password";
-import { useProfile } from "@/components/providers/profile-context";
+import { useAuthStore } from "@/store/auth.store";
 
 const Password = () => {
-  const user = useProfile();
+  const { profile: user } = useAuthStore();
   return <ChangePasswordSection userId={user?.id} />;
 };
 

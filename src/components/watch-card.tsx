@@ -2,26 +2,40 @@ import { Heart, Maximize2, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
-
 import { Watch } from "@/types/watch";
 
+import { useCartMutation } from "@/mutation/cart.mutation";
+import { useFavoriteMutation } from "@/mutation/favorite.mutation";
+
 export default function WatchCard({ watchData }: { watchData: Watch }) {
+  const { addToCart } = useCartMutation();
+  const { addToFavorite } = useFavoriteMutation();
+
   return (
     <div className="group relative overflow-hidden rounded-lg border bg-background p-2">
       <div className="relative rounded-md aspect-square overflow-hidden bg-zinc-100">
-        <Image
-          src={watchData.images[0]?.absolute_url}
-          alt={watchData.name}
-          fill
-          sizes="25vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-        />
+        {watchData.images?.[0]?.absolute_url ? (
+          <Image
+            src={watchData.images[0].absolute_url}
+            alt={watchData.name}
+            fill
+            sizes="25vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
+            No image
+          </div>
+        )}
 
         <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10 flex justify-center items-center">
           <div className="flex gap-2">
             <Button
               size="icon"
               className="rounded-full h-10 w-10 bg-white text-black hover:bg-white/90 cursor-pointer"
+              onClick={() =>
+                addToCart.mutate({ watchId: watchData.id, quantity: 1 })
+              }
             >
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Add to cart</span>
@@ -42,6 +56,7 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
             variant="ghost"
             size="icon"
             className="h-8 w-8 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white/90 cursor-pointer"
+            onClick={() => addToFavorite.mutate(watchData.id)}
           >
             <Heart className="h-4 w-4" />
             <span className="sr-only">Add to wishlist</span>
@@ -62,7 +77,6 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
           </Link>
         </h3>
 
-        {/* Rating */}
         <div className="mt-1 flex items-center gap-2">
           <div className="flex items-center">
             {Array(5)

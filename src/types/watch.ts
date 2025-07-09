@@ -45,14 +45,6 @@ export interface Watch {
   movement: Movement;
   images: WatchImage[];
   rating: number;
-  banner: WatchBanner;
-}
-export interface WatchBanner {
-  id: string;
-  url: string;
-  watchId: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface Meta {

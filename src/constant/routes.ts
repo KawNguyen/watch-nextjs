@@ -1,23 +1,3 @@
-import { Heart, LogIn, ShoppingBag } from "lucide-react";
-
-export const rh = [
-  {
-    icon: Heart,
-    hover: "Favorite",
-    path: "profile/favorite",
-  },
-  {
-    icon: ShoppingBag,
-    hover: "Cart",
-    path: "/cart",
-  },
-  {
-    icon: LogIn,
-    hover: "Sign In",
-    path: "/sign-in",
-  },
-];
-
 export const navigation = {
   brand: [
     {
@@ -94,26 +74,6 @@ export const navigation = {
             { title: "Fashion Watches", value: "fashion" },
             { title: "Minimalist", value: "minimalist" },
             { title: "Smartwatch", value: "smartwatch" },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Unisex",
-      value: "unisex",
-      navItems: [
-        {
-          title: "Brands",
-          items: [
-            { title: "Casio", value: "casio" },
-            { title: "Seiko", value: "seiko" },
-          ],
-        },
-        {
-          title: "Styles",
-          items: [
-            { title: "Casual", value: "casual" },
-            { title: "Digital", value: "digital" },
           ],
         },
       ],

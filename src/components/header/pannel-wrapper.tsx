@@ -21,7 +21,7 @@ const PanelWrapper = () => {
 
           <div className="flex items-center gap-3">
             <span className="hidden sm:flex justify-center items-center">
-              <Headset size={16} />: 1900-1234
+              <Headset size={16} /> 1900-1234
             </span>
           </div>
         </div>

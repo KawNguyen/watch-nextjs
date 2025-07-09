@@ -5,5 +5,6 @@ export const useUser = () => {
   return useQuery({
     queryKey: ["me"],
     queryFn: () => userAPI.findMe().then((res) => res.data.item),
+    retry: 2,
   });
 };

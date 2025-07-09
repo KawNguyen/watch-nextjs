@@ -1,8 +1,8 @@
 import axiosInstance from "@/lib/axios-instance";
 import { Address } from "@/types/address";
 import axios from "axios";
-const API_THANHPHO =
-  process.env.NEXT_PUBLIC_API_THANHPHO || "https://provinces.open-api.vn/api";
+
+const API_THANHPHO = "http://provinces.open-api.vn/api";
 
 export const addressAPI = {
   getProvince: async () => {
