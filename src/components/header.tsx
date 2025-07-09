@@ -20,6 +20,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { CartSheet } from "./cart/cart-sheet";
 import NotificationDropdown from "./notifications/notifications";
 import SearchBar from "./search";
+import SheetMenu from "./header/sheet-menu";
 
 const Header = () => {
   const router = useRouter();
@@ -31,15 +32,15 @@ const Header = () => {
       {!isMobile && <PanelWrapper />}
       <div className="container mx-auto px-4 md:py-4 py-2">
         <div className="flex items-center justify-between">
-          {!isMobile && (
-            <div className="flex-shrink-0">
-              <Link href="/" className="text-3xl">
-                KronLux
-              </Link>
-            </div>
-          )}
+          {isMobile && <SheetMenu />}
 
-          <SearchBar />
+          <div className="flex-shrink-0">
+            <Link href="/" className="text-3xl">
+              KronLux
+            </Link>
+          </div>
+
+          {!isMobile && <SearchBar />}
 
           <div className="flex items-center gap-4">
             {!isMobile && (
