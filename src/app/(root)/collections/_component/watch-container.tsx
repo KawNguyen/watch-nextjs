@@ -15,7 +15,7 @@ export default function WatchesContainer({ brand }: { brand?: string }) {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: watches, isPending: isWatchesLoading } = useWatchesQuery(
     currentPage,
-    brand,
+    brand
   );
   const { data: brands, isPending: isBrandsLoading } = useBrandQuery();
 
