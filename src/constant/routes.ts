@@ -1,3 +1,5 @@
+import { Youtube,Instagram,Facebook} from 'lucide-react';
+
 export const navigation = {
   brand: [
     {
@@ -453,3 +455,132 @@ export const popularSearches = [
 ];
 
 export const recentSearches = ["men's leather watch", "casio edifice", "omega seamaster", "rolex datejust"]
+
+
+export const routes = [
+  {
+    title: "Our Products",
+    children: [
+      { path: "/products", title: "All products" },
+      { path: "/products?gender=Men", title: "Men" },
+      { path: "/products?gender=Women", title: "Women" },
+      { path: "/products?gender=Unisex", title: "Unisex" },
+    ],
+  },
+  {
+    title: "Support",
+    children: [
+      { path: "/support/about-us", title: "About Us" },
+      { path: "/support/contact", title: "Contact" },
+      { path: "/support/faq", title: "FAQ" },
+    ],
+  },
+  {
+    title: "Policy",
+    children: [
+      { path: "/policy/term-of-use", title: "Term Of Use" },
+      { path: "/policy/privacy-policy", title: "Privacy Policy" },
+      { path: "/policy/shipping-return", title: "Shipping And Returns" },
+      { path: "/policy/refund-policy", title: "Refund Policy" },
+    ],
+  },
+];
+
+export const icons = [
+  {
+    icon_social: Facebook,
+    url: "https://www.facebook.com/iambot710?locale=vi_VN",
+  },
+  {
+    icon_social: Instagram,
+    url: "https://www.instagram.com/iamkhoa29/",
+  },
+  {
+    icon_social: Youtube,
+    url: "https://www.youtube.com/@hailoc3403",
+  },
+];
+
+
+
+
+export const poster = [
+  {
+    id: 1,
+    url: "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
+    text: "Time is Precious Shop Watches Effortlessly.",
+  },
+  {
+    id: 2,
+    url: "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl2.jpg",
+    text: "Luxury Redefined Second by Second.",
+  },
+  {
+    id: 3,
+    url: "https://images.unsplash.com/photo-1731759992339-1b079071ab89?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D",
+    text: "Precision and Style ",
+  },
+  {
+    id: 4,
+    url: "https://images.unsplash.com/photo-1731759992338-f44243163ba4?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    text: "Timeless Prestige Seamlessly Yours.",
+  },
+];
+
+
+
+
+
+
+export const articles = [
+  {
+    id: 1,
+    image:
+      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
+    date: "09/05/2025",
+    tag: "Kiến thức đồng hồ",
+    title: "Đồng Hồ – Món Quà Ý Nghĩa Để Tặng ",
+    description:
+      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
+  },
+  {
+    id: 2,
+    image:
+      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
+    date: "18/04/2025",
+    tag: "Kiến thức đồng hồ",
+    title: "Các Phân Khúc Đồng Hồ Trên Thị Trường",
+    description:
+      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
+  },
+  {
+    id: 3,
+    image:
+      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
+    date: "01/04/2025",
+    tag: "Kiến thức đồng hồ",
+    title: "5 Mẫu Đồng Hồ Đáng Mua Nhất Năm 2025",
+    description:
+      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
+  },
+  {
+    id: 4,
+    image:
+      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
+    date: "25/03/2025",
+    tag: "Kiến thức đồng hồ",
+    title: "Top Đồng Hồ Dưới 10 Triệu Đáng Mua Nhất",
+    description:
+      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
+  },
+  {
+    id: 5,
+    image:
+      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
+    date: "10/03/2025",
+    tag: "Kiến thức đồng hồ",
+    title: "Hướng Dẫn Chọn Đồng Hồ Cho Nam",
+    description:
+      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
+  },
+];

@@ -6,63 +6,11 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-const articles = [
-  {
-    id: 1,
-    image:
-      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
-    date: "09/05/2025",
-    tag: "Kiến thức đồng hồ",
-    title: "Đồng Hồ – Món Quà Ý Nghĩa Để Tặng ",
-    description:
-      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
-  },
-  {
-    id: 2,
-    image:
-      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
-    date: "18/04/2025",
-    tag: "Kiến thức đồng hồ",
-    title: "Các Phân Khúc Đồng Hồ Trên Thị Trường",
-    description:
-      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
-  },
-  {
-    id: 3,
-    image:
-      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
-    date: "01/04/2025",
-    tag: "Kiến thức đồng hồ",
-    title: "5 Mẫu Đồng Hồ Đáng Mua Nhất Năm 2025",
-    description:
-      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
-  },
-  {
-    id: 4,
-    image:
-      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
-    date: "25/03/2025",
-    tag: "Kiến thức đồng hồ",
-    title: "Top Đồng Hồ Dưới 10 Triệu Đáng Mua Nhất",
-    description:
-      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
-  },
-  {
-    id: 5,
-    image:
-      "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1sl1.jpg",
-    date: "10/03/2025",
-    tag: "Kiến thức đồng hồ",
-    title: "Hướng Dẫn Chọn Đồng Hồ Cho Nam",
-    description:
-      "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
-  },
-];
+import { articles } from "@/constant/routes";
+
 export default function Blogs() {
   return (
     <div className="container mx-auto my-4">
@@ -75,39 +23,39 @@ export default function Blogs() {
         </p>
       </div>
       <Carousel>
-        <CarouselContent className="mt-4 max-h-[440px]  md:min-h-[500px] p-1">
+        <CarouselContent className="mt-4 p-1">
           {articles.map((item, index) => (
-            <CarouselItem key={index} className="md:pt-2">
+            <CarouselItem key={index} className="pt-2">
               <div>
-                <Card className="grid grid-cols-1 md:grid-cols-12 border-collapse md:h-[450px] border-2 p-1 border-gray-200">
-                  <div className="md:col-span-7 p-1 md:p-4">
+                <Card className="flex flex-col md:flex-row border-2 border-gray-200 p-1 h-full min-h-[400px] md:min-h-[350px] lg:min-h-[400px]">
+                  <div className="w-full md:w-2/3 flex-shrink-0 p-1 md:p-4 flex items-center justify-center">
                     <Image
                       src={item.image}
                       alt={item.title}
                       width={1000}
                       height={1000}
                       priority
-                      className="w-full h-full rounded-md  object-cover"
+                      className="w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-md object-cover"
                     />
                   </div>
-                  <div className="md:col-span-5 md:flex md:flex-col justify-between h-full p-2 md:p-4 ">
+                  <div className="w-full md:w-1/3 flex flex-col justify-between h-full p-2 md:p-4">
                     <div>
                       <div className="flex items-center justify-center md:p-4 mb-2 md:mb-4">
-                        <span className="text-lg md:text-2xl font-semibold">
+                        <span className="text-lg md:text-2xl font-semibold text-center">
                           {item.title}
                         </span>
                       </div>
-                      <div className="flex justify-evenly mb-4">
+                      <div className="flex flex-wrap justify-center gap-4 mb-4">
                         <p className="text-sm text-gray-500">{item.date}</p>
                         <p className="text-sm text-purple-700">{item.tag}</p>
                       </div>
                       <div className="flex items-center justify-center">
-                        <p className="text-lg mb-4 text-gray-500">
+                        <p className="text-base md:text-lg mb-4 text-gray-500 text-center">
                           {item.description}
                         </p>
                       </div>
                     </div>
-                    <CardFooter className="flex items-center justify-center">
+                    <CardFooter className="flex items-center justify-center mt-2">
                       <Button className="w-full text-white">Read More</Button>
                     </CardFooter>
                   </div>
@@ -116,8 +64,7 @@ export default function Blogs() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:block" />
-        <CarouselNext className="hidden md:block"/> 
+        
       </Carousel>
     </div>
   );
