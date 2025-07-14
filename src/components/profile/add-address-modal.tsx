@@ -82,7 +82,7 @@ export const AddAddressModal = ({
     if (!data || !provinces.length) return;
 
     const selectedProvince = provinces.find(
-      (p: { name: string }) => p.name === data.city
+      (p: { name: string }) => p.name === data.city,
     );
     if (selectedProvince && !cityCode) {
       setCityCode(selectedProvince.code.toString());
@@ -94,7 +94,7 @@ export const AddAddressModal = ({
     if (!data || !districts?.districts?.length) return;
 
     const selectedDistrict = districts.districts.find(
-      (d: { name: string }) => d.name === data.district
+      (d: { name: string }) => d.name === data.district,
     );
     if (selectedDistrict && !districtCode) {
       setDistrictCode(selectedDistrict.code.toString());
@@ -129,7 +129,7 @@ export const AddAddressModal = ({
       toast.success(
         type === "create"
           ? "Address added successfully"
-          : "Address saved successfully"
+          : "Address saved successfully",
       );
       queryClient.invalidateQueries({ queryKey: ["my-address"] });
       setOpen(false);
@@ -173,7 +173,7 @@ export const AddAddressModal = ({
                 onValueChange={(value) => {
                   const selected = provinces.find(
                     (p: { code: string; name: string }) =>
-                      p.code.toString() === value
+                      p.code.toString() === value,
                   );
                   if (selected) {
                     setCityCode(selected.code.toString());
@@ -207,7 +207,7 @@ export const AddAddressModal = ({
                 onValueChange={(value) => {
                   const selected = districts.districts.find(
                     (d: { code: string; name: string }) =>
-                      d.code.toString() === value
+                      d.code.toString() === value,
                   );
                   if (selected) {
                     setDistrictCode(selected.code.toString());
@@ -229,7 +229,7 @@ export const AddAddressModal = ({
                       <SelectItem key={d.code} value={d.code.toString()}>
                         {d.name}
                       </SelectItem>
-                    )
+                    ),
                   )}
                 </SelectContent>
               </Select>
@@ -254,7 +254,7 @@ export const AddAddressModal = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {wards.wards.map((w: {code: string, name: string}) => (
+                      {wards.wards.map((w: { code: string; name: string }) => (
                         <SelectItem key={w.code} value={w.name}>
                           {w.name}
                         </SelectItem>

@@ -29,8 +29,6 @@ const NavigationMenuHeader = () => {
             <NavigationMenuItem>
               <Link href={"/blog"}>Blog</Link>
             </NavigationMenuItem>
-
-            
           </NavigationMenuList>
         </NavigationMenu>
       </div>

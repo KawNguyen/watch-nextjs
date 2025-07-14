@@ -68,7 +68,7 @@ export function Favorite() {
 
   const selectedItems = useMemo(
     () => data.filter((item) => selectedIds.has(item.id)),
-    [data, selectedIds]
+    [data, selectedIds],
   );
 
   const renderStars = (rating: number) => (

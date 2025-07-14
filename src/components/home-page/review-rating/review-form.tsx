@@ -39,7 +39,7 @@ export function ReviewForm() {
 
   const onSubmit = (values: ReviewFormValues) => {
     console.log(values);
-    form.reset(); 
+    form.reset();
   };
 
   return (

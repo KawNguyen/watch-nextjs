@@ -15,9 +15,7 @@ export function CheckoutHeader() {
               Back to Shop
             </Link>
           </div>
-          <div className="text-2xl font-bold text-gray-900">
-            KronLux
-          </div>
+          <div className="text-2xl font-bold text-gray-900">KronLux</div>
           <div className="w-24"></div>
         </div>
       </div>

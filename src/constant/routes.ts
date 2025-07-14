@@ -1,4 +1,4 @@
-import { Youtube,Instagram,Facebook} from 'lucide-react';
+import { Youtube, Instagram, Facebook } from "lucide-react";
 
 export const navigation = {
   brand: [
@@ -454,8 +454,12 @@ export const popularSearches = [
   "Citizen Eco-Drive",
 ];
 
-export const recentSearches = ["men's leather watch", "casio edifice", "omega seamaster", "rolex datejust"]
-
+export const recentSearches = [
+  "men's leather watch",
+  "casio edifice",
+  "omega seamaster",
+  "rolex datejust",
+];
 
 export const routes = [
   {
@@ -501,9 +505,6 @@ export const icons = [
   },
 ];
 
-
-
-
 export const poster = [
   {
     id: 1,
@@ -526,11 +527,6 @@ export const poster = [
     text: "Timeless Prestige Seamlessly Yours.",
   },
 ];
-
-
-
-
-
 
 export const articles = [
   {

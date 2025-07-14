@@ -9,8 +9,6 @@ export const middleware = (req: NextRequest) => {
 
   // if (!isAuthenticated) return redirectTo("/sign-in", req);
 
-  
-
   if (isAccountPage && !isAuthenticated) {
     return redirectTo("/sign-in", req);
   }

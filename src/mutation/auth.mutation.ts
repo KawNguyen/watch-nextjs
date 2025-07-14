@@ -33,7 +33,7 @@ export const useAuth = () => {
         data.firstName,
         data.lastName,
         data.email,
-        data.password
+        data.password,
       ),
     onMutate: () => {
       useAuthStore.setState((state) => ({

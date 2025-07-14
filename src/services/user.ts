@@ -15,14 +15,14 @@ export const userAPI = {
   changePassword: async (
     userId: string,
     currentPassword: string,
-    newPassword: string
+    newPassword: string,
   ) => {
     const response = await axiosInstance.patch(
       `/user/change-password/${userId}`,
       {
         currentPassword,
         newPassword,
-      }
+      },
     );
     return response.data;
   },

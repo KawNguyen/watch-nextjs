@@ -18,7 +18,7 @@ export function VerifyOTP({ length = 6, onChange }: OtpInputProps) {
     const newOtp = [...otp];
     newOtp[index] = value.slice(-1);
     setOtp(newOtp);
-    onChange?.(newOtp.join(""));  
+    onChange?.(newOtp.join(""));
 
     if (value && index < length - 1) {
       inputRefs.current[index + 1]?.focus();

@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { icons, routes } from "@/constant/routes";
 
-
 const Footer = () => {
   return (
     <div className="bg-white text-black border-t">
@@ -22,9 +21,7 @@ const Footer = () => {
             />
           </Link>
           <div className="flex-1" />
-          <div className="pt-2">
-            
-          </div>
+          <div className="pt-2"></div>
         </div>
 
         <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 px-4 md:px-0 gap-4">
@@ -66,19 +63,18 @@ const Footer = () => {
         <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between items-center text-sm px-4">
           <p>kronLux@gmailskibidi.com</p>
           <div className="flex space-x-4 justify-start">
-              {icons.map((icon, index) => (
-                <Link
-                  key={index}
-                  href={icon.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-secondary-600 "
-                >
-                  <icon.icon_social className="w-6 h-6" />
-                </Link>
-              ))}
-            </div>
-          
+            {icons.map((icon, index) => (
+              <Link
+                key={index}
+                href={icon.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-secondary-600 "
+              >
+                <icon.icon_social className="w-6 h-6" />
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export const authApi = {
     firstName: string,
     lastName: string,
     email: string,
-    password: string
+    password: string,
   ) => {
     const response = await axiosInstance.post("/auth/register", {
       firstName,

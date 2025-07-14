@@ -9,7 +9,6 @@ import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { poster } from "@/constant/routes";
 
-
 export function HomeHero() {
   const plugin = React.useRef(Autoplay({ delay: 2000 }));
 
@@ -22,7 +21,10 @@ export function HomeHero() {
     >
       <CarouselContent>
         {poster.map((item, index) => (
-          <CarouselItem key={index} className="relative h-[40vw] min-h-[300px] max-h-[600px] w-full">
+          <CarouselItem
+            key={index}
+            className="relative h-[40vw] min-h-[300px] max-h-[600px] w-full"
+          >
             <Image
               src={item.url}
               alt={item.text}

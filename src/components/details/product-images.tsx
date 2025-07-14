@@ -10,7 +10,7 @@ import Image from "next/image";
 
 interface PossibleImages {
   images: WatchImage[];
-  name: string
+  name: string;
 }
 
 export function ProductImages({ images, name }: PossibleImages) {

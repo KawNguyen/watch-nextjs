@@ -9,19 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState, useEffect } from "react";
-import { UserGender } from "@/types/auth";
 import { ChangePhotoModal } from "./change-photo-modal";
 import { useAuthStore } from "@/store/auth.store";
 import { useUserMutation } from "@/mutation/user.mutation";
@@ -36,7 +29,6 @@ export function ProfileInfo() {
     firstName: "",
     lastName: "",
     phone: "",
-    gender: "",
     avatar: "",
   });
 
@@ -46,7 +38,6 @@ export function ProfileInfo() {
         firstName: user.firstName || "",
         lastName: user.lastName || "",
         phone: user.phone || "",
-        gender: user.gender || "",
         avatar: user.avatar?.absolute_url || "",
       });
     }
@@ -63,8 +54,6 @@ export function ProfileInfo() {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phone: formData.phone,
-        gender:
-          UserGender[formData.gender as keyof typeof UserGender] || undefined,
       },
     });
     setIsEditing(false);
@@ -76,7 +65,6 @@ export function ProfileInfo() {
         firstName: user.firstName || "",
         lastName: user.lastName || "",
         phone: user.phone || "",
-        gender: user.gender || "",
         avatar: user.avatar?.absolute_url || "",
       });
     }
@@ -152,22 +140,6 @@ export function ProfileInfo() {
                 onChange={(e) => handleInputChange("phone", e.target.value)}
                 disabled={!isEditing}
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="gender">Gender</Label>
-              <Select
-                value={formData.gender}
-                onValueChange={(value) => handleInputChange("gender", value)}
-                disabled={!isEditing}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="MALE">Male</SelectItem>
-                  <SelectItem value="FEMALE">Female</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
           </div>
 

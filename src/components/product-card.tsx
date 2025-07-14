@@ -115,7 +115,7 @@ const ProductCard = ({
           {product.name}
         </h3>
         <p className="text-primary font-bold text-lg text-red-500">
-          {(product.price)}
+          {product.price}
         </p>
       </CardContent>
     </Card>

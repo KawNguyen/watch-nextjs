@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -156,7 +157,9 @@ export default function WatchBlogPage() {
                       {watch.category}
                     </Badge>
                     <CardTitle className="pl-2">{watch.title}</CardTitle>
-                    <CardDescription className="pl-2">{watch.description}</CardDescription>
+                    <CardDescription className="pl-2">
+                      {watch.description}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Image
@@ -167,7 +170,7 @@ export default function WatchBlogPage() {
                       className="object-contain w-full h-full p-1"
                     />
                   </CardContent>
-                  <CardFooter className="p-2"> 
+                  <CardFooter className="p-2">
                     <Button variant="outline" className="w-full">
                       View Details
                     </Button>

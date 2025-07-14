@@ -211,35 +211,36 @@ export const CustomerInfo = () => {
                   </FormItem>
                 )}
               />
-             <FormField
-  control={form.control}
-  name="payment"
-  rules={{ required: "Payment is required" }}
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Payment Method</FormLabel>
-      <Select
-        onValueChange={field.onChange}
-        defaultValue={field.value}
-      >
-        <FormControl>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select payment method" />
-          </SelectTrigger>
-        </FormControl>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Payments</SelectLabel>
-            <SelectItem value="cod">Cash on Delivery (COD)</SelectItem>
-            <SelectItem value="momo">MOMO</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-
+              <FormField
+                control={form.control}
+                name="payment"
+                rules={{ required: "Payment is required" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Payment Method</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select payment method" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Payments</SelectLabel>
+                          <SelectItem value="cod">
+                            Cash on Delivery (COD)
+                          </SelectItem>
+                          <SelectItem value="momo">MOMO</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </div>
           <Button

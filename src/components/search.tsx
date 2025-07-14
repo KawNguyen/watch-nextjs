@@ -55,7 +55,7 @@ export default function WatchSearchBar() {
       (product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        product.category.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
     setFilteredProducts(filtered);

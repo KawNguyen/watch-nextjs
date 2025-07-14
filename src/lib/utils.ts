@@ -17,7 +17,7 @@ export const formatTime = (date: Date) => {
 export function formatMoney(
   amount: number,
   locale = "vi-VN",
-  currency = "VND"
+  currency = "VND",
 ): string {
   return new Intl.NumberFormat(locale, {
     style: "currency",

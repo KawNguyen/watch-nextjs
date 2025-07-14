@@ -64,7 +64,6 @@ export default function Blogs() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        
       </Carousel>
     </div>
   );

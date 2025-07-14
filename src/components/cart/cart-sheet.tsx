@@ -52,12 +52,12 @@ export function CartSheet() {
   };
 
   const selectedItems = cartItems.filter((item: CartItem) =>
-    selectedIds.has(item.id)
+    selectedIds.has(item.id),
   );
 
   const totalPrice = selectedItems.reduce(
     (sum: number, item: CartItem) => sum + item.watch.price * item.quantity,
-    0
+    0,
   );
 
   const isAllSelected = selectedIds.size === cartItems.length;
@@ -108,8 +108,8 @@ export function CartSheet() {
                   {isAllSelected
                     ? "Deselect All"
                     : isIndeterminate
-                    ? "Some items selected"
-                    : "Select All"}
+                      ? "Some items selected"
+                      : "Select All"}
                 </span>
               </div>
 

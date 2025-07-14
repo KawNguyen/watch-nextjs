@@ -6,13 +6,12 @@ import { ProductItem } from "./product-item";
 import { Product } from "@/constant/routes";
 
 interface SearchResultsProps {
-  query: string
-  products: Product[]
-  onBuy?: (product: Product) => void
-  onViewAll?: () => void
-  maxResults?: number
+  query: string;
+  products: Product[];
+  onBuy?: (product: Product) => void;
+  onViewAll?: () => void;
+  maxResults?: number;
 }
-
 
 export function SearchResults({
   query,

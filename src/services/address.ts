@@ -28,14 +28,14 @@ export const addressAPI = {
   create: async (userId: string, data: Address) => {
     const response = await axiosInstance.post(
       `/address/user/${userId}/add`,
-      data
+      data,
     );
     return response.data;
   },
 
   delete: async (userId: string, id: string) => {
     const response = await axiosInstance.delete(
-      `/address/user/${userId}/delete/${id}`
+      `/address/user/${userId}/delete/${id}`,
     );
     return response.data;
   },
@@ -43,7 +43,7 @@ export const addressAPI = {
   update: async (userId: string, id: string, data: Partial<Address>) => {
     const response = await axiosInstance.patch(
       `/address/user/${userId}/update/${id}`,
-      data
+      data,
     );
     return response.data;
   },

@@ -42,7 +42,7 @@ export function ChangePasswordSection({
       userAPI.changePassword(
         userId!,
         formData.currentPassword,
-        formData.newPassword
+        formData.newPassword,
       ),
     onSuccess: () => {
       setMessage({ type: "success", text: "Password changed successfully!" });
@@ -55,9 +55,7 @@ export function ChangePasswordSection({
     onError: (error: string) => {
       setMessage({
         type: "error",
-        text:
-          error ??
-          "Failed to change password. Please try again.",
+        text: error ?? "Failed to change password. Please try again.",
       });
     },
   });

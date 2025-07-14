@@ -237,7 +237,7 @@ export function OrderHistory() {
 
   return (
     <Card>
-      <CardHeader className="pl-6 pt-4"> 
+      <CardHeader className="pl-6 pt-4">
         <CardTitle>Order History</CardTitle>
         <CardDescription>View and track your orders by status</CardDescription>
       </CardHeader>

@@ -48,18 +48,6 @@ export function ChangePhotoModal({
     },
   });
 
-  // const changeAvatarMutation = useMutation({
-  //   mutationFn: (avatar: { absolute_url: string; public_id: string }) =>
-  //     userAPI.changeAvatar(userId, avatar),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["me"] });
-  //     handleClose();
-  //   },
-  //   onError: (error: string) => {
-  //     console.error("Failed to update avatar.", error);
-  //   },
-  // });
-
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {

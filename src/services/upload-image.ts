@@ -1,7 +1,7 @@
 import axiosInstance from "@/lib/axios-instance";
 
 export const uploadImage = async (
-  file: File
+  file: File,
 ): Promise<{ absolute_url: string; public_id: string }> => {
   const formData = new FormData();
   formData.append("file", file);

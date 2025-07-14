@@ -6,7 +6,6 @@ import { HomeHero } from "@/components/home-page/home-hero";
 import { Promotion } from "@/components/home-page/promotion";
 import { Review } from "@/components/home-page/review-rating/review";
 
-
 const page = () => {
   return (
     <div className="block">
