@@ -6,7 +6,7 @@ const categories = [
     image:
       "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1bn1.jpg?v=1722307763&width=1077",
     alt: "Men's Luxury Watch Collection",
-    path: "/products?gender=Men",
+    path: "/collections?genders=Men",
   },
   {
     title: "Women's Watch",
@@ -14,7 +14,7 @@ const categories = [
     image:
       "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1bn2.jpg?v=1722309719&width=983",
     alt: "Women's Luxury Watch Collection",
-    path: "/products?gender=Women",
+    path: "/collections?genders=Women",
   },
   {
     title: "Unisex's Watch",
@@ -22,7 +22,7 @@ const categories = [
     image:
       "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1bn2.jpg?v=1722309719&width=983",
     alt: "Women's Luxury Watch Collection",
-    path: "/products?gender=Unisex",
+    path: "/collections?genders=Unisex",
   },
 ];
 

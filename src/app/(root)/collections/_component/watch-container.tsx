@@ -2,29 +2,65 @@
 
 import Image from "next/image";
 import WatchFilters from "./watch-filters";
-import { Input } from "@/components/ui/input";
+
 import WatchList from "./watch-list";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import PaginationControl from "@/components/pagination-control";
-import { useState } from "react";
-import { useBrandQuery } from "@/queries/brand";
-import WatchBrand from "@/app/(root)/collections/_component/watch-brand";
+import { useEffect, useMemo, useState } from "react";
+import { useWatchFilters } from "@/hooks/use-watches-filters";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 import { useWatchesQuery } from "@/queries/watches";
+import FilterSidebar from "./filter-sidebar";
 
-export default function WatchesContainer({ brand }: { brand?: string }) {
+type SortOption = "a-z" | "price-low" | "price-high" | "z-a" | "rating";
+
+export default function WatchesContainer() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: watches, isPending: isWatchesLoading } = useWatchesQuery(
-    currentPage,
-    brand,
-  );
-  const { data: brands, isPending: isBrandsLoading } = useBrandQuery();
+  const [sortBy, setSortBy] = useState<SortOption>("a-z");
+  const { filterQuery } = useWatchFilters();
 
-  const isLoading = isWatchesLoading || isBrandsLoading;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filterQuery]);
+
+  const queryParams = useMemo(
+    () => ({
+      page: currentPage,
+      ...filterQuery,
+    }),
+    [currentPage, filterQuery]
+  );
+
+  const {
+    data: watches,
+    refetch,
+    isLoading,
+  } = useWatchesQuery(currentPage, queryParams);
+
+  useEffect(() => {
+    refetch();
+  }, [filterQuery, refetch]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const showPagination = useMemo(() => {
+    return (
+      watches?.data?.items?.length &&
+      watches?.data?.items?.length > 0 &&
+      watches?.meta?.totalPages > 1
+    );
+  }, [watches?.data?.items?.length, watches?.meta?.totalPages]);
 
   return (
     <main>
@@ -44,40 +80,91 @@ export default function WatchesContainer({ brand }: { brand?: string }) {
         </h2>
       </div>
 
-      <div className="container mx-auto py-10">
-        <div className="flex items-center">
-          <div className="flex items-center gap-2">
+      <div className="container py-10">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="hidden lg:block lg:col-span-3">
             <WatchFilters />
-            <Input placeholder="Search" />
+          </div>
+          <div className="col-span-full lg:col-span-9 space-y-8">
+            <div className="flex items-center justify-between text-muted-foreground">
+              <div>
+                <FilterSidebar className="pt-9" />
+                {watches?.meta?.totalItems !== undefined &&
+                watches?.meta?.limit !== undefined &&
+                watches?.meta?.totalItems > watches?.meta?.limit ? (
+                  <span className="hidden lg:block">
+                    Showing {watches?.meta?.limit} of{" "}
+                    {watches?.meta?.totalItems}
+                  </span>
+                ) : (
+                  <span className="hidden lg:block">
+                    Showing {watches?.meta?.totalItems ?? 0} of{" "}
+                    {watches?.meta?.totalItems ?? 0}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                {watches?.meta?.totalItems !== undefined &&
+                watches?.meta?.limit !== undefined &&
+                watches?.meta?.totalItems > watches?.meta?.limit ? (
+                  <span className="lg:hidden">
+                    Showing {watches?.meta?.limit} of{" "}
+                    {watches?.meta?.totalItems}
+                  </span>
+                ) : (
+                  <span className="lg:hidden">
+                    Showing {watches?.meta?.totalItems ?? 0} of{" "}
+                    {watches?.meta?.totalItems ?? 0}
+                  </span>
+                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                      <ArrowUpDown className="h-4 w-4" />
+                      Sort by
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuRadioGroup
+                      value={sortBy}
+                      onValueChange={(value) => setSortBy(value as SortOption)}
+                    >
+                      <DropdownMenuRadioItem value="a-z">
+                        Name: A - Z
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="z-a">
+                        Name: Z - A
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="price-low">
+                        Price: Low to High
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="price-high">
+                        Price: High to Low
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="rating">
+                        Highest Rated
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+
+            <WatchList
+              watchesData={watches?.data.items}
+              isFetching={isLoading}
+            />
+
+            {showPagination && (
+              <PaginationControl
+                currentPage={currentPage}
+                totalPages={watches?.meta.totalPages || 1}
+                onPageChange={handlePageChange}
+              />
+            )}
           </div>
         </div>
-
-        {isLoading ? (
-          <div className="mt-6 space-y-6">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {Array.from({ length: 12 }).map((_, index) => (
-                <Skeleton key={index} className="h-[400px] rounded-lg" />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
-            <WatchBrand brands={brands?.data.items} />
-
-            <div className="mt-6 space-y-6">
-              <WatchList watchesData={watches?.data.items} />
-              {watches?.data?.items?.length &&
-              watches?.data?.items?.length > 0 &&
-              watches?.meta ? (
-                <PaginationControl
-                  currentPage={currentPage}
-                  totalPages={watches.meta.totalPages}
-                  onPageChange={handlePageChange}
-                />
-              ) : null}
-            </div>
-          </>
-        )}
       </div>
     </main>
   );

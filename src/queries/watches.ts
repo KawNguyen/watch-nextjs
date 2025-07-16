@@ -1,12 +1,11 @@
 import { watchesApi } from "@/services/watches";
 import { useQuery } from "@tanstack/react-query";
-import { Watch, ApiResponse } from "@/types/watch";
+import { Watch, ApiResponse, Filters } from "@/types/watch";
 
-export const useWatchesQuery = (page: number = 1, brands?: string) =>
+export const useWatchesQuery = (page: number = 1, filters?: Filters) =>
   useQuery<ApiResponse<Watch>>({
-    queryKey: [brands ? brands : "watches", page],
-    queryFn: () =>
-      brands ? watchesApi.fetchByBrand(page, brands) : watchesApi.fetchAll(page),
+    queryKey: ["watches", page, filters],
+    queryFn: () => watchesApi.fetchAll(page, filters),
   });
 
 export const useWatchQuery = (slug: string) =>
@@ -14,10 +13,3 @@ export const useWatchQuery = (slug: string) =>
     queryKey: ["watch", slug],
     queryFn: () => watchesApi.fetchBySlug(slug).then((res) => res.data.item),
   });
-
-// export const useWatchByBrand = (brand: string,page:number) => {
-//   return useQuery({
-//     queryKey: ["watches", brand],
-//     queryFn: () => watchesApi.fetchByBrand(brand,page),
-//   })
-// };

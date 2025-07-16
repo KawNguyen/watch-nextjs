@@ -19,7 +19,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package, Clock, Truck, CheckCircle, XCircle } from "lucide-react";
+import {
+  Package,
+  Clock,
+  Truck,
+  CheckCircle,
+  XCircle,
+  PackageCheck,
+} from "lucide-react";
+import { useOrdersQuery } from "@/queries/order";
 
 enum OrderStatus {
   PENDING = "PENDING",
@@ -38,67 +46,26 @@ interface Order {
   trackingNumber?: string;
 }
 
-const allOrders: Order[] = [
-  {
-    id: "#ORD-001",
-    date: "Dec 15, 2023",
-    items: "3 items",
-    total: "$299.99",
-    status: OrderStatus.DELIVERED,
-    trackingNumber: "TRK123456789",
-  },
-  {
-    id: "#ORD-002",
-    date: "Dec 10, 2023",
-    items: "1 item",
-    total: "$89.99",
-    status: OrderStatus.SHIPPED,
-    trackingNumber: "TRK987654321",
-  },
-  {
-    id: "#ORD-003",
-    date: "Dec 5, 2023",
-    items: "2 items",
-    total: "$159.98",
-    status: OrderStatus.PROCESSING,
-  },
-  {
-    id: "#ORD-004",
-    date: "Dec 1, 2023",
-    items: "1 item",
-    total: "$49.99",
-    status: OrderStatus.PENDING,
-  },
-  {
-    id: "#ORD-005",
-    date: "Nov 28, 2023",
-    items: "4 items",
-    total: "$399.99",
-    status: OrderStatus.CANCELED,
-  },
-  {
-    id: "#ORD-006",
-    date: "Nov 25, 2023",
-    items: "2 items",
-    total: "$129.98",
-    status: OrderStatus.DELIVERED,
-    trackingNumber: "TRK456789123",
-  },
-  {
-    id: "#ORD-007",
-    date: "Nov 20, 2023",
-    items: "1 item",
-    total: "$79.99",
-    status: OrderStatus.PROCESSING,
-  },
-  {
-    id: "#ORD-008",
-    date: "Nov 15, 2023",
-    items: "3 items",
-    total: "$249.97",
-    status: OrderStatus.PENDING,
-  },
-];
+interface RawOrder {
+  id: string;
+  createdAt: string;
+  orderItems: { id: string }[];
+  totalPrice: number;
+  status: OrderStatus;
+}
+
+const transformOrders = (rawOrders: RawOrder[]): Order[] => {
+  return rawOrders.map((order) => ({
+    id: order.id,
+    date: new Date(order.createdAt).toLocaleDateString(),
+    items: `${order.orderItems.length} item${
+      order.orderItems.length > 1 ? "s" : ""
+    }`,
+    total: `$${order.totalPrice.toFixed(2)}`,
+    status: order.status,
+    trackingNumber: "",
+  }));
+};
 
 const getStatusConfig = (status: OrderStatus) => {
   switch (status) {
@@ -117,7 +84,7 @@ const getStatusConfig = (status: OrderStatus) => {
         color: "text-blue-600",
         bgColor: "bg-blue-50",
         borderColor: "border-blue-200",
-        icon: Package,
+        icon: PackageCheck,
         label: "Processing",
       };
     case OrderStatus.SHIPPED:
@@ -168,7 +135,10 @@ const getActionButton = (order: Order) => {
 };
 
 export function OrderHistory() {
+  const { data: orders, isLoading: isOrdersLoading } = useOrdersQuery();
   const [activeTab, setActiveTab] = useState("all");
+
+  const allOrders = transformOrders(orders || []);
 
   const getFilteredOrders = (status?: OrderStatus) => {
     if (!status) return allOrders;
@@ -180,6 +150,12 @@ export function OrderHistory() {
   };
 
   const renderOrderTable = (orders: Order[]) => {
+    if (isOrdersLoading) {
+      return (
+        <div className="text-center py-8 text-gray-500">Loading orders...</div>
+      );
+    }
+
     if (orders.length === 0) {
       return (
         <div className="text-center py-8">
@@ -285,23 +261,18 @@ export function OrderHistory() {
           <TabsContent value="all" className="mt-6">
             {renderOrderTable(allOrders)}
           </TabsContent>
-
           <TabsContent value="pending" className="mt-6">
             {renderOrderTable(getFilteredOrders(OrderStatus.PENDING))}
           </TabsContent>
-
           <TabsContent value="processing" className="mt-6">
             {renderOrderTable(getFilteredOrders(OrderStatus.PROCESSING))}
           </TabsContent>
-
           <TabsContent value="shipped" className="mt-6">
             {renderOrderTable(getFilteredOrders(OrderStatus.SHIPPED))}
           </TabsContent>
-
           <TabsContent value="delivered" className="mt-6">
             {renderOrderTable(getFilteredOrders(OrderStatus.DELIVERED))}
           </TabsContent>
-
           <TabsContent value="canceled" className="mt-6">
             {renderOrderTable(getFilteredOrders(OrderStatus.CANCELED))}
           </TabsContent>

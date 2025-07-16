@@ -44,7 +44,7 @@ const NavigationGender = ({ gender }: NavigationGenderProps) => {
                     {section.items.map((subItem) => (
                       <li key={subItem.value}>
                         <Link
-                          href={`/${subItem.value}/collections?gender=${item.value}`}
+                          href={`/collections?brands=${subItem.value}&genders=${item.value}`}
                           className="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition"
                         >
                           {subItem.title}

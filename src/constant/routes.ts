@@ -36,7 +36,7 @@ export const navigation = {
   gender: [
     {
       title: "Men",
-      value: "men",
+      value: "MEN",
       navItems: [
         {
           title: "Brands",
@@ -60,7 +60,7 @@ export const navigation = {
     },
     {
       title: "Women",
-      value: "women",
+      value: "WOMEN",
       navItems: [
         {
           title: "Brands",

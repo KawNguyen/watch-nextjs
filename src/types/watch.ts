@@ -48,11 +48,10 @@ export interface Watch {
 }
 
 export interface Meta {
-  total: number;
+  limit: number;
   page: number;
+  totalItems: number;
   totalPages: number;
-  lastPage: number;
-  itemsPerPage: number;
 }
 
 export interface ApiResponse<T> {
@@ -70,4 +69,14 @@ export interface ApiResponseItem<T> {
     item: T;
   };
   meta: Meta;
+}
+
+export interface Filters {
+  minPrice?: number;
+  maxPrice?: number;
+  brands?: string[];
+  movements?: string[];
+  materials?: string[];
+  bandMaterials?: string[];
+  genders?: string[];
 }
