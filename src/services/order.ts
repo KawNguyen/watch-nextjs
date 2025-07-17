@@ -1,4 +1,5 @@
 import axiosInstance from "@/lib/axios-instance";
+import { CreateOrderDto } from "@/types/order";
 
 export const orderAPI = {
   getOrdersMe: async () => {
@@ -6,5 +7,8 @@ export const orderAPI = {
     return response.data;
   },
 
-  //   createOrder: async (data: {
+  createOrder: async (data: CreateOrderDto) => {
+    const response = await axiosInstance.post(`/order`, data);
+    return response.data;
+  },
 };

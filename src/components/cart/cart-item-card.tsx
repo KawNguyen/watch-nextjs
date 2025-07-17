@@ -6,6 +6,8 @@ import { CartItem } from "@/types/cart";
 import { formatMoney } from "@/lib/utils";
 import { useCartMutation } from "@/mutation/cart.mutation";
 import { useEffect, useState } from "react";
+import { useAuthStore } from "@/store/auth.store";
+import { useCartStore } from "@/store/cart.store";
 
 export function CartItemCard({
   item,
@@ -18,6 +20,21 @@ export function CartItemCard({
 }) {
   const { updateQuantity } = useCartMutation();
   const [localQuantity, setLocalQuantity] = useState(item.quantity);
+  const { isAuthenticated } = useAuthStore();
+  const { updateQuantityCartItemStore } = useCartStore();
+
+  const handleUpdateQuantity = (delta: number) => {
+    const nextQuantity = Math.max(1, localQuantity + delta);
+    if (isAuthenticated) {
+      updateQuantity.mutate({
+        cartItemId: item.id,
+        newQuantity: nextQuantity,
+      });
+    } else {
+      updateQuantityCartItemStore(item.id, nextQuantity);
+    }
+    setLocalQuantity(nextQuantity);
+  };
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -31,13 +48,6 @@ export function CartItemCard({
 
     return () => clearTimeout(handler);
   }, [localQuantity, item.id, item.quantity, updateQuantity]);
-
-  const handleQuantityChange = (delta: number) => {
-    setLocalQuantity((prev) => {
-      const next = prev + delta;
-      return next < 1 ? 1 : next;
-    });
-  };
 
   return (
     <div>
@@ -68,7 +78,7 @@ export function CartItemCard({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => handleQuantityChange(-1)}
+              onClick={() => handleUpdateQuantity(-1)}
               disabled={localQuantity <= 1 || updateQuantity.isPending}
             >
               −
@@ -77,8 +87,8 @@ export function CartItemCard({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => handleQuantityChange(1)}
               disabled={updateQuantity.isPending}
+              onClick={() => handleUpdateQuantity(+1)}
             >
               +
             </Button>

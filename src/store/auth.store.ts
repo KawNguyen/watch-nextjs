@@ -14,7 +14,7 @@ type AuthStore = {
   };
   setStep: (step: StepType) => void;
   setProfile: (user: UserProps | null) => void;
-  setAuthenticated: (val: boolean) => void;
+  setIsAuthenticated: (val: boolean) => void;
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -28,5 +28,5 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   setStep: (step) => set({ step }),
   setProfile: (user) => set({ profile: user }),
-  setAuthenticated: (val) => set({ isAuthenticated: val }),
+  setIsAuthenticated: (val) => set({ isAuthenticated: val }),
 }));

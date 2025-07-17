@@ -18,14 +18,14 @@ export const useAuth = () => {
   const pendingState = useAuthStore((state) => state.pendingState);
   const setStep = useAuthStore((state) => state.setStep);
   const setProfile = useAuthStore((state) => state.setProfile);
-  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const setIsAuthenticated = useAuthStore((state) => state.setIsAuthenticated);
 
   useEffect(() => {
     if (userData && !profile) {
       setProfile(userData);
-      setAuthenticated(true);
+      setIsAuthenticated(true);
     }
-  }, [userData, profile, setProfile, setAuthenticated]);
+  }, [userData, profile, setProfile, setIsAuthenticated]);
 
   const registerMutation = useMutation({
     mutationFn: (data: RegisterTypes) =>
@@ -33,7 +33,7 @@ export const useAuth = () => {
         data.firstName,
         data.lastName,
         data.email,
-        data.password,
+        data.password
       ),
     onMutate: () => {
       useAuthStore.setState((state) => ({
@@ -58,19 +58,19 @@ export const useAuth = () => {
       authApi.signIn(data.email, data.password),
     onMutate: () => {
       useAuthStore.setState((state) => ({
-        pendingState: { ...state.pendingState, signIn: true },
+        pendingState: { ...state.pendingState },
       }));
     },
     onSuccess: async (data) => {
       if (data.message === "Login successfully") {
         await refetch();
-        setAuthenticated(true);
+        setIsAuthenticated(true);
         router.push("/");
       }
     },
     onSettled: () => {
       useAuthStore.setState((state) => ({
-        pendingState: { ...state.pendingState, signIn: false },
+        pendingState: { ...state.pendingState },
       }));
     },
     onError: (err) => {
@@ -89,7 +89,7 @@ export const useAuth = () => {
     onSuccess: async (data) => {
       if (data.message === "Account created successfully") {
         await refetch();
-        setAuthenticated(true);
+        setIsAuthenticated(true);
         router.push("/");
       }
     },
@@ -105,11 +105,15 @@ export const useAuth = () => {
 
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
+    onMutate: () => {
+      useAuthStore.setState((state) => ({
+        pendingState: { ...state.pendingState },
+      }));
+    },
     onSuccess: () => {
-      setAuthenticated(false);
-      setStep("1");
-      setProfile(null);
       refetch();
+      setIsAuthenticated(false);
+      setStep("1");
     },
   });
 
