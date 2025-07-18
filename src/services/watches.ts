@@ -73,4 +73,9 @@ export const watchesApi = {
     const data = await fetcher<ApiResponseItem<Watch>>(`/watch/${slug}`);
     return data;
   },
+
+  fetchWatchBySearch: async (keyword: string) => {
+    const data = await fetcher<ApiResponse<Watch>>(`/watch?keyword=${keyword}`);
+    return data;
+  },
 };

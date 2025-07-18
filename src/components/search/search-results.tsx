@@ -1,29 +1,31 @@
 "use client";
 
-import { Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Clock, Loader2 } from "lucide-react";
 import { ProductItem } from "./product-item";
 import { Product } from "@/constant/routes";
 
 interface SearchResultsProps {
+  isSearching?: boolean;
   query: string;
-  products: Product[];
+  products: any;
   onBuy?: (product: Product) => void;
-  onViewAll?: () => void;
-  maxResults?: number;
 }
 
 export function SearchResults({
+  isSearching,
   query,
   products,
   onBuy,
-  onViewAll,
-  maxResults = 6,
 }: SearchResultsProps) {
-  const displayedProducts = products.slice(0, maxResults);
-  const hasMoreResults = products.length > maxResults;
+  if (isSearching) {
+    return (
+      <div className="h-96 size-full flex items-center justify-center">
+        <Loader2 className="size-8 animate-spin" />
+      </div>
+    );
+  }
 
-  if (products.length === 0) {
+  if (products.meta.totalItems === 0) {
     return (
       <div className="p-8 text-center">
         <Clock className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
@@ -39,20 +41,13 @@ export function SearchResults({
     <div className="max-h-96 overflow-y-auto">
       <div className="p-4 border-b bg-muted/50">
         <div className="text-sm font-medium">
-          Search results for "{query}" ({products.length} products)
+          Search results for "{query}" ({products?.meta.totalItems} products)
         </div>
       </div>
       <div className="divide-y">
-        {displayedProducts.map((product) => (
+        {products?.data.items.map((product: any) => (
           <ProductItem key={product.id} product={product} onBuy={onBuy} />
         ))}
-        {hasMoreResults && (
-          <div className="p-4 text-center border-t bg-muted/30">
-            <Button variant="outline" size="sm" onClick={onViewAll}>
-              View all {products.length} products
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );

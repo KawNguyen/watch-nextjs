@@ -5,24 +5,24 @@ import { Product } from "@/constant/routes";
 
 interface SearchDropdownProps {
   isOpen: boolean;
+  isSearching?: boolean;
   searchQuery: string;
-  filteredProducts: Product[];
+  products: any;
   popularSearches: string[];
   recentSearches: string[];
   onSearchSelect: (query: string) => void;
   onBuy?: (product: Product) => void;
-  onViewAll?: () => void;
 }
 
 export function SearchDropdown({
   isOpen,
+  isSearching,
   searchQuery,
-  filteredProducts,
+  products,
   popularSearches,
   recentSearches,
   onSearchSelect,
   onBuy,
-  onViewAll,
 }: SearchDropdownProps) {
   if (!isOpen) return null;
 
@@ -31,10 +31,10 @@ export function SearchDropdown({
       <CardContent className="p-0">
         {searchQuery ? (
           <SearchResults
+            isSearching={isSearching}
+            products={products}
             query={searchQuery}
-            products={filteredProducts}
             onBuy={onBuy}
-            onViewAll={onViewAll}
           />
         ) : (
           <SearchSuggestions

@@ -19,7 +19,7 @@ import { useAuth } from "@/mutation/auth.mutation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { CartSheet } from "./cart/cart-sheet";
 import NotificationDropdown from "./notifications/notifications";
-import SearchBar from "./search";
+import SearchBar from "./search-bar";
 import SheetMenu from "./header/sheet-menu";
 
 const Header = () => {
