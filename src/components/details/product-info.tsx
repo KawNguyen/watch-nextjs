@@ -1,16 +1,30 @@
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/mutation/auth.mutation";
 import { useCartMutation } from "@/mutation/cart.mutation";
+import { useCartStore } from "@/store/cart.store";
+import { Watch } from "@/types/watch";
 import { Minus, Plus, Heart } from "lucide-react";
 import { useState } from "react";
 
 interface ProductInfoProps {
-  id: string;
+  watchData: Watch;
   price: number;
 }
-export function ProductInfo({ id, price }: ProductInfoProps) {
+export function ProductInfo({ watchData, price }: ProductInfoProps) {
+  const { isAuthenticated } = useAuth();
   const { addToCart } = useCartMutation();
+  const { addToCartStore } = useCartStore();
+
   const [quantity, setQuantity] = useState(1);
   const totalPrice = price * quantity;
+
+  const handleAddToCart = () => {
+    if (isAuthenticated) {
+      addToCart.mutate({ watchId: watchData.id, quantity: 1 });
+    } else {
+      addToCartStore(watchData, 1);
+    }
+  };
   return (
     <div className="space-y-6 mt-6">
       <div className="flex items-center justify-around">
@@ -41,7 +55,7 @@ export function ProductInfo({ id, price }: ProductInfoProps) {
         <div className="flex items-center gap-4">
           <Button
             className="flex-1 h-12 text-base"
-            onClick={() => addToCart.mutate({ watchId: id, quantity })}
+            onClick={() => handleAddToCart()}
           >
             Add to Cart
           </Button>

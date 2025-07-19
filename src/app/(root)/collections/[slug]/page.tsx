@@ -31,7 +31,7 @@ const DetailsPage = ({ params }: { params: { slug: string } }) => {
               waterResistance={data?.waterResistance}
             />
           </div>
-          <ProductInfo id={data?.id ?? ""} price={data?.price ?? 0} />
+          {data && <ProductInfo watchData={data} price={data.price ?? 0} />}
         </div>
       </div>
       <div>
