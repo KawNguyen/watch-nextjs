@@ -18,6 +18,9 @@ import { CartItem } from "@/types/cart";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatMoney } from "@/lib/utils";
 import { useCartMutation } from "@/mutation/cart.mutation";
+import { useAuthStore } from "@/store/auth.store";
+import { useCartStore } from "@/store/cart.store";
+import { useCheckoutStore } from "@/store/checkout.store";
 
 export function CartSheet() {
   const router = useRouter();
@@ -25,6 +28,10 @@ export function CartSheet() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [open, setOpen] = useState(false);
   const { deleteCartItem } = useCartMutation();
+  const { isAuthenticated } = useAuthStore();
+  const { items: cartItemsStore } = useCartStore();
+
+  const cartItemsToDisplay = isAuthenticated ? cartItems : cartItemsStore;
 
   const handleSelectChange = (id: string, selected: boolean) => {
     setSelectedIds((prev) => {
@@ -40,29 +47,33 @@ export function CartSheet() {
 
   const toggleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedIds(new Set(cartItems.map((item: CartItem) => item.id)));
+      setSelectedIds(
+        new Set(cartItemsToDisplay.map((item: CartItem) => item.id))
+      );
     } else {
       setSelectedIds(new Set());
     }
   };
 
+  const { setSelectedItems } = useCheckoutStore();
   const handleCheckout = () => {
+    setSelectedItems(selectedItems);
     setOpen(false);
     router.push("/checkout");
   };
 
-  const selectedItems = cartItems.filter((item: CartItem) =>
-    selectedIds.has(item.id),
+  const selectedItems = cartItemsToDisplay.filter((item: CartItem) =>
+    selectedIds.has(item.id)
   );
 
   const totalPrice = selectedItems.reduce(
     (sum: number, item: CartItem) => sum + item.watch.price * item.quantity,
-    0,
+    0
   );
 
-  const isAllSelected = selectedIds.size === cartItems.length;
+  const isAllSelected = selectedIds.size === cartItemsToDisplay.length;
   const isIndeterminate =
-    selectedIds.size > 0 && selectedIds.size < cartItems.length;
+    selectedIds.size > 0 && selectedIds.size < cartItemsToDisplay.length;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -71,9 +82,9 @@ export function CartSheet() {
           <SheetTrigger asChild>
             <div className="relative h-full w-full cursor-pointer">
               <ShoppingCart />
-              {cartItems.length > 0 && (
+              {cartItemsToDisplay.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                  {cartItems.length}
+                  {cartItemsToDisplay.length}
                 </span>
               )}
             </div>
@@ -90,7 +101,7 @@ export function CartSheet() {
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto py-4">
-          {cartItems.length > 0 ? (
+          {cartItemsToDisplay.length > 0 ? (
             <>
               <div className="flex items-center gap-2 mb-2">
                 <Checkbox
@@ -108,13 +119,13 @@ export function CartSheet() {
                   {isAllSelected
                     ? "Deselect All"
                     : isIndeterminate
-                      ? "Some items selected"
-                      : "Select All"}
+                    ? "Some items selected"
+                    : "Select All"}
                 </span>
               </div>
 
               <div className="space-y-4">
-                {cartItems.map((item: CartItem, index: number) => (
+                {cartItemsToDisplay.map((item: CartItem, index: number) => (
                   <CartItemCard
                     key={item.id}
                     item={{
@@ -134,7 +145,7 @@ export function CartSheet() {
           )}
         </div>
 
-        {cartItems.length > 0 && (
+        {cartItemsToDisplay.length > 0 && (
           <div className="border-t pt-4">
             <div className="flex justify-between items-center mb-4">
               <span className="font-medium">Total:</span>

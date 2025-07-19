@@ -39,9 +39,18 @@ import { Address } from "@/types/address";
 
 const addFormSchema = z.object({
   street: z.string().min(1, "Address is required"),
-  ward: z.string().min(1, "Ward is required"),
-  district: z.string().min(1, "District is required"),
-  city: z.string().min(1, "City is required"),
+  ward: z.object({
+    name: z.string(),
+    code: z.string(),
+  }),
+  district: z.object({
+    name: z.string(),
+    code: z.string(),
+  }),
+  city: z.object({
+    name: z.string(),
+    code: z.string(),
+  }),
   country: z.string().min(1, "Country is required"),
 });
 type FormValue = z.infer<typeof addFormSchema>;
@@ -71,9 +80,9 @@ export const AddAddressModal = ({
     resolver: zodResolver(addFormSchema),
     defaultValues: {
       street: "",
-      ward: "",
-      district: "",
-      city: "",
+      ward: { name: "", code: "" },
+      district: { name: "", code: "" },
+      city: { name: "", code: "" },
       country: "Việt Nam",
     },
   });
@@ -82,11 +91,18 @@ export const AddAddressModal = ({
     if (!data || !provinces.length) return;
 
     const selectedProvince = provinces.find(
-      (p: { name: string }) => p.name === data.city,
+      (p: { name: string }) =>
+        typeof data.city === "object" &&
+        data.city !== null &&
+        "name" in data.city &&
+        p.name === (data.city as { name: string }).name
     );
     if (selectedProvince && !cityCode) {
       setCityCode(selectedProvince.code.toString());
-      form.setValue("city", selectedProvince.name);
+      form.setValue("city", {
+        name: selectedProvince.name,
+        code: selectedProvince.code.toString(),
+      });
     }
   }, [data, provinces, cityCode, form]);
 
@@ -94,19 +110,38 @@ export const AddAddressModal = ({
     if (!data || !districts?.districts?.length) return;
 
     const selectedDistrict = districts.districts.find(
-      (d: { name: string }) => d.name === data.district,
+      (d: { name: string }) =>
+        typeof data.district === "object" &&
+        data.district !== null &&
+        "name" in data.district &&
+        d.name === (data.district as { name: string }).name
     );
     if (selectedDistrict && !districtCode) {
       setDistrictCode(selectedDistrict.code.toString());
-      form.setValue("district", selectedDistrict.name);
+      form.setValue("district", {
+        name: selectedDistrict.name,
+        code: selectedDistrict.code.toString(),
+      });
     }
   }, [data, districts, districtCode, form]);
 
   useEffect(() => {
     if (data) {
       form.setValue("street", data.street);
-      form.setValue("ward", data.ward);
-      form.setValue("district", data.district);
+      form.setValue("ward", {
+        name:
+          typeof data.ward === "object" &&
+          data.ward !== null &&
+          "name" in data.ward
+            ? (data.ward as { name: string }).name
+            : "",
+        code:
+          typeof data.ward === "object" &&
+          data.ward !== null &&
+          "code" in data.ward
+            ? (data.ward as { code: string }).code
+            : "",
+      });
       form.setValue("country", data.country);
     }
   }, [data, form]);
@@ -129,7 +164,7 @@ export const AddAddressModal = ({
       toast.success(
         type === "create"
           ? "Address added successfully"
-          : "Address saved successfully",
+          : "Address saved successfully"
       );
       queryClient.invalidateQueries({ queryKey: ["my-address"] });
       setOpen(false);
@@ -173,13 +208,16 @@ export const AddAddressModal = ({
                 onValueChange={(value) => {
                   const selected = provinces.find(
                     (p: { code: string; name: string }) =>
-                      p.code.toString() === value,
+                      p.code.toString() === value
                   );
                   if (selected) {
                     setCityCode(selected.code.toString());
-                    form.setValue("city", selected.name);
-                    form.setValue("district", "");
-                    form.setValue("ward", "");
+                    form.setValue("city", {
+                      name: selected.name,
+                      code: selected.code.toString(),
+                    });
+                    form.setValue("district", { name: "", code: "" });
+                    form.setValue("ward", { name: "", code: "" });
                     setDistrictCode("");
                   }
                 }}
@@ -191,28 +229,33 @@ export const AddAddressModal = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {provinces.map((p: { code: string; name: string }) => (
-                    <SelectItem key={p.code} value={p.code.toString()}>
-                      {p.name}
-                    </SelectItem>
-                  ))}
+                  {provinces.map(
+                    (p: { code: string | number; name: string }) => (
+                      <SelectItem key={p.code} value={p.code.toString()}>
+                        {p.name}
+                      </SelectItem>
+                    )
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
 
+            {/* District */}
             <FormItem>
               <FormLabel>District</FormLabel>
               <Select
                 onValueChange={(value) => {
                   const selected = districts.districts.find(
-                    (d: { code: string; name: string }) =>
-                      d.code.toString() === value,
+                    (d: { code: string }) => d.code.toString() === value
                   );
                   if (selected) {
                     setDistrictCode(selected.code.toString());
-                    form.setValue("district", selected.name);
-                    form.setValue("ward", "");
+                    form.setValue("district", {
+                      name: selected.name,
+                      code: selected.code.toString(),
+                    });
+                    form.setValue("ward", { name: "", code: "" });
                   }
                 }}
                 value={districtCode}
@@ -225,11 +268,11 @@ export const AddAddressModal = ({
                 </FormControl>
                 <SelectContent>
                   {districts.districts.map(
-                    (d: { code: string; name: string }) => (
+                    (d: { code: string | number; name: string }) => (
                       <SelectItem key={d.code} value={d.code.toString()}>
                         {d.name}
                       </SelectItem>
-                    ),
+                    )
                   )}
                 </SelectContent>
               </Select>
@@ -244,8 +287,20 @@ export const AddAddressModal = ({
                 <FormItem>
                   <FormLabel>Ward</FormLabel>
                   <Select
-                    onValueChange={(value) => field.onChange(value)}
-                    value={field.value}
+                    onValueChange={(value) => {
+                      const selected:
+                        | { name: string; code: string }
+                        | undefined = wards.wards.find(
+                        (w: { name: string; code: string }) => w.name === value
+                      );
+                      if (selected) {
+                        field.onChange({
+                          name: selected.name,
+                          code: selected.code.toString(),
+                        });
+                      }
+                    }}
+                    value={field.value.name}
                     disabled={!districtCode}
                   >
                     <FormControl>
@@ -254,11 +309,13 @@ export const AddAddressModal = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {wards.wards.map((w: { code: string; name: string }) => (
-                        <SelectItem key={w.code} value={w.name}>
-                          {w.name}
-                        </SelectItem>
-                      ))}
+                      {wards.wards.map(
+                        (w: { code: string | number; name: string }) => (
+                          <SelectItem key={w.code} value={w.name}>
+                            {w.name}
+                          </SelectItem>
+                        )
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

@@ -3,13 +3,25 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Watch } from "@/types/watch";
-
 import { useCartMutation } from "@/mutation/cart.mutation";
 import { useFavoriteMutation } from "@/mutation/favorite.mutation";
+import { useAuthStore } from "@/store/auth.store";
+import { useCartStore } from "@/store/cart.store";
 
 export default function WatchCard({ watchData }: { watchData: Watch }) {
   const { addToCart } = useCartMutation();
   const { addToFavorite } = useFavoriteMutation();
+  const { isAuthenticated } = useAuthStore();
+  const { addToCartStore } = useCartStore();
+
+  const handleAddToCart = () => {
+    if (isAuthenticated) {
+      addToCart.mutate({ watchId: watchData.id, quantity: 1 });
+    } else {
+      addToCartStore(watchData, 1);
+
+    }
+  };
 
   return (
     <div className="group relative overflow-hidden rounded-lg border bg-background p-2">
@@ -33,9 +45,7 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
             <Button
               size="icon"
               className="rounded-full h-10 w-10 bg-white text-black hover:bg-white/90 cursor-pointer"
-              onClick={() =>
-                addToCart.mutate({ watchId: watchData.id, quantity: 1 })
-              }
+              onClick={() => handleAddToCart()}
             >
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Add to cart</span>

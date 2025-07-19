@@ -15,8 +15,10 @@ import {
   Phone,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Component() {
+  const router = useRouter();
   const orderNumber = "WTC-2024-001847";
   const orderDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -239,7 +241,9 @@ export default function Component() {
                   <Package className="w-4 h-4 mr-2" />
                   Track Your Order
                 </Button>
-                <Button className="w-full">Continue Shopping</Button>
+                <Button className="w-full" onClick={() => router.push("/")}>
+                  Continue Shopping
+                </Button>
               </CardContent>
             </Card>
 
