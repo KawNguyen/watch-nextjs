@@ -14,7 +14,7 @@ export const useCartMutation = () => {
     }) => cartApi.addCartItem({ watchId, quantity }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-cart"] });
-      toast.success("Item added to cart.");
+      toast.success("Added item to cart successfully.");
     },
     onError: () => {
       toast.error("Failed to add item to cart. Please try again.");

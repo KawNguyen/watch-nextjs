@@ -1,5 +1,6 @@
 import axiosInstance from "@/lib/axios-instance";
-import { CreateOrderDto } from "@/types/order";
+import { OrderPayload } from "@/types/order";
+
 
 export const orderAPI = {
   getOrdersMe: async () => {
@@ -7,8 +8,13 @@ export const orderAPI = {
     return response.data;
   },
 
-  createOrder: async (data: CreateOrderDto) => {
-    const response = await axiosInstance.post(`/order`, data);
+  createOrderFromCart: async (data: OrderPayload) => {
+    const response = await axiosInstance.post(`/order/create`, data);
     return response.data;
   },
+
+  createOrderWalkin: async (data: OrderPayload) => {
+    const response = await axiosInstance.post(`/order/create-walkin`, data);
+    return response.data;
+  }
 };

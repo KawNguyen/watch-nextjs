@@ -10,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AddAddressModal } from "./add-address-modal";
-import { AddressProps } from "@/types/auth";
 import { useMyAddresses } from "@/queries/address";
 import { useMutation } from "@tanstack/react-query";
 import { addressAPI } from "@/services/address";
@@ -28,6 +27,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/auth.store";
+import { formatAddress } from "@/lib/utils";
+import { AddressProps } from "@/types/auth";
 
 export function AddressManagement() {
   const { profile: user } = useAuthStore();
@@ -78,14 +79,28 @@ export function AddressManagement() {
                         <span className="font-medium">Address {index + 1}</span>
                       </div>
                       <p className="text-sm text-muted-foreground whitespace-pre-line">
-                        {`${address.street}, ${address.ward}, ${address.district}, ${address.city}, ${address.country}`}
+                        {formatAddress(address)}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <AddAddressModal
                         userId={user?.id ?? ""}
                         addressId={address.id}
-                        data={address}
+                        data={{
+                          ...address,
+                          ward:
+                            typeof address.ward === "string"
+                              ? { name: address.ward, code: "" }
+                              : address.ward,
+                          district:
+                            typeof address.district === "string"
+                              ? { name: address.district, code: "" }
+                              : address.district,
+                          city:
+                            typeof address.city === "string"
+                              ? { name: address.city, code: "" }
+                              : address.city,
+                        }}
                         type="edit"
                       />
                       <AlertDialog>
@@ -103,7 +118,7 @@ export function AddressManagement() {
                               You are about to delete the following address:
                               <br />
                               <span className="font-medium block mt-2">
-                                {`${address.street}, ${address.ward}, ${address.district}, ${address.city}, ${address.country}`}
+                                {formatAddress(address)}
                               </span>
                               <br />
                               This action cannot be undone.
@@ -115,7 +130,7 @@ export function AddressManagement() {
                               onClick={() =>
                                 mutation.mutate({
                                   userId: user?.id ?? "",
-                                  addressId: address.id,
+                                  addressId: address.id ?? "",
                                 })
                               }
                             >
