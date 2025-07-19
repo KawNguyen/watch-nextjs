@@ -15,9 +15,8 @@ export const useOrderMutation = () => {
       toast.success("Your order has been created successfully.");
       router.push("/checkout-success");
     },
-    onError: (error: string) => {
-      console.error("Error creating order:", error);
-      toast.error("Failed to create order. Please try again.");
+    onError: (error: any) => {
+      toast.error(`${error.response.data.message}. Please try again.`);
     },
   });
 
