@@ -1,34 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { popularSearches, Product, recentSearches } from "@/constant/routes";
 import { SearchDropdown } from "./search/search-dropdown";
 import { useWatchBySearchQuery } from "@/queries/watches";
 import { useClickOutside } from "@/hooks/use-click-outside";
+
+import { popularSearches, recentSearches } from "@/constant/routes";
 import useDebounce from "@/hooks/use-debounce";
+import { Watch } from "@/types/watch";
 
 export default function WatchSearchBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const searchQueryDebounce = useDebounce(searchQuery, 300);
+  const debouncedQuery = useDebounce(searchQuery, 300);
 
-  const searchRef = useClickOutside(() => {
-    setIsSearchOpen(false);
-  });
-  const { data: productsByKeyword, isLoading } =
-    useWatchBySearchQuery(searchQueryDebounce);
+  const searchRef = useClickOutside(() => setIsSearchOpen(false));
 
-  const handleSearchSelect = (query: string) => {
-    console.log("Searching for:", query);
+  const {
+    data: productsByKeyword,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useWatchBySearchQuery(debouncedQuery);
+
+  const handleSearchSelect = useCallback((query: string) => {
     setSearchQuery(query);
     setIsSearchOpen(false);
-  };
+  }, []);
 
-  const handleBuy = (product: Product) => {
+  const handleBuy = useCallback((product: Watch) => {
     console.log("Buying product:", product);
-  };
+    // Add your buy logic here
+  }, []);
+
+  const handleInputFocus = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
 
   return (
     <div className="w-full lg:max-w-xl xl:max-w-4xl mx-auto p-2 sm:p-4">
@@ -38,9 +48,9 @@ export default function WatchSearchBar() {
           <Input
             type="text"
             placeholder="Search for watches by brand, model..."
-            value={searchQueryDebounce}
+            value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setIsSearchOpen(true)}
+            onFocus={handleInputFocus}
             className="pl-10"
           />
         </div>
@@ -49,11 +59,14 @@ export default function WatchSearchBar() {
           isSearching={isLoading}
           products={productsByKeyword}
           isOpen={isSearchOpen}
-          searchQuery={searchQueryDebounce}
+          searchQuery={debouncedQuery}
           popularSearches={popularSearches}
           recentSearches={recentSearches}
           onSearchSelect={handleSearchSelect}
           onBuy={handleBuy}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
         />
       </div>
     </div>

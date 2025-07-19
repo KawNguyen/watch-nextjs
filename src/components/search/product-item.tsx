@@ -3,12 +3,12 @@
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Product } from "@/constant/routes";
 import { AspectRatio } from "../ui/aspect-ratio";
+import { Watch } from "@/types/watch";
 
 interface ProductItemProps {
-  product: any;
-  onBuy?: (product: Product) => void;
+  product: Watch;
+  onBuy?: (product: Watch) => void;
 }
 
 export function ProductItem({ product, onBuy }: ProductItemProps) {

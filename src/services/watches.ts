@@ -74,8 +74,10 @@ export const watchesApi = {
     return data;
   },
 
-  fetchWatchBySearch: async (keyword: string) => {
-    const data = await fetcher<ApiResponse<Watch>>(`/watch?keyword=${keyword}`);
+  fetchWatchBySearch: async (keyword: string, page = 1, limit = 10) => {
+    const data = await fetcher<ApiResponse<Watch>>(
+      `/watch?keyword=${keyword}&page=${page}&limit=${limit}`
+    );
     return data;
   },
 };
