@@ -1,17 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Menu,
-  ChevronDown,
-  ChevronRight,
-  User,
-  Home,
-  Grid3X3,
-  Users,
-  LogIn,
-  X,
-} from "lucide-react";
+import { Menu, ChevronDown, ChevronRight, User, LogIn, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -28,124 +18,20 @@ import {
 } from "@/components/ui/collapsible";
 import { useRouter } from "next/navigation";
 import WatchSearchBar from "../search-bar";
+import { menuItems } from "@/constant/routes";
+import { useAuth } from "@/mutation/auth.mutation";
 
-const mockUser = {
-  isLoggedIn: true,
-  firstName: "Nguyễn",
-  lastName: "Văn An",
-  email: "nguyenvanan@example.com",
-  avatar: "/placeholder.svg?height=40&width=40&text=User",
-};
-
-const menuItems = [
-  {
-    id: "home",
-    title: "Trang chủ",
-    icon: Home,
-    href: "/",
-  },
-  {
-    id: "collection",
-    title: "Bộ sưu tập",
-    icon: Grid3X3,
-    href: "/collections",
-  },
-  {
-    id: "men",
-    title: "Nam",
-    icon: Users,
-    submenu: [
-      {
-        title: "Brand",
-        href: "/men/brand",
-        children: [
-          { title: "Rolex", value: "rolex", queryKey: "brands" },
-          {
-            title: "Daniel Wellington",
-            value: "daniel-wellington",
-            queryKey: "brands",
-          },
-          { title: "Casio", value: "casio", queryKey: "brands" },
-          { title: "Tissot", value: "tissot", queryKey: "brands" },
-        ],
-      },
-      {
-        title: "Material",
-        href: "/men/material",
-        children: [
-          {
-            title: "Thép không rỉ",
-            value: "stainless-steel",
-            queryKey: "materials",
-          },
-          { title: "Vàng", value: "gold", queryKey: "materials" },
-          { title: "Bạc", value: "silver", queryKey: "materials" },
-        ],
-      },
-      {
-        title: "Band Material",
-        href: "/men/band-material",
-        children: [
-          {
-            title: "Thép không rỉ",
-            value: "stainless-steel",
-            queryKey: "bandMaterials",
-          },
-          { title: "Da cá sâu", value: "leather", queryKey: "bandMaterials" },
-          { title: "Vàng", value: "gold", queryKey: "bandMaterials" },
-          { title: "Bạc", value: "silver", queryKey: "bandMaterials" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "women",
-    title: "Nữ",
-    icon: Users,
-    submenu: [
-      {
-        title: "Brand",
-        href: "/women/brand",
-        children: [
-          { title: "Rolex", value: "rolex", queryKey: "brands" },
-          { title: "DW", value: "dw", queryKey: "brands" },
-          { title: "Casio", value: "casio", queryKey: "brands" },
-          { title: "Tissot", value: "tissot", queryKey: "brands" },
-        ],
-      },
-      {
-        title: "Material",
-        href: "/women/material",
-        children: [
-          {
-            title: "Thép không rỉ",
-            value: "stainless-steel",
-            queryKey: "materials",
-          },
-          { title: "Vàng", value: "gold", queryKey: "materials" },
-          { title: "Bạc", value: "silver", queryKey: "materials" },
-        ],
-      },
-      {
-        title: "Band Material",
-        href: "/women/band-material",
-        children: [
-          {
-            title: "Thép không rỉ",
-            value: "stainless-steel",
-            queryKey: "bandMaterials",
-          },
-          { title: "Da cá sâu", value: "leather", queryKey: "bandMaterials" },
-          { title: "Vàng", value: "gold", queryKey: "bandMaterials" },
-          { title: "Bạc", value: "silver", queryKey: "bandMaterials" },
-        ],
-      },
-    ],
-  },
-];
+// const mockUser = {
+//   isLoggedIn: true,
+//   firstName: "Nguyễn",
+//   lastName: "Văn An",
+//   email: "nguyenvanan@example.com",
+//   avatar: "/placeholder.svg?height=40&width=40&text=User",
+// };
 
 export default function MobileSheetMenu() {
   const router = useRouter();
+  const { isAuthenticated, profile } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
 
@@ -296,22 +182,25 @@ export default function MobileSheetMenu() {
 
         {/* Footer */}
         <div className="p-6 pt-4 border-t bg-gray-50">
-          {mockUser.isLoggedIn ? (
+          {isAuthenticated ? (
             <div className="space-y-4">
               <div className="flex items-center gap-3 p-4 rounded-lg bg-white border">
                 <Avatar className="h-12 w-12">
-                  <AvatarImage src={mockUser.avatar} alt="User avatar" />
+                  <AvatarImage
+                    src={profile?.avatar?.absolute_url}
+                    alt="User avatar"
+                  />
                   <AvatarFallback className="bg-blue-500 text-white">
-                    {mockUser.firstName.charAt(0)}
-                    {mockUser.lastName.charAt(0)}
+                    {profile?.firstName?.charAt(0)}
+                    {profile?.lastName?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold truncate">
-                    {mockUser.firstName} {mockUser.lastName}
+                    {profile?.firstName} {profile?.lastName}
                   </p>
                   <p className="text-xs text-gray-500 truncate">
-                    {mockUser.email}
+                    {profile?.email}
                   </p>
                 </div>
               </div>
@@ -320,7 +209,7 @@ export default function MobileSheetMenu() {
                   variant="outline"
                   size="sm"
                   className="flex-1 bg-transparent"
-                  onClick={() => handleMenuClick("/account")}
+                  onClick={() => handleMenuClick("/account/profile")}
                 >
                   Tài khoản
                 </Button>

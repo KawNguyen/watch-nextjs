@@ -11,8 +11,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const formatDate = (date: Date) => {
+  return date.toLocaleDateString("vi-VN", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+};
+
 export const formatTime = (date: Date) => {
-  return date.toLocaleTimeString("en-US", {
+  return date.toLocaleTimeString("vi-VN", {
     hour12: false,
     hour: "2-digit",
     minute: "2-digit",
@@ -46,4 +54,22 @@ export function formatAddress(address: AddressProps) {
   ]
     .filter(Boolean)
     .join(", ");
+}
+
+export function formatDeliveryAddress(address: {
+  street?: string;
+  wardName?: string;
+  districtName?: string;
+  provinceName?: string;
+}) {
+  const parts = [
+    address.street,
+    address.wardName,
+    address.districtName,
+    address.provinceName,
+  ]
+    .filter(Boolean)
+    .map((part) => (part as string).replace(/^"|"$/g, ""));
+
+  return parts.join(", ");
 }

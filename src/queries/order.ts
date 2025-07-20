@@ -1,10 +1,10 @@
 import { orderAPI } from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 
-export const useOrdersQuery = () =>
+export const useOrdersQuery = (status: string) =>
   useQuery({
-    queryKey: ["my-orders"],
-    queryFn: () => orderAPI.getOrdersMe().then((res) => res.data.items),
+    queryKey: ["my-orders", status],
+    queryFn: () => orderAPI.getOrdersMe(status).then((res) => res.data.items),
   });
 
 export const useOrderQuery = (orderId: string) =>

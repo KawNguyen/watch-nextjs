@@ -1,4 +1,4 @@
-import { Youtube, Instagram, Facebook } from "lucide-react";
+import { Youtube, Instagram, Facebook, Users, Grid3X3, Home } from "lucide-react";
 
 export const navigation = {
   brand: [
@@ -187,93 +187,6 @@ export const team = [
   },
 ];
 
-export const searchProducts = [
-  {
-    id: "1",
-    title: "Bo mạch chủ MSI PRO B760M-A WIFI DDR4",
-    price: 3490000,
-    originalPrice: 4190000,
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=80&h=80&fit=crop",
-    category: "Motherboard",
-    href: "/products/1",
-    inStock: true,
-  },
-  {
-    id: "2",
-    title: "Bo mạch chủ MSI A320M-A Pro",
-    price: 1390000,
-    originalPrice: 1550000,
-    image:
-      "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=80&h=80&fit=crop",
-    category: "Motherboard",
-    href: "/products/2",
-    inStock: true,
-  },
-  {
-    id: "3",
-    title: "Bo mạch chủ ASUS PRIME A620M-A DDR5",
-    price: 3290000,
-    image:
-      "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=80&h=80&fit=crop",
-    category: "Motherboard",
-    href: "/products/3",
-    inStock: false,
-  },
-  {
-    id: "4",
-    title: "Bo mạch chủ MSI B450M-A PRO MAX II",
-    price: 1690000,
-    originalPrice: 1990000,
-    image:
-      "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=80&h=80&fit=crop",
-    category: "Motherboard",
-    href: "/products/4",
-    inStock: true,
-  },
-  {
-    id: "5",
-    title: "Bo mạch chủ ASUS PRIME B650M-A-CSM DDR5",
-    price: 4690000,
-    image:
-      "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=80&h=80&fit=crop",
-    category: "Motherboard",
-    href: "/products/5",
-    inStock: true,
-  },
-  {
-    id: "6",
-    title: "Classic Heritage Watch Premium Gold",
-    price: 2500000,
-    originalPrice: 3200000,
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&h=80&fit=crop",
-    category: "Watch",
-    href: "/products/6",
-    inStock: true,
-  },
-  {
-    id: "7",
-    title: "Luxury Gold Watch Diamond Edition",
-    price: 8900000,
-    image:
-      "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=80&h=80&fit=crop",
-    category: "Watch",
-    href: "/products/7",
-    inStock: true,
-  },
-  {
-    id: "8",
-    title: "Sport Elite Watch Titanium",
-    price: 1890000,
-    originalPrice: 2100000,
-    image:
-      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=80&h=80&fit=crop",
-    category: "Watch",
-    href: "/products/8",
-    inStock: true,
-  },
-];
 
 export const mockNotifications = [
   {
@@ -578,5 +491,112 @@ export const articles = [
     title: "Hướng Dẫn Chọn Đồng Hồ Cho Nam",
     description:
       "Đồng hồ là món quà ý nghĩa dành cho người yêu thời trang và những người yêu thời trang.",
+  },
+];
+
+export const menuItems = [
+  {
+    id: "home",
+    title: "Trang chủ",
+    icon: Home,
+    href: "/",
+  },
+  {
+    id: "collection",
+    title: "Bộ sưu tập",
+    icon: Grid3X3,
+    href: "/collections",
+  },
+  {
+    id: "men",
+    title: "Nam",
+    icon: Users,
+    submenu: [
+      {
+        title: "Brand",
+        href: "/men/brand",
+        children: [
+          { title: "Rolex", value: "rolex", queryKey: "brands" },
+          {
+            title: "Daniel Wellington",
+            value: "daniel-wellington",
+            queryKey: "brands",
+          },
+          { title: "Casio", value: "casio", queryKey: "brands" },
+          { title: "Tissot", value: "tissot", queryKey: "brands" },
+        ],
+      },
+      {
+        title: "Material",
+        href: "/men/material",
+        children: [
+          {
+            title: "Thép không rỉ",
+            value: "stainless-steel",
+            queryKey: "materials",
+          },
+          { title: "Vàng", value: "gold", queryKey: "materials" },
+          { title: "Bạc", value: "silver", queryKey: "materials" },
+        ],
+      },
+      {
+        title: "Band Material",
+        href: "/men/band-material",
+        children: [
+          {
+            title: "Thép không rỉ",
+            value: "stainless-steel",
+            queryKey: "bandMaterials",
+          },
+          { title: "Da cá sâu", value: "leather", queryKey: "bandMaterials" },
+          { title: "Vàng", value: "gold", queryKey: "bandMaterials" },
+          { title: "Bạc", value: "silver", queryKey: "bandMaterials" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "women",
+    title: "Nữ",
+    icon: Users,
+    submenu: [
+      {
+        title: "Brand",
+        href: "/women/brand",
+        children: [
+          { title: "Rolex", value: "rolex", queryKey: "brands" },
+          { title: "DW", value: "dw", queryKey: "brands" },
+          { title: "Casio", value: "casio", queryKey: "brands" },
+          { title: "Tissot", value: "tissot", queryKey: "brands" },
+        ],
+      },
+      {
+        title: "Material",
+        href: "/women/material",
+        children: [
+          {
+            title: "Thép không rỉ",
+            value: "stainless-steel",
+            queryKey: "materials",
+          },
+          { title: "Vàng", value: "gold", queryKey: "materials" },
+          { title: "Bạc", value: "silver", queryKey: "materials" },
+        ],
+      },
+      {
+        title: "Band Material",
+        href: "/women/band-material",
+        children: [
+          {
+            title: "Thép không rỉ",
+            value: "stainless-steel",
+            queryKey: "bandMaterials",
+          },
+          { title: "Da cá sâu", value: "leather", queryKey: "bandMaterials" },
+          { title: "Vàng", value: "gold", queryKey: "bandMaterials" },
+          { title: "Bạc", value: "silver", queryKey: "bandMaterials" },
+        ],
+      },
+    ],
   },
 ];

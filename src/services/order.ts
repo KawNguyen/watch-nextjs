@@ -2,8 +2,10 @@ import axiosInstance from "@/lib/axios-instance";
 import { OrderPayload } from "@/types/order";
 
 export const orderAPI = {
-  getOrdersMe: async () => {
-    const response = await axiosInstance.get(`/order/my-order`);
+  getOrdersMe: async (status: string) => {
+    const response = await axiosInstance.get(
+      `/order/my-order?status=${status}`
+    );
     return response.data;
   },
 
