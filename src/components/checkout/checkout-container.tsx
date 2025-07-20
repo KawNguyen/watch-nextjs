@@ -103,7 +103,6 @@ const CheckoutContainer = () => {
         : undefined,
     };
 
-    console.log(basePayload);
     if (!isAuthenticated) {
       createOrderWalkin.mutate(basePayload);
     } else {

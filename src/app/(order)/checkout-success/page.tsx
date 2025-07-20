@@ -1,7 +1,7 @@
 import CheckoutSuccess from "@/components/checkout-success/checkout-success";
 
-const page = () => {
+const CheckoutSuccessPage = () => {
   return <CheckoutSuccess />;
 };
 
-export default page;
+export default CheckoutSuccessPage;
