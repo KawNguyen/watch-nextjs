@@ -13,18 +13,35 @@ import {
   Download,
   Mail,
   Phone,
+  Loader2,
 } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useOrderQuery } from "@/queries/order";
 
 export default function Component() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderInfo") ?? router.push("/");
+
+  const { data, isLoading } = useOrderQuery(orderId as string);
+
   const orderNumber = "WTC-2024-001847";
-  const orderDate = new Date().toLocaleDateString("en-US", {
+  const orderDate = new Date(data?.item.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+
+  if (isLoading)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="animate-spin size-8" />
+      </div>
+    );
+
+  const deliveryAddress = JSON.parse(data?.item.deliveryAddress as string);
+  const fullName = `${data.item.user.firstName} ${data.item.user.lastName}`;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -66,40 +83,48 @@ export default function Component() {
                 </div>
 
                 <Separator />
+                {data?.item.orderItems.map((item: any) => (
+                  <div key={item.id} className="flex gap-4">
+                    <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
+                      <Image
+                        src="https://placehold.co/96x96/png"
+                        alt="Rolex Submariner"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
 
-                <div className="flex gap-4">
-                  <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
-                    <Image
-                      src="/placeholder.svg?height=96&width=96"
-                      alt="Rolex Submariner"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg">Rolex Submariner</h3>
-                    <p className="text-gray-600">Black Dial, Steel Case</p>
-                    <p className="text-sm text-gray-500">Model: 126610LN</p>
-                    <div className="flex items-center gap-1 mt-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                      <span className="text-sm text-gray-600 ml-1">(4.9)</span>
-                    </div>
-                    <div className="flex items-center justify-between mt-2">
-                      <Badge
-                        variant="secondary"
-                        className="bg-green-100 text-green-800"
-                      >
-                        Authentic Certified
-                      </Badge>
-                      <span className="font-bold text-xl">$8,995.00</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">
+                        {item.watch.name}
+                      </h3>
+                      <p className="text-gray-600">Black Dial, Steel Case</p>
+                      <p className="text-sm text-gray-500">Model: 126610LN</p>
+                      <div className="flex items-center gap-1 mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                          />
+                        ))}
+                        <span className="text-sm text-gray-600 ml-1">
+                          (4.9)
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-2">
+                        <Badge
+                          variant="secondary"
+                          className="bg-green-100 text-green-800"
+                        >
+                          Authentic Certified
+                        </Badge>
+                        <span className="font-bold text-xl">
+                          ${item.price.toFixed(2)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </CardContent>
             </Card>
 
@@ -115,9 +140,13 @@ export default function Component() {
                   <div>
                     <p className="text-sm text-gray-600">Shipping Address</p>
                     <div className="mt-1">
-                      <p className="font-medium">John Doe</p>
-                      <p className="text-gray-700">123 Main Street</p>
-                      <p className="text-gray-700">New York, NY 10001</p>
+                      <p className="font-medium">{fullName}</p>
+                      <p className="text-gray-700">{deliveryAddress.street}</p>
+                      <p className="text-gray-700">
+                        {deliveryAddress.wardName},{" "}
+                        {deliveryAddress.districtName},{" "}
+                        {deliveryAddress.provinceName}
+                      </p>
                     </div>
                   </div>
                   <div>
@@ -200,20 +229,20 @@ export default function Component() {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>$8,995.00</span>
+                    <span>${data?.item.originalPrice}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Express Shipping</span>
-                    <span>$35.00</span>
+                    <span>$0</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Tax</span>
-                    <span>$719.60</span>
+                    <span>$0</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total Paid</span>
-                    <span>$9,749.60</span>
+                    <span>${data?.item.totalPrice}</span>
                   </div>
                 </div>
 

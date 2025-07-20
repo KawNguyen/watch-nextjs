@@ -58,6 +58,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "scontent.fsgn5-14.fna.fbcdn.net",
       },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+      },
     ],
   },
 };
