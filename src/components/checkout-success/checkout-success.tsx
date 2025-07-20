@@ -87,7 +87,7 @@ export default function Component() {
                   <div key={item.id} className="flex gap-4">
                     <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
                       <Image
-                        src="https://placehold.co/96x96/png"
+                        src={item.watch.images[0]?.absoluteUrl || "https://placehold.co/96x96/png"}
                         alt="Rolex Submariner"
                         fill
                         className="object-cover"
