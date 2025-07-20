@@ -25,7 +25,8 @@ import { useAuthStore } from "@/store/auth.store";
 import { useMyAddresses } from "@/queries/address";
 import { useProvinces, useDistricts, useWards } from "@/queries/address";
 import { Card } from "../ui/card";
-import { UserProps } from "@/types/auth";
+import { AddressProps, UserProps } from "@/types/auth";
+import { formatAddress } from "@/lib/utils";
 
 type FormValues = {
   firstName: string;
@@ -242,7 +243,6 @@ export const CustomerInfo = ({
     return () => subscription.unsubscribe();
   }, [form, setCustomerInfo]);
 
-  // Don't render until component is mounted to prevent hydration issues
   if (!isMounted) {
     return (
       <Card className="p-4 bg-gray-100">
@@ -324,9 +324,9 @@ export const CustomerInfo = ({
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Addresses</SelectLabel>
-                        {addresses.map((addr: Address) => (
+                        {addresses.map((addr: AddressProps) => (
                           <SelectItem key={addr.id ?? ""} value={addr.id ?? ""}>
-                            {`${addr.street}, ${addr.ward}, ${addr.district}, ${addr.city}`}
+                            {formatAddress(addr)}
                           </SelectItem>
                         ))}
                       </SelectGroup>

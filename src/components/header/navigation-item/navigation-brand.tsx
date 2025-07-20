@@ -38,7 +38,7 @@ const NavigationBrand = ({ brands }: NavigationBrandProps) => {
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Link
-                    href={`${brand.value}/collections`}
+                    href={`/collections?brands=${brand.value}`}
                     className={`block px-3 py-2 rounded-md text-sm transition-colors 
                       text-gray-700 hover:bg-gray-200`}
                   >
