@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useOrderQuery } from "@/queries/order";
+import { formatMoney } from "@/lib/utils";
 
 export default function Component() {
   const router = useRouter();
@@ -87,7 +88,10 @@ export default function Component() {
                   <div key={item.id} className="flex gap-4">
                     <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
                       <Image
-                        src={item.watch.images[0]?.absoluteUrl || "https://placehold.co/96x96/png"}
+                        src={
+                          item.watch.images[0]?.absolute_url ||
+                          "https://placehold.co/96x96/png"
+                        }
                         alt="Rolex Submariner"
                         fill
                         className="object-cover"
@@ -119,7 +123,7 @@ export default function Component() {
                           Authentic Certified
                         </Badge>
                         <span className="font-bold text-xl">
-                          ${item.price.toFixed(2)}
+                          {formatMoney(item.price)}
                         </span>
                       </div>
                     </div>
@@ -229,7 +233,7 @@ export default function Component() {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>${data?.item.originalPrice}</span>
+                    <span>{formatMoney(data?.item.originalPrice)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Express Shipping</span>
@@ -242,7 +246,7 @@ export default function Component() {
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total Paid</span>
-                    <span>${data?.item.totalPrice}</span>
+                    <span>{formatMoney(data?.item.totalPrice)}</span>
                   </div>
                 </div>
 

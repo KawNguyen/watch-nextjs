@@ -71,7 +71,7 @@ export function CartItemCard({
         <div className="flex-1">
           <h3 className="font-medium">{item.watch.name}</h3>
           <p className="text-gray-600">
-            {formatMoney(item.watch.price, "en-US", "USD")}
+            {formatMoney(item.watch.price)}
           </p>
 
           <div className="flex items-center gap-2 mt-2">

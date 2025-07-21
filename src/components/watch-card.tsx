@@ -7,6 +7,7 @@ import { useCartMutation } from "@/mutation/cart.mutation";
 import { useFavoriteMutation } from "@/mutation/favorite.mutation";
 import { useAuthStore } from "@/store/auth.store";
 import { useCartStore } from "@/store/cart.store";
+import { formatMoney } from "@/lib/utils";
 
 export default function WatchCard({ watchData }: { watchData: Watch }) {
   const { addToCart } = useCartMutation();
@@ -19,7 +20,6 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
       addToCart.mutate({ watchId: watchData.id, quantity: 1 });
     } else {
       addToCartStore(watchData, 1);
-
     }
   };
 
@@ -108,7 +108,7 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
         </div>
 
         <div className="mt-2">
-          <span className="font-medium">${watchData.price}</span>
+          <span className="font-medium">{formatMoney(watchData.price)}</span>
         </div>
       </div>
     </div>
