@@ -37,7 +37,7 @@ import { useState } from "react";const SheetMenu = () => {
                   className="flex items-center justify-between w-full text-sm font-medium text-gray-800 mb-2"
                 >
                   <span>Brands</span>
-                  <ChevronRight className={`h-4 w-4 transition-transform ${brandsOpen ? 'transform rotate-' : ''}`} />
+                  <ChevronRight className={`h-4 w-4 transition-transform ${brandsOpen ? 'transform rotate-90' : ''}`} />
                 </button>
                 <div className={`space-y-1 ${brandsOpen ? 'block' : 'hidden'}`}>
                   {navigation.brand.map((brand, index) => (
