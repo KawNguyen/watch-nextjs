@@ -43,6 +43,7 @@ export enum OrderStatus {
   PROCESSING = "PROCESSING",
   SHIPPING = "SHIPPING",
   DELIVERED = "DELIVERED",
+  COMPLETED = "COMPLETED",
   CANCELED = "CANCELED",
 }
 
@@ -53,13 +54,13 @@ export interface Order {
   totalPrice: number;
   originalPrice: number;
   couponId: string | null;
-  coupon: any | null; 
+  coupon: any | null;
   cancellationReason: string | null;
   paymentMethod: paymentMethodEnum;
   shippingNotes: string;
-  deliveryAddress: string; 
+  deliveryAddress: string;
   orderItems: OrderItem[];
-  walkinInformation: any | null; 
+  walkinInformation: any | null;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

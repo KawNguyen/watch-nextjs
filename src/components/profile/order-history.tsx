@@ -30,19 +30,10 @@ import {
 import { formatDate, formatMoney } from "@/lib/utils";
 import { OrderDetailsModal } from "./order-details-modal";
 import { useCancelOrderMutation, useOrdersQuery } from "@/queries/order";
-import { Order } from "@/types/order";
+import { Order, OrderStatus } from "@/types/order";
 import { CancelOrderDialog } from "./cancel-order-dialog";
 import { toast } from "sonner";
 import { queryClient } from "../providers/providers";
-
-enum OrderStatus {
-  PENDING = "PENDING",
-  PROCESSING = "PROCESSING",
-  SHIPPING = "SHIPPING",
-  DELIVERED = "DELIVERED",
-  CANCELED = "CANCELED",
-  COMPLETED = "COMPLETED",
-}
 
 // const useOrdersQuery = (status: OrderStatus) => {
 //   return useQuery({
