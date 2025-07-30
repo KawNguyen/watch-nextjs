@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { formatMoney } from "@/lib/utils";
 import { useAuth } from "@/mutation/auth.mutation";
 import { useCartMutation } from "@/mutation/cart.mutation";
 import { useCartStore } from "@/store/cart.store";
@@ -48,7 +49,9 @@ export function ProductInfo({ watchData, price }: ProductInfoProps) {
           </Button>
         </div>
         <div>
-          <p className="text-3xl font-semibold text-primary">{totalPrice}</p>
+          <p className="text-3xl font-semibold text-primary">
+            {formatMoney(totalPrice)}
+          </p>
         </div>
       </div>
       <div className="space-y-6">

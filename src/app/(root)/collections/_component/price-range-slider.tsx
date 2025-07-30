@@ -25,7 +25,7 @@ export function PriceRangeSlider({
       <div className="flex items-center justify-between">
         <span className="text-lg font-medium">Price Range</span>
         <span className="text-sm text-muted-foreground">
-          ${value[0].toLocaleString()} - ${value[1].toLocaleString()}
+          {value[0].toLocaleString()} - {value[1].toLocaleString()}
         </span>
       </div>
 

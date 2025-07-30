@@ -21,7 +21,7 @@ export interface WatchFilters {
 
 // Default values
 const DEFAULT_MIN_PRICE = 0;
-const DEFAULT_MAX_PRICE = 10000;
+const DEFAULT_MAX_PRICE = 100000000;
 
 export function useWatchFilters() {
   const [filters, setFilters] = useQueryStates({

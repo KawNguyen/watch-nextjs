@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CartItem } from "@/types/cart";
+import { formatMoney } from "@/lib/utils";
 
 export const OrderSummary = ({ items }: { items: CartItem[] }) => {
   return (
@@ -29,7 +30,7 @@ export const OrderSummary = ({ items }: { items: CartItem[] }) => {
                 Brand: {product.watch.brand.name}
               </p>
               <p className="font-semibold text-gray-900 mt-1">
-                ${product.watch.price.toFixed(2)}
+                {formatMoney(product.watch.price)}
               </p>
             </CardContent>
           </Card>

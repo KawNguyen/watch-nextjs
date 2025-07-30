@@ -27,6 +27,7 @@ const FAQPage = () => {
           >
             <Button
               className="flex justify-between items-center w-full text-left text-lg font-semibold text-gray-800 focus:outline-none"
+              variant="ghost"
               onClick={() => toggleFAQ(idx)}
               aria-expanded={openIndex === idx}
             >

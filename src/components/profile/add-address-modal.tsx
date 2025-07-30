@@ -201,7 +201,6 @@ export const AddAddressModal = ({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* City/Province */}
             <FormItem>
               <FormLabel>City / Province</FormLabel>
               <Select
@@ -241,7 +240,6 @@ export const AddAddressModal = ({
               <FormMessage />
             </FormItem>
 
-            {/* District */}
             <FormItem>
               <FormLabel>District</FormLabel>
               <Select
@@ -279,7 +277,6 @@ export const AddAddressModal = ({
               <FormMessage />
             </FormItem>
 
-            {/* Ward */}
             <FormField
               control={form.control}
               name="ward"
@@ -323,7 +320,6 @@ export const AddAddressModal = ({
               )}
             />
 
-            {/* Street */}
             <FormField
               control={form.control}
               name="street"
@@ -338,7 +334,6 @@ export const AddAddressModal = ({
               )}
             />
 
-            {/* Country */}
             <FormField
               control={form.control}
               name="country"

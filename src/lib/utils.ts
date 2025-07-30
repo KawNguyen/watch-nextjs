@@ -73,3 +73,13 @@ export function formatDeliveryAddress(address: {
 
   return parts.join(", ");
 }
+
+export function extractThumbnailAndDescription(htmlString: string) {
+  if (typeof window === "undefined") return { thumbnail: "", description: "" };
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, "text/html");
+  const img = doc.querySelector("img")?.getAttribute("src") || "";
+  const description = doc.querySelector("p")?.textContent || "";
+  return { thumbnail: img, description };
+}

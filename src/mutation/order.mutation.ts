@@ -34,7 +34,7 @@ const handleOrderWithMomo = async (
       console.error("Momo payment creation failed:", error);
     }
   } else {
-    router.push("/checkout-success");
+    router.push("/checkout-success?orderInfo=" + result.data.item.id);
   }
 
   return result;
@@ -68,7 +68,6 @@ export const useOrderMutation = () => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-orders"] });
       toast.success("Your order has been created successfully.");
     },
     onError: (error: string) => {

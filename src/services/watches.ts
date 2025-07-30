@@ -33,7 +33,7 @@ export const watchesApi = {
     }
 
     const data = await fetcher<ApiResponse<Watch>>(
-      `/watch?${params.toString()}`
+      `/watch?${params.toString()}&status=PUBLISHED`
     );
     return data;
   },

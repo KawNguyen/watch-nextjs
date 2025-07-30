@@ -150,7 +150,7 @@ export function CartSheet() {
             <div className="flex justify-between items-center mb-4">
               <span className="font-medium">Total:</span>
               <span className="font-bold text-lg">
-                {formatMoney(totalPrice, "en-US", "USD")}
+                {formatMoney(totalPrice)}
               </span>
             </div>
 

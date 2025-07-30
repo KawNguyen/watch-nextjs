@@ -8,6 +8,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { formatMoney } from "@/lib/utils";
 
 export const Invoice = ({ items }: { items: CartItem[] }) => {
   const invoiceNumber = `INV-${new Date().getFullYear()}-${Math.floor(
@@ -50,10 +51,10 @@ export const Invoice = ({ items }: { items: CartItem[] }) => {
                 <td className="py-2">{item.watch.name}</td>
                 <td className="py-2 text-center">{item.quantity}</td>
                 <td className="py-2 text-right">
-                  ${item.watch.price.toFixed(2)}
+                  {formatMoney(item.watch.price)}
                 </td>
                 <td className="py-2 text-right">
-                  ${(item.quantity * item.watch.price).toFixed(2)}
+                  {formatMoney(item.quantity * item.watch.price)}
                 </td>
               </tr>
             ))}
@@ -68,12 +69,12 @@ export const Invoice = ({ items }: { items: CartItem[] }) => {
       <CardContent className="space-y-2 text-sm">
         <div className="flex justify-between">
           <span className="text-gray-500">Subtotal</span>
-          <span className="text-gray-900">${subtotal.toFixed(2)}</span>
+          <span className="text-gray-900">{formatMoney(subtotal)}</span>
         </div>
       </CardContent>
       <CardFooter className="border-t border-gray-200 pt-4 flex justify-between font-semibold text-gray-900">
         <span>Total Amount</span>
-        <span>${total.toFixed(2)}</span>
+        <span>{formatMoney(total)}</span>
       </CardFooter>
     </Card>
   );

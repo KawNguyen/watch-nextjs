@@ -102,7 +102,14 @@ export function OrderDetailsModal({
   orderId,
 }: OrderDetailsModalProps) {
   const { data: orderDetails } = useOrderQuery(orderId);
-  const deliveryAddress = JSON.parse(orderDetails?.item.deliveryAddress as string);
+  const deliveryAddress = orderDetails?.item.deliveryAddress
+    ? JSON.parse(orderDetails.item.deliveryAddress)
+    : {
+        street: "",
+        provinceName: "",
+        districtName: "",
+        wardName: "",
+      };
 
   if (!orderDetails) return null;
 
@@ -118,7 +125,8 @@ export function OrderDetailsModal({
             Order Details - {orderDetails?.item.id}
           </DialogTitle>
           <DialogDescription>
-            Placed on {orderDetails?.item.date} • {orderDetails?.item.orderItems.length} item
+            Placed on {orderDetails?.item.date} •{" "}
+            {orderDetails?.item.orderItems.length} item
             {orderDetails?.item.orderItems.length > 1 ? "s" : ""}
           </DialogDescription>
         </DialogHeader>
@@ -151,40 +159,44 @@ export function OrderDetailsModal({
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {orderDetails?.item.orderItems.map((item: any, index: number) => (
-                  <div key={item.id}>
-                    <div className="flex gap-4">
-                      <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image
-                          src={item.watch.image || "/placeholder.svg"}
-                          alt={item.watch.name}
-                          width={80}
-                          height={80}
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-medium">{item.watch.name}</h4>
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="text-sm text-gray-600">
-                            Qty: {item.quantity}
-                          </span>
-                          <span className="font-semibold">
-                            {formatMoney(item.price * item.quantity)}
-                          </span>
+                {orderDetails?.item.orderItems.map(
+                  (item: any, index: number) => (
+                    <div key={item.id}>
+                      <div className="flex gap-4">
+                        <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                          <Image
+                            src={
+                              item.watch.images[0]?.absolute_url ||
+                              "/placeholder.svg"
+                            }
+                            alt={item.watch.name}
+                            width={80}
+                            height={80}
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium">{item.watch.name}</h4>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-sm text-gray-600">
+                              Qty: {item.quantity}
+                            </span>
+                            <span className="font-semibold">
+                              {formatMoney(item.watch.price * item.quantity)}
+                            </span>
+                          </div>
                         </div>
                       </div>
+                      {index < orderDetails?.item.orderItems.length - 1 && (
+                        <Separator className="mt-4" />
+                      )}
                     </div>
-                    {index < orderDetails?.item.orderItems.length - 1 && (
-                      <Separator className="mt-4" />
-                    )}
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Address + Payment */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
@@ -208,7 +220,9 @@ export function OrderDetailsModal({
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <p className="font-medium">{orderDetails?.item.paymentMethod}</p>
+                  <p className="font-medium">
+                    {orderDetails?.item.paymentMethod}
+                  </p>
                 </div>
               </CardContent>
             </Card>

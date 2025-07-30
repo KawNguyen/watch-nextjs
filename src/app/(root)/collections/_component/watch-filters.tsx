@@ -94,8 +94,8 @@ export default function WatchFilters({ className }: WatchFiltersProps) {
           value={priceRange}
           onValueChange={setPriceRange}
           min={0}
-          max={10000}
-          step={100}
+          max={100000000}
+          step={1000000}
         />
         <GenderFilter
           selectedGenders={selectedGenders}

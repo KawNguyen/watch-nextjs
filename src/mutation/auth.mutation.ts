@@ -106,6 +106,8 @@ export const useAuth = () => {
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
     onMutate: () => {
+      setProfile(null);
+      setIsAuthenticated(false);
       useAuthStore.setState((state) => ({
         pendingState: { ...state.pendingState },
       }));

@@ -23,4 +23,11 @@ export const orderAPI = {
     const response = await axiosInstance.post(`/order/create-walkin`, data);
     return response.data;
   },
+
+  cancelOrder: async (orderId: string, reason: string) => {
+    const response = await axiosInstance.post(`/order/${orderId}/cancel`, {
+      reason,
+    });
+    return response.data;
+  }
 };

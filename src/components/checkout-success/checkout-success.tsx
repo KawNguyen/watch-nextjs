@@ -42,7 +42,9 @@ export default function Component() {
     );
 
   const deliveryAddress = JSON.parse(data?.item.deliveryAddress as string);
-  const fullName = `${data.item.user.firstName} ${data.item.user.lastName}`;
+  const fullName = data?.item.user
+    ? `${data.item.user.firstName} ${data.item.user.lastName}`
+    : JSON.parse(data.item.walkinInformation as string)?.firstName + " " + JSON.parse(data.item.walkinInformation as string)?.lastName;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -235,14 +237,14 @@ export default function Component() {
                     <span>Subtotal</span>
                     <span>{formatMoney(data?.item.originalPrice)}</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span>Express Shipping</span>
                     <span>$0</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Tax</span>
                     <span>$0</span>
-                  </div>
+                  </div> */}
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total Paid</span>
