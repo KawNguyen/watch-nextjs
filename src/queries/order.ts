@@ -1,5 +1,5 @@
 import { orderAPI } from "@/services/order";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useOrdersQuery = (status: string) =>
   useQuery({
@@ -9,6 +9,12 @@ export const useOrdersQuery = (status: string) =>
 
 export const useOrderQuery = (orderId: string) =>
   useQuery({
-    queryKey: ["order"],
+    queryKey: ["order", orderId],
     queryFn: () => orderAPI.getOrder(orderId).then((res) => res.data),
+  });
+
+export const useCancelOrderMutation = () =>
+  useMutation({
+    mutationFn: (data: { orderId: string; reason: string }) =>
+      orderAPI.cancelOrder(data.orderId, data.reason),
   });

@@ -25,9 +25,9 @@ export const orderAPI = {
   },
 
   cancelOrder: async (orderId: string, reason: string) => {
-    const response = await axiosInstance.post(`/order/${orderId}/cancel`, {
+    const response = await axiosInstance.patch(`/order/cancel/${orderId}`, {
       reason,
     });
     return response.data;
-  }
+  },
 };

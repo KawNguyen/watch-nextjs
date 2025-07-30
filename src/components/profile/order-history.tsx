@@ -29,8 +29,11 @@ import {
 } from "lucide-react";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { OrderDetailsModal } from "./order-details-modal";
-import { useOrdersQuery } from "@/queries/order";
+import { useCancelOrderMutation, useOrdersQuery } from "@/queries/order";
 import { Order } from "@/types/order";
+import { CancelOrderDialog } from "./cancel-order-dialog";
+import { toast } from "sonner";
+import { queryClient } from "../providers/providers";
 
 enum OrderStatus {
   PENDING = "PENDING",
@@ -38,6 +41,7 @@ enum OrderStatus {
   SHIPPING = "SHIPPING",
   DELIVERED = "DELIVERED",
   CANCELED = "CANCELED",
+  COMPLETED = "COMPLETED",
 }
 
 // const useOrdersQuery = (status: OrderStatus) => {
@@ -73,21 +77,40 @@ export function OrderHistory() {
     { label: "Processing", value: OrderStatus.PROCESSING },
     { label: "Shipping", value: OrderStatus.SHIPPING },
     { label: "Delivered", value: OrderStatus.DELIVERED },
+    { label: "Completed", value: OrderStatus.COMPLETED },
     { label: "Canceled", value: OrderStatus.CANCELED },
   ];
-
+  const [isCancelOrderOpen, setIsCancelOrderOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<OrderStatus>(OrderStatus.PENDING);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const { data: orders = [], isLoading, error } = useOrdersQuery(activeTab);
+  const cancelOrderMutation = useCancelOrderMutation();
 
   const handleViewDetails = (orderId: string) => {
     setSelectedOrderId(orderId);
     setIsDetailsModalOpen(true);
   };
 
-  const handleCancelOrder = async (orderId: string) => {
-    console.log(`Canceling order ${orderId}`);
+  const handleCancelOrder = async (reason: string) => {
+    cancelOrderMutation.mutate(
+      { orderId: selectedOrderId as string, reason },
+      {
+        onSuccess: (data) => {
+          toast.success(data.message);
+          queryClient.invalidateQueries({ queryKey: ["my-orders"] });
+        },
+        onSettled: () => {
+          setSelectedOrderId(null);
+          setIsCancelOrderOpen(false);
+        },
+      }
+    );
+  };
+
+  const handleOpenCancelOrderDialog = (orderId: string) => {
+    setIsCancelOrderOpen(true);
+    setSelectedOrderId(orderId);
   };
 
   // const handleTrackOrder = (trackingNumber?: string) => {
@@ -160,6 +183,13 @@ export function OrderHistory() {
           orderId={selectedOrderId}
         />
       )}
+
+      <CancelOrderDialog
+        open={isCancelOrderOpen}
+        onOpenChange={setIsCancelOrderOpen}
+        onConfirm={handleCancelOrder}
+        isLoading={cancelOrderMutation.isPending}
+      />
     </>
   );
 
@@ -348,7 +378,15 @@ export function OrderHistory() {
           icon: CheckCircle,
           label: "Delivered",
         };
-
+      case OrderStatus.COMPLETED:
+        return {
+          variant: "secondary" as const,
+          color: "text-green-600",
+          bgColor: "bg-green-50",
+          borderColor: "border-green-200",
+          icon: CheckCircle,
+          label: "Delivered",
+        };
       case OrderStatus.CANCELED:
         return {
           variant: "destructive" as const,
@@ -367,7 +405,7 @@ export function OrderHistory() {
         return {
           text: "Cancel Order",
           variant: "outline" as const,
-          onClick: () => handleCancelOrder(order.id),
+          onClick: () => handleOpenCancelOrderDialog(order.id),
           disabled: false,
         };
       case OrderStatus.PROCESSING:
@@ -378,19 +416,26 @@ export function OrderHistory() {
           disabled: false,
         };
       case OrderStatus.SHIPPING:
-        // return {
-        //   text: order.trackingNumber ? "Track Order" : "No Tracking",
-        //   variant: order.trackingNumber
-        //     ? ("outline" as const)
-        //     : ("ghost" as const),
-        //   onClick: () => handleTrackOrder(order.trackingNumber),
-        //   disabled: !order.trackingNumber,
-        // };
+      // return {
+      //   text: order.trackingNumber ? "Track Order" : "No Tracking",
+      //   variant: order.trackingNumber
+      //     ? ("outline" as const)
+      //     : ("ghost" as const),
+      //   onClick: () => handleTrackOrder(order.trackingNumber),
+      //   disabled: !order.trackingNumber,
+      // };
       case OrderStatus.DELIVERED:
         return {
           text: "Reorder",
           variant: "outline" as const,
           onClick: () => handleReorder(order.id),
+          disabled: false,
+        };
+      case OrderStatus.COMPLETED:
+        return {
+          text: "Review",
+          variant: "default" as const,
+          onClick: () => {},
           disabled: false,
         };
       case OrderStatus.CANCELED:
