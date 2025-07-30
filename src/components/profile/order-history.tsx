@@ -385,7 +385,7 @@ export function OrderHistory() {
           bgColor: "bg-green-50",
           borderColor: "border-green-200",
           icon: CheckCircle,
-          label: "Delivered",
+          label: "Completed",
         };
       case OrderStatus.CANCELED:
         return {
