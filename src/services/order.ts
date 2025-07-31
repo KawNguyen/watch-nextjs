@@ -2,6 +2,13 @@ import axiosInstance from "@/lib/axios-instance";
 import { OrderPayload } from "@/types/order";
 
 export const orderAPI = {
+  getOrdersForTracking: async (status: string) => {
+    const response = await axiosInstance.get(
+      `/order/tracking?keyword=${status}`
+    );
+    return response.data;
+  },
+
   getOrdersMe: async (status: string) => {
     const response = await axiosInstance.get(
       `/order/my-order?status=${status}`
@@ -11,6 +18,11 @@ export const orderAPI = {
 
   getOrder: async (orderId: string) => {
     const response = await axiosInstance.get(`/order/${orderId}`);
+    return response.data;
+  },
+
+  trackingOrder: async (orderId: string, phoneLast4Digits: string) => {
+    const response = await axiosInstance.get(`/order/track/${orderId}?phoneLast4Digits=${phoneLast4Digits}`);
     return response.data;
   },
 
@@ -29,5 +41,5 @@ export const orderAPI = {
       reason,
     });
     return response.data;
-  }
+  },
 };

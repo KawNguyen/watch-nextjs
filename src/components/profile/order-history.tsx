@@ -29,8 +29,8 @@ import {
 } from "lucide-react";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { OrderDetailsModal } from "./order-details-modal";
-import { useOrdersQuery } from "@/queries/order";
 import { Order } from "@/types/order";
+import { useMyOrdersQuery } from "@/queries/order";
 
 enum OrderStatus {
   PENDING = "PENDING",
@@ -79,7 +79,7 @@ export function OrderHistory() {
   const [activeTab, setActiveTab] = useState<OrderStatus>(OrderStatus.PENDING);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const { data: orders = [], isLoading, error } = useOrdersQuery(activeTab);
+  const { data: orders = [], isLoading, error } = useMyOrdersQuery(activeTab);
 
   const handleViewDetails = (orderId: string) => {
     setSelectedOrderId(orderId);

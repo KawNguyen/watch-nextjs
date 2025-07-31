@@ -1,7 +1,24 @@
 import { orderAPI } from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 
-export const useOrdersQuery = (status: string) =>
+export const useOrdersQuery = (keyword: string) =>
+  useQuery({
+    queryKey: ["tracking-search", keyword],
+    queryFn: () =>
+      orderAPI.getOrdersForTracking(keyword).then((res) => res.data.items),
+  });
+
+export const useTrackingOrderQuery = (
+  orderId: string,
+  phoneLast4Digits: string
+) =>
+  useQuery({
+    queryKey: ["tracking-order", orderId, phoneLast4Digits],
+    queryFn: () =>
+      orderAPI.trackingOrder(orderId, phoneLast4Digits).then((res) => res.data.item),
+  });
+
+export const useMyOrdersQuery = (status: string) =>
   useQuery({
     queryKey: ["my-orders", status],
     queryFn: () => orderAPI.getOrdersMe(status).then((res) => res.data.items),
