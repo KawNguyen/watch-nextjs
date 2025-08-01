@@ -1,76 +1,97 @@
 import React from "react";
-import { Star, ChevronRight } from "lucide-react";
-import Image from "next/image";
+import { Star, ChevronRight, User } from "lucide-react";
 import { Button } from "../ui/button";
-export const reviews = [
-  {
-    id: 1,
-    user: "Alex Johnson",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    date: "October 12, 2023",
-    rating: 5,
-    title: "Best headphones I've ever owned",
-    content:
-      "These headphones are absolutely incredible. The sound quality is crystal clear, and the noise cancellation is top-notch. I use them daily for work calls and listening to music, and they never disappoint. Battery life is impressive too!",
-    helpful: 24,
-    replies: 3,
-  },
-  {
-    id: 2,
-    user: "Sarah Miller",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    date: "September 28, 2023",
-    rating: 4,
-    title: "Great sound, slight comfort issue",
-    content:
-      "The sound quality and noise cancellation are excellent. My only complaint is that they get a bit uncomfortable after wearing them for 3+ hours. Otherwise, these are fantastic headphones that I would recommend to anyone looking for premium audio quality.",
-    helpful: 18,
-    replies: 1,
-  },
-  {
-    id: 3,
-    user: "Michael Chen",
-    avatar: "https://randomuser.me/api/portraits/men/67.jpg",
-    date: "October 5, 2023",
-    rating: 5,
-    title: "Worth every penny",
-    content:
-      "I was hesitant about spending this much on headphones, but after using these for a month, I can confidently say they're worth every penny. The sound is incredible, they're comfortable for long periods, and the battery life is amazing. Highly recommended!",
-    helpful: 32,
-    replies: 0,
-  },
-];
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useInfiniteReviews } from "@/queries/review";
+
+interface Review {
+  id: string;
+  rating: number;
+  comment: string | null;
+  userId: string;
+  watchId: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatar: string | null;
+  };
+}
 
 const ReviewProduct = ({ slug }: { slug: string }) => {
-  console.log(slug);
+  const {
+    data: reviews,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteReviews(slug);
+  console.log(reviews);
+  
+
+  const allReviews: Review[] =
+    reviews?.pages?.flatMap((page: any) => page.reviews) || [];
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("vi-VN", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-10 px-4">
+        <div className="flex justify-center items-center h-40">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="flex items-center justify-between mb-12">
-        <h2 className="text-3xl font-bold text-black ">Customer Reviews</h2>
+        <h2 className="text-3xl font-bold text-black">Customer Reviews</h2>
+        <div className="text-sm text-gray-600">
+          {allReviews.length} review{allReviews.length !== 1 ? "s" : ""}
+        </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-12 space-y-6">
-          {reviews.map((review) => (
+
+      {allReviews.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="text-gray-400 text-lg mb-2">No reviews yet</div>
+          <p className="text-gray-600">Be the first to review this product!</p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {allReviews.map((review) => (
             <div
               key={review.id}
               className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
             >
               <div className="flex justify-between items-start">
                 <div className="flex items-center">
-                  <Image
-                    src={review.avatar}
-                    alt={review.user}
-                    className="w-12 h-12 rounded-full ring-2 ring-offset-2 ring-blue-100"
-                    width={40}
-                    height={40}
-                  />
+                  <Avatar>
+                    <AvatarImage
+                      src={review.user?.avatar || ""}
+                      alt={`${review.user?.firstName} ${review.user?.lastName}`}
+                    />
+                    <AvatarFallback>
+                      <User className="w-6 h-6 text-gray-500" />
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="ml-4">
                     <h4 className="font-semibold text-gray-900">
-                      {review.user}
+                      {review.user?.firstName} {review.user?.lastName}
                     </h4>
                     <div className="text-sm text-gray-600 font-medium">
-                      {review.date}
+                      {formatDate(review.createdAt)}
                     </div>
                   </div>
                 </div>
@@ -85,21 +106,40 @@ const ReviewProduct = ({ slug }: { slug: string }) => {
                   ))}
                 </div>
               </div>
-              <h3 className="font-bold mt-4 text-lg text-gray-900">
-                {review.title}
-              </h3>
-              <p className="mt-2 text-gray-600 leading-relaxed">
-                {review.content}
+
+              <p className="mt-4 text-gray-600 leading-relaxed">
+                {review.comment || (
+                  <span className="italic text-gray-400">
+                    No comment provided
+                  </span>
+                )}
               </p>
             </div>
           ))}
-          <Button className="w-full mt-8  py-4 border border-black rounded-full text-gray-600 hover:text-white font-medium bg-white  flex items-center justify-center group">
-            Load More Reviews
-            <ChevronRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
-          </Button>
+
+          {hasNextPage && (
+            <Button
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+              className="w-full mt-8 py-4 border border-black rounded-full text-gray-600 hover:text-white font-medium bg-white flex items-center justify-center group"
+            >
+              {isFetchingNextPage ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600 mr-2"></div>
+                  Loading...
+                </>
+              ) : (
+                <>
+                  Load More Reviews
+                  <ChevronRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </Button>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 };
+
 export default ReviewProduct;

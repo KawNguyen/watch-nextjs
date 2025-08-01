@@ -24,7 +24,6 @@ import {
   Truck,
   CheckCircle,
   XCircle,
-  Eye,
   PackageCheck,
 } from "lucide-react";
 import { formatDate, formatMoney } from "@/lib/utils";
@@ -110,10 +109,6 @@ export function OrderHistory() {
   //   }
   // };
 
-  const handleReorder = (orderId: string) => {
-    console.log(`Reordering ${orderId}`);
-  };
-
   if (isLoading) {
     return (
       <Card>
@@ -144,7 +139,6 @@ export function OrderHistory() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          {/* Custom Tab */}
           <div className="flex overflow-x-auto border-b border-border scrollbar-hide">
             {tabs.map((tab) => (
               <button
@@ -237,15 +231,16 @@ export function OrderHistory() {
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleViewDetails(order.id)}
-                          aria-label={`View details for order ${order.id}`}
-                        >
-                          <Eye className="h-4 w-4 mr-1" />
-                          Details
-                        </Button>
+                        {actionButton.text !== "View Details" && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleViewDetails(order.id)}
+                            aria-label={`View details for order ${order.id}`}
+                          >
+                            View Details
+                          </Button>
+                        )}
                         <Button
                           variant={actionButton.variant}
                           size="sm"
@@ -301,16 +296,6 @@ export function OrderHistory() {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleViewDetails(order.id)}
-                      className="flex-1"
-                      aria-label={`View details for order ${order.id}`}
-                    >
-                      <Eye className="h-4 w-4 mr-1" />
-                      Details
-                    </Button>
                     <Button
                       variant={actionButton.variant}
                       size="sm"
@@ -419,26 +404,26 @@ export function OrderHistory() {
         return {
           text: "Reorder",
           variant: "outline" as const,
-          onClick: () => handleReorder(order.id),
+          // onClick: () => handleReorder(order.id),
           disabled: false,
         };
       case OrderStatus.COMPLETED:
-        return {
-          text: "Review",
-          variant: "default" as const,
-          onClick: () => {},
-          disabled: false,
-        };
+        // return {
+        //   text: "Review",
+        //   variant: "default" as const,
+        //   onClick: () => {},
+        //   disabled: false,
+        // };
       case OrderStatus.CANCELED:
         return {
-          text: "Reorder",
+          text: "View Details",
           variant: "outline" as const,
-          onClick: () => handleReorder(order.id),
+          onClick: () => handleViewDetails(order.id),
           disabled: false,
         };
       default:
         return {
-          text: "View Details",
+          // text: "View Details",
           variant: "outline" as const,
           onClick: () => handleViewDetails(order.id),
           disabled: false,

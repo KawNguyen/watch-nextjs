@@ -22,12 +22,14 @@ import {
 } from "@/components/ui/dialog";
 import { useOrderQuery } from "@/queries/order";
 import { formatMoney } from "@/lib/utils";
+import ReviewDialog from "./review-modal";
 
 enum OrderStatus {
   PENDING = "PENDING",
   PROCESSING = "PROCESSING",
   SHIPPING = "SHIPPING",
   DELIVERED = "DELIVERED",
+  COMPLETED = "COMPLETED",
   CANCELED = "CANCELED",
 }
 
@@ -74,6 +76,15 @@ const getStatusConfig = (status: OrderStatus) => {
         borderColor: "border-green-200",
         icon: CheckCircle,
         label: "DELIVERED",
+      };
+    case OrderStatus.COMPLETED:
+      return {
+        variant: "default" as const,
+        color: "text-green-600",
+        bgColor: "bg-green-50",
+        borderColor: "border-green-200",
+        icon: CheckCircle,
+        label: "COMPLETED",
       };
     case OrderStatus.CANCELED:
       return {
@@ -177,13 +188,16 @@ export function OrderDetailsModal({
                         </div>
                         <div className="flex-1">
                           <h4 className="font-medium">{item.watch.name}</h4>
-                          <div className="flex items-center justify-between mt-2">
-                            <span className="text-sm text-gray-600">
-                              Qty: {item.quantity}
-                            </span>
-                            <span className="font-semibold">
-                              {formatMoney(item.watch.price * item.quantity)}
-                            </span>
+                          <div className="flex justify-between items-center mt-2">
+                            <div className="flex flex-col">
+                              <span className="text-sm text-gray-600">
+                                Qty: {item.quantity}
+                              </span>
+                              <span className="font-semibold">
+                                {formatMoney(item.watch.price * item.quantity)}
+                              </span>
+                            </div>
+                            <ReviewDialog watchId={item.watch.id} />
                           </div>
                         </div>
                       </div>
