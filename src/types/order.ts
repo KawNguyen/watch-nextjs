@@ -50,6 +50,12 @@ export enum OrderStatus {
 export interface Order {
   id: string;
   userId: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  }
   status: OrderStatus;
   totalPrice: number;
   originalPrice: number;

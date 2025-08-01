@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export function CheckoutHeader() {
@@ -15,7 +16,14 @@ export function CheckoutHeader() {
               Back to Shop
             </Link>
           </div>
-          <div className="text-2xl font-bold text-gray-900">KronLux</div>
+          {/* <div className="text-2xl font-bold text-gray-900">KronLux</div> */}
+          <Image
+            src="/images/logo/logo-black.png"
+            alt="KronLux"
+            width={80}
+            height={80}
+            className="h-16 w-auto object-contain"
+          />
           <div className="w-24"></div>
         </div>
       </div>

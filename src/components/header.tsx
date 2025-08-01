@@ -21,6 +21,7 @@ import { CartSheet } from "./cart/cart-sheet";
 import NotificationDropdown from "./notifications/notifications";
 import SearchBar from "./search-bar";
 import SheetMenu from "./header/sheet-menu";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -36,7 +37,13 @@ const Header = () => {
 
           <div className="flex-shrink-0">
             <Link href="/" className="text-3xl">
-              KronLux
+              <Image
+                src="/images/logo/logo-black.png"
+                alt="logo"
+                width={80}
+                height={80}
+                className="h-16 w-auto object-contain"
+              />
             </Link>
           </div>
 
