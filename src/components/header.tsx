@@ -36,7 +36,7 @@ const Header = () => {
           {isMobile && <SheetMenu />}
 
           <div className="flex-shrink-0">
-            <Link href="/" className="text-3xl">
+            <Link href="/">
               <Image
                 src="/images/logo/logo-black.png"
                 alt="logo"

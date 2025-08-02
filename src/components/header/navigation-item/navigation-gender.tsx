@@ -1,3 +1,4 @@
+import { GenderFilter } from "@/types/navigation";
 import {
   NavigationMenuContent,
   NavigationMenuItem,
@@ -5,27 +6,9 @@ import {
 } from "../../ui/navigation-menu";
 import Link from "next/link";
 
-interface NavItem {
-  title: string;
-  value: string;
-}
 
-interface NavSection {
-  title: string;
-  items: NavItem[];
-}
 
-interface Gender {
-  title: string;
-  value: string;
-  navItems: NavSection[];
-}
-
-interface NavigationGenderProps {
-  gender: Gender[];
-}
-
-const NavigationGender = ({ gender }: NavigationGenderProps) => {
+const NavigationGender = ({ gender }: { gender: GenderFilter[] }) => {
   return (
     <>
       {gender.map((item, ind) => (
@@ -34,18 +17,38 @@ const NavigationGender = ({ gender }: NavigationGenderProps) => {
             {item.title}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid grid-cols-2 gap-6 p-6 w-[400px] lg:w-[500px]">
+            <div className="flex justify-between p-6 w-[440px] lg:w-[680px]">
               {item.navItems.map((section) => (
                 <div key={section.title}>
-                  <h4 className="text-sm font-semibold mb-2 text-gray-900">
+                  <h4 className="text-sm font-semibold px-2 mb-2 text-gray-900">
                     {section.title}
                   </h4>
-                  <ul className="space-y-1">
+                  <ul
+                    className={`w-max ${
+                      section.items.length > 5
+                        ? "grid grid-cols-2 gap-x-2"
+                        : "grid grid-cols-1"
+                    }`}
+                  >
                     {section.items.map((subItem) => (
-                      <li key={subItem.value}>
+                      <li
+                        key={
+                          typeof subItem.value === "string"
+                            ? subItem.value
+                            : JSON.stringify(subItem.value)
+                        }
+                      >
                         <Link
-                          href={`/collections?brands=${subItem.value}&genders=${item.value}`}
-                          className="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition"
+                          href={
+                            section.value === "brands"
+                              ? `/collections?brands=${subItem.value}&genders=${item.value}`
+                              : section.value === "price"
+                              ? typeof subItem.value === "object"
+                                ? `/collections?minPrice=${subItem.value.minPrice}&maxPrice=${subItem.value.maxPrice}&genders=${item.value}`
+                                : "#"
+                              : `/collections?movements=${subItem.value}&genders=${item.value}`
+                          }
+                          className={`block p-2 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition`}
                         >
                           {subItem.title}
                         </Link>

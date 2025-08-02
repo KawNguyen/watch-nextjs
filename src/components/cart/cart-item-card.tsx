@@ -20,6 +20,8 @@ export function CartItemCard({
 }) {
   const { updateQuantity } = useCartMutation();
   const [localQuantity, setLocalQuantity] = useState(item.quantity);
+  const [localInput, setLocalInput] = useState(item.quantity.toString());
+
   const { isAuthenticated } = useAuthStore();
   const { updateQuantityCartItemStore } = useCartStore();
 
@@ -37,6 +39,10 @@ export function CartItemCard({
   };
 
   useEffect(() => {
+    setLocalInput(localQuantity.toString());
+  }, [localQuantity]);
+
+  useEffect(() => {
     const handler = setTimeout(() => {
       if (localQuantity !== item.quantity) {
         updateQuantity.mutate({
@@ -44,7 +50,7 @@ export function CartItemCard({
           newQuantity: localQuantity,
         });
       }
-    }, 500);
+    }, 800);
 
     return () => clearTimeout(handler);
   }, [localQuantity, item.id, item.quantity, updateQuantity]);
@@ -70,9 +76,7 @@ export function CartItemCard({
 
         <div className="flex-1">
           <h3 className="font-medium">{item.watch.name}</h3>
-          <p className="text-gray-600">
-            {formatMoney(item.watch.price)}
-          </p>
+          <p className="text-gray-600">{formatMoney(item.watch.price)}</p>
 
           <div className="flex items-center gap-2 mt-2">
             <Button
@@ -83,7 +87,23 @@ export function CartItemCard({
             >
               −
             </Button>
-            <span className="w-6 text-center">{localQuantity}</span>
+
+            <input
+              type="number"
+              inputMode="numeric"
+              className="w-12 text-center border rounded-md h-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              value={localInput}
+              onChange={(e) => {
+                const raw = e.target.value;
+                setLocalInput(raw);
+
+                const parsed = parseInt(raw);
+                if (!isNaN(parsed) && parsed >= 1) {
+                  setLocalQuantity(parsed);
+                }
+              }}
+            />
+
             <Button
               variant="outline"
               size="sm"

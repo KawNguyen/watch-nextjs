@@ -16,15 +16,28 @@ import { Star } from "lucide-react";
 import { useReviewMutation } from "@/mutation/review.mutation";
 
 export default function ReviewDialog({ watchId }: { watchId: string }) {
+  const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const { createReview } = useReviewMutation();
 
+  const handleSubmit = () => {
+    createReview.mutate(
+      { watchId, comment, rating },
+      {
+        onSuccess: () => {
+          setOpen(false);
+          setRating(0);
+          setComment("");
+        },
+      }
+    );
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
-          {" "}
           <Star className="w-4 h-4 mr-2" /> Viết đánh giá
         </Button>
       </DialogTrigger>
@@ -63,13 +76,7 @@ export default function ReviewDialog({ watchId }: { watchId: string }) {
         </div>
 
         <DialogFooter className="mt-4">
-          <Button
-            onClick={() =>
-              createReview.mutate({ watchId, comment: comment, rating })
-            }
-          >
-            Gửi đánh giá
-          </Button>
+          <Button onClick={handleSubmit}>Gửi đánh giá</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

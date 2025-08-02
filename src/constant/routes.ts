@@ -1,4 +1,12 @@
-import { Youtube, Instagram, Facebook, Users, Grid3X3, Home } from "lucide-react";
+import { GenderFilter } from "@/types/navigation";
+import {
+  Youtube,
+  Instagram,
+  Facebook,
+  Users,
+  Grid3X3,
+  Home,
+} from "lucide-react";
 
 export const navigation = {
   brand: [
@@ -32,6 +40,21 @@ export const navigation = {
       value: "seiko",
       logo: "/images/brand/seiko-logo.png",
     },
+    {
+      name: "Casio",
+      value: "casio",
+      logo: "/images/brand/casio-logo.png",
+    },
+    {
+      name: "Citizen",
+      value: "citizen",
+      logo: "/images/brand/citizen-logo.png",
+    },
+    {
+      name: "Orient",
+      value: "orient",
+      logo: "/images/brand/orient-logo.png",
+    },
   ],
   gender: [
     {
@@ -39,21 +62,52 @@ export const navigation = {
       value: "MEN",
       navItems: [
         {
-          title: "Brands",
+          title: "Giá",
+          value: "price",
+          items: [
+            {
+              title: "Dưới 5 triệu",
+              value: {
+                minPrice: 0,
+                maxPrice: 5000000,
+              },
+            },
+            {
+              title: "5 - 10 triệu",
+              value: { minPrice: 5000000, maxPrice: 10000000 },
+            },
+            {
+              title: "10 - 20 triệu",
+              value: { minPrice: 10000000, maxPrice: 20000000 },
+            },
+            {
+              title: "Trên 20 triệu",
+              value: { minPrice: 20000000, maxPrice: 100000000 },
+            },
+          ],
+        },
+        {
+          title: "Thương hiệu",
+          value: "brands",
           items: [
             { title: "Rolex", value: "rolex" },
             { title: "Tissot", value: "tissot" },
             { title: "Omega", value: "omega" },
+            { title: "Patek Philippe", value: "patek-philippe" },
+            { title: "Daniel Wellington", value: "daniel-wellington" },
             { title: "Seiko", value: "seiko" },
+            { title: "Casio", value: "casio" },
+            { title: "Citizen", value: "citizen" },
+            { title: "Orient", value: "orient" },
           ],
         },
         {
-          title: "Styles",
+          title: "Động cơ",
+          value: "movements",
           items: [
-            { title: "Dress Watches", value: "dress" },
-            { title: "Diving Watches", value: "diving" },
-            { title: "Chronograph", value: "chronograph" },
-            { title: "Automatic", value: "automatic" },
+            { title: "Bộ máy cơ", value: "bo-may-co" },
+            { title: "Bộ máy thạch anh", value: "bo-may-thach-anh" },
+            { title: "Pin", value: "pin" },
           ],
         },
       ],
@@ -63,24 +117,54 @@ export const navigation = {
       value: "WOMEN",
       navItems: [
         {
-          title: "Brands",
+          title: "Giá",
           items: [
-            { title: "Daniel Wellington", value: "daniel-wellington" },
-            { title: "Tissot", value: "tissot" },
-            { title: "Omega", value: "omega" },
+            {
+              title: "Dưới 5 triệu",
+              value: {
+                minPrice: 0,
+                maxPrice: 5000000,
+              },
+            },
+            {
+              title: "5 - 10 triệu",
+              value: { minPrice: 5000000, maxPrice: 10000000 },
+            },
+            {
+              title: "10 - 20 triệu",
+              value: { minPrice: 10000000, maxPrice: 20000000 },
+            },
+            {
+              title: "Trên 20 triệu",
+              value: { minPrice: 20000000, maxPrice: 100000000 },
+            },
           ],
         },
         {
-          title: "Styles",
+          title: "Thương hiệu",
           items: [
-            { title: "Fashion Watches", value: "fashion" },
-            { title: "Minimalist", value: "minimalist" },
-            { title: "Smartwatch", value: "smartwatch" },
+            { title: "Rolex", value: "rolex" },
+            { title: "Tissot", value: "tissot" },
+            { title: "Omega", value: "omega" },
+            { title: "Patek Philippe", value: "patek-philippe" },
+            { title: "Daniel Wellington", value: "daniel-wellington" },
+            { title: "Seiko", value: "seiko" },
+            { title: "Casio", value: "casio" },
+            { title: "Citizen", value: "citizen" },
+            { title: "Orient", value: "orient" },
+          ],
+        },
+        {
+          title: "Động cơ",
+          items: [
+            { title: "Bộ máy cơ", value: "bo-may-co" },
+            { title: "Bộ máy thạch anh", value: "bo-may-thach-anh" },
+            { title: "Pin", value: "pin" },
           ],
         },
       ],
     },
-  ],
+  ] satisfies GenderFilter[],
 };
 
 export const faqs = [
@@ -110,65 +194,6 @@ export const faqs = [
   },
 ];
 
-export const allPosts = [
-  {
-    title: "Intro to ML",
-    category: "Men Watch",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Discover the world of machine learning with our comprehensive guide. From theory to practical applications, we'll walk you through the fundamentals and show you how to build your own models.",
-  },
-  {
-    title: "All",
-    category: "All",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Discover the world of machine learning with our comprehensive guide. From theory to practical applications, we'll walk you through the fundamentals and show you how to build your own models.",
-  },
-  {
-    title: "Why Open Source Matters",
-    category: "Open source",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Open source software has become an essential part of modern technology. Learn why it matters and how you can contribute to the future of software development.",
-  },
-  {
-    title: "GPT vs BERT in NLP",
-    category: "Natural language processing",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Explore the differences between GPT and BERT in natural language processing. Understand their strengths and use cases for different tasks.",
-  },
-  {
-    title: "Our Hardware Journey",
-    category: "Hardware",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Uncover the fascinating world of hardware with our guide. From the basics to advanced topics, we'll explore the evolution of hardware and its impact on our daily lives.",
-  },
-  {
-    title: "Vision Transformers",
-    category: "Women Watch",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Learn about the revolutionary Vision Transformers and how they're transforming computer vision.",
-  },
-  {
-    title: "AI Research Roadmap 2025",
-    category: "Research",
-    image: "/images/logo.png",
-    date: "2023-08-15",
-    description:
-      "Get a clear view of the future of AI research with our roadmap. Discover the latest breakthroughs and areas of interest.",
-  },
-];
-
 export const team = [
   {
     name: "Anna Nguyen",
@@ -186,7 +211,6 @@ export const team = [
     image: "",
   },
 ];
-
 
 export const mockNotifications = [
   {
@@ -378,10 +402,10 @@ export const routes = [
   {
     title: "Our Products",
     children: [
-      { path: "/products", title: "All products" },
-      { path: "/products?gender=Men", title: "Men" },
-      { path: "/products?gender=Women", title: "Women" },
-      { path: "/products?gender=Unisex", title: "Unisex" },
+      { path: "/collections", title: "All products" },
+      { path: "/collections?genders=Men", title: "Men" },
+      { path: "/collections?genders=Women", title: "Women" },
+      { path: "/collections?genders=Unisex", title: "Unisex" },
     ],
   },
   {

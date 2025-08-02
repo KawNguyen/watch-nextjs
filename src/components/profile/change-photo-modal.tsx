@@ -15,7 +15,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { uploadImage } from "@/services/upload-image";
-import { useUserMutation } from "@/mutation/user.mutation";
+// import { useUserMutation } from "@/mutation/user.mutation";
+import { useAuth } from "@/mutation/auth.mutation";
 
 interface ChangePhotoModalProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export function ChangePhotoModal({
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { changeAvatar } = useUserMutation();
+  const { changeAvatar } = useAuth();
 
   const displayImage = previewImage || currentImage;
 

@@ -28,38 +28,12 @@ import {
 } from "lucide-react";
 import { formatDate, formatMoney } from "@/lib/utils";
 import { OrderDetailsModal } from "./order-details-modal";
-import { useCancelOrderMutation, useOrdersQuery } from "@/queries/order";
+import { useCancelOrderMutation, useMyOrdersQuery } from "@/queries/order";
 import { Order, OrderStatus } from "@/types/order";
 import { CancelOrderDialog } from "./cancel-order-dialog";
 import { toast } from "sonner";
 import { queryClient } from "../providers/providers";
-
-// const useOrdersQuery = (status: OrderStatus) => {
-//   return useQuery({
-//     queryKey: ["orders", status],
-//     queryFn: async () => {
-//       const response = await orderAPI.getOrdersMe(status).then((res) => res.data);
-//       const filteredItems = response.items.filter(
-//         (item: any) => item.status === status
-//       );
-//       return filteredItems.map(
-//         (item: any): Order => ({
-//           id: item.id,
-//           date: formatDate(new Date(item.createdAt)),
-//           items: `${item.orderItems.length} item${
-//             item.orderItems.length !== 1 ? "s" : ""
-//           }`,
-//           total: new Intl.NumberFormat("en-US", {
-//             style: "currency",
-//             currency: "USD",
-//           }).format(item.totalPrice),
-//           status: item.status as OrderStatus,
-//           trackingNumber: item.trackingNumber,
-//         })
-//       );
-//     },
-//   });
-// };
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function OrderHistory() {
   const tabs: { label: string; value: OrderStatus }[] = [
@@ -70,11 +44,12 @@ export function OrderHistory() {
     { label: "Completed", value: OrderStatus.COMPLETED },
     { label: "Canceled", value: OrderStatus.CANCELED },
   ];
+
   const [isCancelOrderOpen, setIsCancelOrderOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<OrderStatus>(OrderStatus.PENDING);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const { data: orders = [], isLoading, error } = useOrdersQuery(activeTab);
+  const { data: orders = [], isLoading, error } = useMyOrdersQuery(activeTab);
   const cancelOrderMutation = useCancelOrderMutation();
 
   const handleViewDetails = (orderId: string) => {
@@ -103,17 +78,35 @@ export function OrderHistory() {
     setSelectedOrderId(orderId);
   };
 
-  // const handleTrackOrder = (trackingNumber?: string) => {
-  //   if (trackingNumber) {
-  //     console.log(`Tracking order with number ${trackingNumber}`);
-  //   }
-  // };
-
   if (isLoading) {
     return (
       <Card>
-        <CardContent className="p-4 text-center">
-          <p>Loading orders...</p>
+        <CardHeader className="p-4">
+          <CardTitle>Order History</CardTitle>
+          <CardDescription>
+            View and track your orders by status
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="flex overflow-x-auto border-b border-border scrollbar-hide">
+            {tabs.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setActiveTab(tab.value)}
+                aria-selected={activeTab === tab.value}
+                role="tab"
+                className={`text-sm px-4 py-2 whitespace-nowrap transition-colors flex-shrink-0 ${
+                  activeTab === tab.value
+                    ? "border-b-2 border-primary text-primary font-medium"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="p-4">{renderOrderTable(orders, isLoading)}</div>
         </CardContent>
       </Card>
     );
@@ -157,10 +150,9 @@ export function OrderHistory() {
             ))}
           </div>
 
-          <div className="p-4">{renderOrderTable(orders)}</div>
+          <div className="p-4">{renderOrderTable(orders, isLoading)}</div>
         </CardContent>
-      </Card>
-
+      </Card>{" "}
       {selectedOrderId && (
         <OrderDetailsModal
           isOpen={isDetailsModalOpen}
@@ -168,7 +160,6 @@ export function OrderHistory() {
           orderId={selectedOrderId}
         />
       )}
-
       <CancelOrderDialog
         open={isCancelOrderOpen}
         onOpenChange={setIsCancelOrderOpen}
@@ -178,7 +169,76 @@ export function OrderHistory() {
     </>
   );
 
-  function renderOrderTable(orders: Order[]) {
+  function renderOrderTable(orders: Order[], isLoading: boolean) {
+    if (isLoading) {
+      return (
+        <>
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Order ID</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Items</TableHead>
+                  <TableHead>Total</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {[...Array(5)].map((_, i) => (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Skeleton className="h-8 w-20" />
+                        <Skeleton className="h-8 w-20" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          <div className="md:hidden space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <Card key={i}>
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <Skeleton className="h-4 w-32 mb-1" />
+                      <Skeleton className="h-3 w-20" />
+                    </div>
+                    <Skeleton className="h-6 w-20 rounded-full" />
+                  </div>
+                  <div className="flex justify-between">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-4 w-20" />
+                  </div>
+                  <Skeleton className="h-8 w-full" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </>
+      );
+    }
+
     if (orders.length === 0) {
       return (
         <div className="text-center py-8">
@@ -236,7 +296,6 @@ export function OrderHistory() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleViewDetails(order.id)}
-                            aria-label={`View details for order ${order.id}`}
                           >
                             View Details
                           </Button>
@@ -246,7 +305,6 @@ export function OrderHistory() {
                           size="sm"
                           onClick={actionButton.onClick}
                           disabled={actionButton.disabled}
-                          aria-label={actionButton.text}
                         >
                           {actionButton.text}
                         </Button>
@@ -302,7 +360,6 @@ export function OrderHistory() {
                       onClick={actionButton.onClick}
                       className="flex-1"
                       disabled={actionButton.disabled}
-                      aria-label={actionButton.text}
                     >
                       {actionButton.text}
                     </Button>
@@ -316,11 +373,20 @@ export function OrderHistory() {
     );
   }
 
-  function getStatusConfig(status: OrderStatus) {
+  type BadgeVariant = "outline" | "secondary" | "default" | "destructive";
+
+  function getStatusConfig(status: OrderStatus): {
+    variant: BadgeVariant;
+    color: string;
+    bgColor: string;
+    borderColor: string;
+    icon: React.ElementType;
+    label: string;
+  } {
     switch (status) {
       case OrderStatus.PENDING:
         return {
-          variant: "outline" as const,
+          variant: "outline",
           color: "text-orange-600",
           bgColor: "bg-orange-50",
           borderColor: "border-orange-200",
@@ -329,7 +395,7 @@ export function OrderHistory() {
         };
       case OrderStatus.PROCESSING:
         return {
-          variant: "secondary" as const,
+          variant: "secondary",
           color: "text-blue-600",
           bgColor: "bg-blue-50",
           borderColor: "border-blue-200",
@@ -338,7 +404,7 @@ export function OrderHistory() {
         };
       case OrderStatus.SHIPPING:
         return {
-          variant: "default" as const,
+          variant: "default",
           color: "text-purple-600",
           bgColor: "bg-purple-50",
           borderColor: "border-purple-200",
@@ -346,26 +412,18 @@ export function OrderHistory() {
           label: "Shipping",
         };
       case OrderStatus.DELIVERED:
-        return {
-          variant: "secondary" as const,
-          color: "text-green-600",
-          bgColor: "bg-green-50",
-          borderColor: "border-green-200",
-          icon: CheckCircle,
-          label: "Delivered",
-        };
       case OrderStatus.COMPLETED:
         return {
-          variant: "secondary" as const,
+          variant: "secondary",
           color: "text-green-600",
           bgColor: "bg-green-50",
           borderColor: "border-green-200",
           icon: CheckCircle,
-          label: "Completed",
+          label: status === OrderStatus.DELIVERED ? "Delivered" : "Completed",
         };
       case OrderStatus.CANCELED:
         return {
-          variant: "destructive" as const,
+          variant: "destructive",
           color: "text-red-600",
           bgColor: "bg-red-50",
           borderColor: "border-red-200",
@@ -375,56 +433,53 @@ export function OrderHistory() {
     }
   }
 
-  function getActionButton(order: Order) {
+  function getActionButton(order: Order): {
+    text: string;
+    variant:
+      | "outline"
+      | "secondary"
+      | "default"
+      | "destructive"
+      | "link"
+      | "ghost";
+    onClick: () => void;
+    disabled: boolean;
+  } {
     switch (order.status) {
       case OrderStatus.PENDING:
         return {
           text: "Cancel Order",
-          variant: "outline" as const,
+          variant: "outline",
           onClick: () => handleOpenCancelOrderDialog(order.id),
           disabled: false,
         };
       case OrderStatus.PROCESSING:
         return {
           text: "View Details",
-          variant: "outline" as const,
+          variant: "outline",
           onClick: () => handleViewDetails(order.id),
           disabled: false,
         };
       case OrderStatus.SHIPPING:
-      // return {
-      //   text: order.trackingNumber ? "Track Order" : "No Tracking",
-      //   variant: order.trackingNumber
-      //     ? ("outline" as const)
-      //     : ("ghost" as const),
-      //   onClick: () => handleTrackOrder(order.trackingNumber),
-      //   disabled: !order.trackingNumber,
-      // };
       case OrderStatus.DELIVERED:
         return {
           text: "Reorder",
-          variant: "outline" as const,
-          // onClick: () => handleReorder(order.id),
+          variant: "outline",
+          onClick: () => {},
           disabled: false,
         };
       case OrderStatus.COMPLETED:
         // return {
         //   text: "Review",
-        //   variant: "default" as const,
+        //   variant: "default",
         //   onClick: () => {},
         //   disabled: false,
         // };
       case OrderStatus.CANCELED:
-        return {
-          text: "View Details",
-          variant: "outline" as const,
-          onClick: () => handleViewDetails(order.id),
-          disabled: false,
-        };
       default:
         return {
-          // text: "View Details",
-          variant: "outline" as const,
+          text: "View Details",
+          variant: "outline",
           onClick: () => handleViewDetails(order.id),
           disabled: false,
         };

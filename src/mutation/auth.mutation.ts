@@ -1,12 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { RegisterTypes, SignInTypes } from "@/types/auth";
+import { RegisterTypes, SignInTypes, UpdateUserProps } from "@/types/auth";
 import { authApi } from "@/services/auth";
 import { useUser } from "@/queries/user";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/auth.store";
 import { useEffect } from "react";
+import { toast } from "sonner";
+import { userAPI } from "@/services/user";
 
 export const useAuth = () => {
   const router = useRouter();
@@ -56,7 +58,8 @@ export const useAuth = () => {
   const signInMutation = useMutation({
     mutationFn: (data: SignInTypes) =>
       authApi.signIn(data.email, data.password),
-    onMutate: () => {
+    onMutate: async () => {
+      await refetch();
       useAuthStore.setState((state) => ({
         pendingState: { ...state.pendingState },
       }));
@@ -78,6 +81,32 @@ export const useAuth = () => {
     },
   });
 
+  const updateProfile = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: UpdateUserProps }) =>
+      await userAPI.updateUser(id, data),
+    onSuccess: async () => {
+      await refetch();
+      setProfile(userData);
+      toast.success("Your profile has been updated successfully.");
+    },
+    onError: (error: string) => {
+      console.error("Error updating user:", error);
+    },
+  });
+
+  const changeAvatar = useMutation({
+    mutationFn: (avatar: { absolute_url: string; public_id: string }) =>
+      userAPI.changeAvatar(avatar),
+    onSuccess: async () => {
+      await refetch();
+      setProfile(userData);
+      toast.success("Your avatar has been updated successfully.");
+    },
+    onError: (error: string) => {
+      console.error("Failed to update avatar.", error);
+    },
+  });
+
   const verifyOTPMutation = useMutation({
     mutationFn: ({ email, otp }: { email: string; otp: string }) =>
       authApi.verifyOTP(email, otp),
@@ -92,6 +121,7 @@ export const useAuth = () => {
         setIsAuthenticated(true);
         router.push("/");
       }
+      toast.success("Sign up successful");
     },
     onSettled: () => {
       useAuthStore.setState((state) => ({
@@ -105,7 +135,8 @@ export const useAuth = () => {
 
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
-    onMutate: () => {
+    onMutate: async () => {
+      await refetch();
       setProfile(null);
       setIsAuthenticated(false);
       useAuthStore.setState((state) => ({
@@ -126,6 +157,8 @@ export const useAuth = () => {
     setStep,
     register: registerMutation.mutate,
     signIn: signInMutation.mutate,
+    updateProfile: updateProfile,
+    changeAvatar: changeAvatar,
     verifyOTP: (email: string, otp: string) =>
       verifyOTPMutation.mutate({ email, otp }),
     logout: logoutMutation.mutate,

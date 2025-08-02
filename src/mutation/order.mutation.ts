@@ -51,6 +51,7 @@ export const useOrderMutation = () => {
       );
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-cart"] });
       queryClient.invalidateQueries({ queryKey: ["my-orders"] });
       toast.success("Your order has been created successfully.");
     },

@@ -17,11 +17,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState, useEffect } from "react";
 import { ChangePhotoModal } from "./change-photo-modal";
 import { useAuthStore } from "@/store/auth.store";
-import { useUserMutation } from "@/mutation/user.mutation";
+// import { useUserMutation } from "@/mutation/user.mutation";
+import { useAuth } from "@/mutation/auth.mutation";
 
 export function ProfileInfo() {
   const { profile: user } = useAuthStore();
-  const { updateProfile } = useUserMutation();
+  // const { updateProfile } = useUserMutation();
+  const { updateProfile } = useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);

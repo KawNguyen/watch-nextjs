@@ -13,13 +13,12 @@ const Footer = () => {
           <div>THE LUXURIOUS WATCH</div>
           <Link href="/">
             <Image
-              src="/images/logo/logo-black.png"
+              src="/images/logo/logo-black-text.png"
               alt="icon"
               width={160}
               height={160}
               className="object-contain"
             />
-            <span className="text-3xl font-semibold">KronLux</span>
           </Link>
           <div className="flex-1" />
           <div className="pt-2"></div>
@@ -62,7 +61,7 @@ const Footer = () => {
 
       <div className="border-t mt-6">
         <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between items-center text-sm px-4">
-          <p>kronLux@gmailskibidi.com</p>
+          <p>kronLux@gmail.com</p>
           <div className="flex space-x-4 justify-start">
             {icons.map((icon, index) => (
               <Link

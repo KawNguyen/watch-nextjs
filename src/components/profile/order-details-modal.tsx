@@ -23,6 +23,7 @@ import {
 import { useOrderQuery } from "@/queries/order";
 import { formatMoney } from "@/lib/utils";
 import ReviewDialog from "./review-modal";
+import Link from "next/link";
 
 enum OrderStatus {
   PENDING = "PENDING",
@@ -174,31 +175,40 @@ export function OrderDetailsModal({
                   (item: any, index: number) => (
                     <div key={item.id}>
                       <div className="flex gap-4">
-                        <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                          <Image
-                            src={
-                              item.watch.images[0]?.absolute_url ||
-                              "/placeholder.svg"
-                            }
-                            alt={item.watch.name}
-                            width={80}
-                            height={80}
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-medium">{item.watch.name}</h4>
-                          <div className="flex justify-between items-center mt-2">
-                            <div className="flex flex-col">
-                              <span className="text-sm text-gray-600">
-                                Qty: {item.quantity}
-                              </span>
-                              <span className="font-semibold">
-                                {formatMoney(item.watch.price * item.quantity)}
-                              </span>
-                            </div>
-                            <ReviewDialog watchId={item.watch.id} />
+                        <Link
+                          href={`/collections/${item.watch.slug}`}
+                          className="flex gap-4 flex-1"
+                        >
+                          <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                            <Image
+                              src={
+                                item.watch.images[0]?.absolute_url ||
+                                "/placeholder.svg"
+                              }
+                              alt={item.watch.name}
+                              width={80}
+                              height={80}
+                              className="object-cover"
+                            />
                           </div>
+                          <div className="flex-1">
+                            <h4 className="font-medium">{item.watch.name}</h4>
+                            <div className="flex justify-between items-center mt-2">
+                              <div className="flex flex-col">
+                                <span className="text-sm text-gray-600">
+                                  Qty: {item.quantity}
+                                </span>
+                                <span className="font-semibold">
+                                  {formatMoney(
+                                    item.watch.price * item.quantity
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                        <div className="flex items-center">
+                          <ReviewDialog watchId={item.watch.id} />
                         </div>
                       </div>
                       {index < orderDetails?.item.orderItems.length - 1 && (

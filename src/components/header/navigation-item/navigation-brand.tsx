@@ -25,28 +25,30 @@ const NavigationBrand = ({ brands }: NavigationBrandProps) => {
 
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="px-4 py-2">Brand</NavigationMenuTrigger>
+      <NavigationMenuTrigger className="px-4 py-2">Thương hiệu</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <div className="grid grid-cols-2 md:w-[400px] lg:w-[500px]">
+        <div className="grid grid-cols-2 md:w-[440px] lg:w-[560px]">
           <div className="p-6 border-r border-gray-200">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">Brands</h3>
-            <ul className="space-y-1">
+            <h3 className="text-sm px-2 font-semibold text-gray-900 mb-3">
+              Thương hiệu
+            </h3>
+            <div className="grid grid-cols-2 gap-1 w-max">
               {brands.map((brand, index) => (
-                <li
+                <div
                   key={brand.name}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Link
                     href={`/collections?brands=${brand.value}`}
-                    className={`block px-3 py-2 rounded-md text-sm transition-colors 
+                    className={`block p-2 rounded-md text-sm transition-colors 
                       text-gray-700 hover:bg-gray-200`}
                   >
                     {brand.name}
                   </Link>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           <div className="h-full">
