@@ -59,8 +59,10 @@ export function ProductInfo({ watchData, price }: ProductInfoProps) {
           <Button
             className="flex-1 h-12 text-base"
             onClick={() => handleAddToCart()}
+            disabled={watchData.inventory.quantity === 0}
+            variant={"destructive"}
           >
-            Add to Cart
+            {watchData.inventory.quantity === 0 ? `Hết hàng` : `Thêm vào giỏ hàng`}
           </Button>
           <Button className="h-12 w-12" variant="outline">
             <Heart className="h-5 w-5" />

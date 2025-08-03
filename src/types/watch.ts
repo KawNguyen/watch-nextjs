@@ -45,6 +45,9 @@ export interface Watch {
   movement: Movement;
   images: WatchImage[];
   rating: number;
+  inventory: {
+    quantity: number;
+  }
 }
 
 export interface Meta {

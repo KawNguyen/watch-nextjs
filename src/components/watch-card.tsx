@@ -36,30 +36,36 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
-            No image
+            Không có hình ảnh
           </div>
         )}
 
-        <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10 flex justify-center items-center">
-          <div className="flex gap-2">
-            <Button
-              size="icon"
-              className="rounded-full h-10 w-10 bg-white text-black hover:bg-white/90 cursor-pointer"
-              onClick={() => handleAddToCart()}
-            >
-              <ShoppingCart className="h-5 w-5" />
-              <span className="sr-only">Add to cart</span>
-            </Button>
-
-            <Button
-              size="icon"
-              className="rounded-full h-10 w-10 bg-white text-black hover:bg-white/90 cursor-pointer"
-            >
-              <Maximize2 className="h-5 w-5" />
-              <span className="sr-only">Quick view</span>
-            </Button>
+        {watchData.inventory.quantity === 0 ? (
+          <div className="absolute inset-0 bg-black/80 opacity-80 z-10 flex justify-center items-center">
+            <span className="text-white text-lg font-semibold">Hết hàng</span>
           </div>
-        </div>
+        ) : (
+          <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10 flex justify-center items-center">
+            <div className="flex gap-2">
+              <Button
+                size="icon"
+                className="rounded-full h-10 w-10 bg-white text-black hover:bg-white/90 cursor-pointer"
+                onClick={() => handleAddToCart()}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                <span className="sr-only">Thêm vào mục giỏ hàng</span>
+              </Button>
+
+              <Button
+                size="icon"
+                className="rounded-full h-10 w-10 bg-white text-black hover:bg-white/90 cursor-pointer"
+              >
+                <Maximize2 className="h-5 w-5" />
+                <span className="sr-only">Xem nhanh</span>
+              </Button>
+            </div>
+          </div>
+        )}
 
         <div className="absolute right-2 top-2 z-20">
           <Button
@@ -69,7 +75,7 @@ export default function WatchCard({ watchData }: { watchData: Watch }) {
             onClick={() => addToFavorite.mutate(watchData.id)}
           >
             <Heart className="h-4 w-4" />
-            <span className="sr-only">Add to wishlist</span>
+            <span className="sr-only">Thêm vào mục yêu thích</span>
           </Button>
         </div>
       </div>
