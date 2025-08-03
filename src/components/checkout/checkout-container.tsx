@@ -12,6 +12,15 @@ import { paymentMethodEnum } from "@/types/order";
 import { Button } from "../ui/button";
 import { useAuth } from "@/mutation/auth.mutation";
 import { Loader2 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCouponsUserCanUseQuery } from "@/queries/coupon";
+import { formatMoney } from "@/lib/utils";
 
 interface CustomerInfoType {
   street: string;
@@ -25,6 +34,29 @@ interface CustomerInfoType {
   payment: string;
 }
 
+interface Coupon {
+  id: string;
+  code: string;
+  description?: string;
+  discountType: "PERCENT" | "FIXED";
+  discountValue: number;
+  minOrderValue?: number;
+  count?: number;
+  usedCount: number;
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null;
+
+  // Calculated by backend:
+  discountAmount: number;
+  finalPrice: number;
+  canUse: boolean;
+  reason: string;
+}
+
 const CheckoutContainer = () => {
   const { isAuthenticated, profile } = useAuth();
   const { selectedItems } = useCheckoutStore();
@@ -33,8 +65,16 @@ const CheckoutContainer = () => {
     null
   );
   const [shippingNotes, setShippingNotes] = useState("");
-  const [couponId, setCouponId] = useState("");
   const { createOrderFromCart, createOrderWalkin } = useOrderMutation();
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | undefined>(
+    undefined
+  );
+  const { data: availableCoupons } = useCouponsUserCanUseQuery(
+    selectedItems.reduce(
+      (sum, item) => sum + item.watch.price * item.quantity,
+      0
+    )
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -87,7 +127,7 @@ const CheckoutContainer = () => {
 
     const basePayload: OrderPayload = {
       deliveryAddress,
-      couponId: couponId || undefined,
+      couponId: selectedCoupon?.id || undefined,
       shippingNotes: shippingNotes ?? "",
       paymentMethod,
       totalPrice,
@@ -138,18 +178,39 @@ const CheckoutContainer = () => {
             <label className="block text-sm font-medium mb-2">
               Coupon Code (Optional)
             </label>
-            <input
-              type="text"
-              className="w-full p-2 border rounded"
-              placeholder="Enter coupon code"
-              value={couponId}
-              onChange={(e) => setCouponId(e.target.value)}
-            />
+
+            <Select
+              value={selectedCoupon?.id}
+              onValueChange={(id) => {
+                const coupon: Coupon | undefined = availableCoupons?.find(
+                  (c: Coupon) => c.id === id
+                );
+                setSelectedCoupon(coupon);
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a coupon" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableCoupons?.map((coupon: Coupon) => (
+                  <SelectItem key={coupon.id} value={coupon.id}>
+                    {coupon.code} -{" "}
+                    {coupon.discountType === "PERCENT"
+                      ? `${coupon.discountValue}%`
+                      : `${formatMoney(coupon.discountValue)}`}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="col-span-5 space-y-4">
           <OrderSummary items={selectedItems} />
-          <Invoice items={selectedItems} />
+          <Invoice
+            items={selectedItems}
+            discountValue={selectedCoupon?.discountValue ?? 0}
+            discountType={selectedCoupon?.discountType ?? "FIXED"}
+          />
           <Button
             className="w-full mt-4 bg-black text-white py-2 rounded hover:bg-gray-900"
             onClick={handleOrder}

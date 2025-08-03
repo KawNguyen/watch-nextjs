@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Package, MapPin, Copy, Badge } from "lucide-react";
+import { Package, MapPin, Copy} from "lucide-react";
 
 import { OrderItem } from "@/types/order";
 import Image from "next/image";
@@ -78,6 +78,8 @@ export function OrderOverview({
     : null;
   const statusColor = getStatusBadgeColor(trackingData?.status);
   const statusText = getStatusText(trackingData?.status);
+  console.log(trackingData?.status);
+  
 
   return (
     <Card>

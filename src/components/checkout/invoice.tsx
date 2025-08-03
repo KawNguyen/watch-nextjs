@@ -10,16 +10,36 @@ import {
 } from "@/components/ui/card";
 import { formatMoney } from "@/lib/utils";
 
-export const Invoice = ({ items }: { items: CartItem[] }) => {
+export const Invoice = ({
+  items,
+  discountValue,
+  discountType,
+}: {
+  items: CartItem[];
+  discountValue: number;
+  discountType: string;
+}) => {
   const invoiceNumber = `INV-${new Date().getFullYear()}-${Math.floor(
     Math.random() * 1000
   )}`;
   const date = new Date().toLocaleDateString();
+
+  if (discountType === "PERCENT") {
+    discountValue = items.reduce(
+      (sum, item) =>
+        sum + (item.watch.price * item.quantity * discountValue) / 100,
+      0
+    );
+  } else if (discountType === "FIXED") {
+    discountValue = items.reduce((sum) => sum + discountValue, 0);
+  }
+
   const subtotal = items.reduce(
     (sum, item) => sum + item.watch.price * item.quantity,
     0
   );
-  const total = subtotal;
+
+  const total = subtotal - discountValue;
 
   return (
     <Card className="p-4 bg-gray-100">
@@ -30,7 +50,7 @@ export const Invoice = ({ items }: { items: CartItem[] }) => {
           <CardDescription>Date: {date}</CardDescription>
         </div>
         <div className="text-right">
-          <h3 className="font-bold text-xl text-gray-800">Chrono</h3>
+          <h3 className="font-bold text-xl text-gray-800">KronLux</h3>
           <p className="text-gray-500 text-sm">Premium Watch Store</p>
         </div>
       </CardHeader>
@@ -70,6 +90,12 @@ export const Invoice = ({ items }: { items: CartItem[] }) => {
         <div className="flex justify-between">
           <span className="text-gray-500">Subtotal</span>
           <span className="text-gray-900">{formatMoney(subtotal)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-500">Coupon Discount</span>
+          <span className="text-gray-900">
+            {formatMoney(discountValue || 0)}
+          </span>
         </div>
       </CardContent>
       <CardFooter className="border-t border-gray-200 pt-4 flex justify-between font-semibold text-gray-900">

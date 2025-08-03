@@ -27,7 +27,7 @@ export const useMyOrdersQuery = (status: string) =>
 export const useOrderQuery = (orderId: string) =>
   useQuery({
     queryKey: ["order", orderId],
-    queryFn: () => orderAPI.getOrder(orderId).then((res) => res.data),
+    queryFn: () => orderAPI.getOrder(orderId).then((res) => res.data.item),
   });
 
 export const useCancelOrderMutation = () =>

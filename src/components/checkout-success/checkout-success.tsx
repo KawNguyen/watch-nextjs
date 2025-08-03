@@ -27,8 +27,7 @@ export default function Component() {
 
   const { data, isLoading } = useOrderQuery(orderId as string);
 
-  const orderNumber = "WTC-2024-001847";
-  const orderDate = new Date(data?.item.createdAt).toLocaleDateString("en-US", {
+  const orderDate = new Date(data?.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -41,10 +40,12 @@ export default function Component() {
       </div>
     );
 
-  const deliveryAddress = JSON.parse(data?.item.deliveryAddress as string);
-  const fullName = data?.item.user
-    ? `${data.item.user.firstName} ${data.item.user.lastName}`
-    : JSON.parse(data.item.walkinInformation as string)?.firstName + " " + JSON.parse(data.item.walkinInformation as string)?.lastName;
+  const deliveryAddress = JSON.parse(data?.deliveryAddress as string);
+  const fullName = data?.user
+    ? `${data.user.firstName} ${data.user.lastName}`
+    : JSON.parse(data.walkinInformation as string)?.firstName +
+      " " +
+      JSON.parse(data.walkinInformation as string)?.lastName;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -77,7 +78,7 @@ export default function Component() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-gray-600">Order Number</p>
-                    <p className="font-semibold text-lg">{orderNumber}</p>
+                    <p className="font-semibold text-lg">{data?.id}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Order Date</p>
@@ -86,7 +87,7 @@ export default function Component() {
                 </div>
 
                 <Separator />
-                {data?.item.orderItems.map((item: any) => (
+                {data?.orderItems.map((item: any) => (
                   <div key={item.id} className="flex gap-4">
                     <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
                       <Image
@@ -234,21 +235,18 @@ export default function Component() {
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span>Subtotal</span>
-                    <span>{formatMoney(data?.item.originalPrice)}</span>
-                  </div>
-                  {/* <div className="flex justify-between">
-                    <span>Express Shipping</span>
-                    <span>$0</span>
+                    <span>Subtotal:</span>
+                    <span>{formatMoney(data?.originalPrice)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Tax</span>
-                    <span>$0</span>
-                  </div> */}
+                    <span>Coupon:</span>
+                    <span>- {formatMoney(data?.coupon.discountValue)}</span>
+                  </div>
+
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
-                    <span>Total Paid</span>
-                    <span>{formatMoney(data?.item.totalPrice)}</span>
+                    <span>Total Paid:</span>
+                    <span>{formatMoney(data?.totalPrice)}</span>
                   </div>
                 </div>
 

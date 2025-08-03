@@ -273,9 +273,7 @@ export function OrderHistory() {
                     <TableCell className="font-medium truncate max-w-[150px]">
                       {order.id}
                     </TableCell>
-                    <TableCell>
-                      {formatDate(new Date(order.createdAt))}
-                    </TableCell>
+                    <TableCell>{formatDate(order.createdAt)}</TableCell>
                     <TableCell>{order.orderItems.length}</TableCell>
                     <TableCell className="font-semibold">
                       {formatMoney(order.totalPrice)}
@@ -332,7 +330,7 @@ export function OrderHistory() {
                         {order.id}
                       </h4>
                       <p className="text-sm text-gray-600">
-                        {formatDate(new Date(order.createdAt))}
+                        {formatDate(order.createdAt)}
                       </p>
                     </div>
                     <Badge
@@ -469,12 +467,12 @@ export function OrderHistory() {
           disabled: false,
         };
       case OrderStatus.COMPLETED:
-        // return {
-        //   text: "Review",
-        //   variant: "default",
-        //   onClick: () => {},
-        //   disabled: false,
-        // };
+      // return {
+      //   text: "Review",
+      //   variant: "default",
+      //   onClick: () => {},
+      //   disabled: false,
+      // };
       case OrderStatus.CANCELED:
       default:
         return {
