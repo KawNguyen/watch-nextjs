@@ -56,7 +56,7 @@ export const useOrderMutation = () => {
       toast.success("Your order has been created successfully.");
     },
     onError: (error: any) => {
-      toast.error(`${error.response.data.message}. Please try again.`);
+      toast.error(`${error.response.data.message}`);
     },
   });
 
@@ -71,9 +71,8 @@ export const useOrderMutation = () => {
     onSuccess: () => {
       toast.success("Your order has been created successfully.");
     },
-    onError: (error: string) => {
-      console.error("Error creating walk-in order:", error);
-      toast.error("Failed to create walk-in order. Please try again.");
+    onError: (error: any) => {
+      toast.error(`${error.response.data.message}`);
     },
   });
 

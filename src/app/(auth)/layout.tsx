@@ -15,7 +15,7 @@ const layout = ({ children }: { children: ReactNode }) => {
         <div className="absolute inset-0 bg-black/60" />
         <div className="absolute top-10 left-10 z-10">
           <Link href="/">
-            <Image src="/images/logo/logo-white.png" alt="logo" width={160} height={160} />
+            <Image src="/images/logo/logo-white-text.png" alt="logo" width={160} height={160} />
           </Link>
         </div>
       </div>

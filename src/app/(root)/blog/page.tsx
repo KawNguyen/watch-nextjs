@@ -9,10 +9,11 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import Image from "next/image";
-import { useBlog } from "@/queries/blog";
+import { useBlogsQueries } from "@/queries/blog";
 import { Blog } from "@/types/blog";
 import { extractThumbnailAndDescription } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { BlogCard } from "@/components/blogs/blog-card";
 
 // Dữ liệu mẫu
 // const filteredWatches = [
@@ -28,7 +29,8 @@ import { extractThumbnailAndDescription } from "@/lib/utils";
 // ];
 
 export default function WatchBlogPage() {
-  const { data: blogs } = useBlog();
+  const router = useRouter();
+  const { data: blogs } = useBlogsQueries();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -50,28 +52,7 @@ export default function WatchBlogPage() {
       </section>
       <section className="py-12 container mx-auto px-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {blogs?.map((blog: Blog) => (
-          <Card key={blog.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <CardTitle className="pl-2">{blog.title}</CardTitle>
-              <CardDescription className="pl-2">
-                {extractThumbnailAndDescription(blog.content).description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Image
-                src={blog.thumbnail}
-                alt={blog.title}
-                width={300}
-                height={300}
-                className="object-contain w-full h-60 rounded"
-              />
-            </CardContent>
-            <CardFooter className="p-2">
-              <Button variant="outline" className="w-full">
-                View Details
-              </Button>
-            </CardFooter>
-          </Card>
+          <BlogCard blog={blog} key={blog.id} />
         ))}
       </section>
     </div>

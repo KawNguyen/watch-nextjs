@@ -11,7 +11,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatDate = (date: Date) => {
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
   return date.toLocaleDateString("vi-VN", {
     year: "numeric",
     month: "numeric",

@@ -24,8 +24,8 @@ export function ProductImages({ images, name }: PossibleImages) {
                 <Image
                   src={image.absolute_url}
                   alt={`${name} - ${index + 1}`}
-                  width={1000}
-                  height={1000}
+                  
+                  fill
                   priority={true}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />

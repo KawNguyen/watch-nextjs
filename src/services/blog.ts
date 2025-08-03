@@ -1,12 +1,13 @@
 import axiosInstance from "@/lib/axios-instance";
 
 export const blogApi = {
-  getAllBlogs: async () => {
-    const res = await axiosInstance.get("/blogs");
+  getAllBlogs: async (isPublished: true) => {
+    const res = await axiosInstance.get(`/blogs?isPublished=${isPublished}`);
     return res.data;
   },
-  getBlogById: async (blogId: string) => {
-    const res = await axiosInstance.get(`/blogs/${blogId}`);
+
+  getBlogBySlug: async (slug: string) => {
+    const res = await axiosInstance.get(`/blogs/${slug}`);
     return res.data;
   },
 };

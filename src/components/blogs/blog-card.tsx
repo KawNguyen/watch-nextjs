@@ -1,83 +1,65 @@
-"use client";
+import Link from "next/link";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar } from "lucide-react";
+import { Blog } from "@/types/blog";
+import { formatDate } from "@/lib/utils";
 
-import Image from "next/image";
+// interface BlogCardProps {
+//   blog: BlogPost;
+// }
 
-interface BlogCardProps {
-  image: string;
-  category: string;
-  title: string;
-  description: string;
-  date: string;
+function extractTextFromHtml(html: string, maxLength = 150): string {
+  const text = html.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ")
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text
 }
-export const BlogPost = [
-  {
-    image: "/images/watch.jpg",
-    category: "Open Source",
-    title:
-      "How Common Sense Machines uses Meta Segment Anything Model and AI to generate production-ready 3D assets",
-    description:
-      "Common Sense Machines uses Meta Segment Anything Model 2 to analyze 2D images and video and translate their components to 3D.",
-    date: "May 1, 2025",
-  },
-  {
-    image: "/images/watch.jpg",
-    category: "Women Watch",
-    title:
-      "How Common Sense Machines uses Meta Segment Anything Model and AI to generate production-ready 3D assets",
-    description:
-      "Common Sense Machines uses Meta Segment Anything Model 2 to analyze 2D images and video and translate their components to 3D.",
-    date: "May 1, 2025",
-  },
 
-  {
-    image: "/images/watch.jpg",
-    category: "Men Watch",
-    title:
-      "How Common Sense Machines uses Meta Segment Anything Model and AI to generate production-ready 3D assets",
-    description:
-      "Common Sense Machines uses Meta Segment Anything Model 2 to analyze 2D images and video and translate their components to 3D.",
-    date: "May 1, 2025",
-  },
-  {
-    image: "/images/watch.jpg",
-    category: "Unisex Watch",
-    title:
-      "How Common Sense Machines uses Meta Segment Anything Model and AI to generate production-ready 3D assets",
-    description:
-      "Common Sense Machines uses Meta Segment Anything Model 2 to analyze 2D images and video and translate their components to 3D.",
-    date: "May 1, 2025",
-  },
-];
+export function BlogCard({ blog }: { blog: Blog }) {
+  const excerpt = extractTextFromHtml(blog.content, 120);
 
-export default function BlogCard({
-  image,
-  category,
-  title,
-  description,
-  date,
-}: BlogCardProps) {
   return (
-    <div className="flex flex-col md:flex-row bg-[#f4f7fa] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
-      {/* Image section */}
-      <div className="md:w-1/2">
-        <Image
-          src={image}
-          alt={title}
-          width={600}
-          height={300}
-          className="w-full h-full object-fit"
-        />
-      </div>
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      <Link href={`/blog/${blog.slug}`}>
+        <div className="relative aspect-video overflow-hidden">
+          <img
+            src={blog.thumbnail || "/placeholder.svg"}
+            alt={blog.title}
+            className="object-cover hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      </Link>
 
-      {/* Text section */}
-      <div className="md:w-1/2 p-6 flex flex-col justify-center gap-2">
-        <p className="text-sm text-gray-500 font-medium">{category}</p>
-        <h2 className="text-xl font-semibold text-gray-800 hover:underline cursor-pointer">
-          {title}
-        </h2>
-        <p className="text-gray-600">{description}</p>
-        <p className="text-sm text-gray-400 mt-2">{date}</p>
-      </div>
-    </div>
+      <CardContent className="p-6">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+          <Calendar className="h-4 w-4" />
+          <span>{formatDate(blog.createdAt)}</span>
+          {blog.isPublished && (
+            <Badge variant="secondary" className="ml-auto">
+              Đã xuất bản
+            </Badge>
+          )}
+        </div>
+
+        <Link href={`/blog/${blog.slug}`}>
+          <h3 className="font-semibold text-lg mb-3 line-clamp-2 hover:text-primary transition-colors">
+            {blog.title}
+          </h3>
+        </Link>
+
+        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
+          {excerpt}
+        </p>
+      </CardContent>
+
+      <CardFooter className="px-6 pb-6">
+        <Link
+          href={`/blog/${blog.slug}`}
+          className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
+        >
+          Đọc thêm →
+        </Link>
+      </CardFooter>
+    </Card>
   );
 }
