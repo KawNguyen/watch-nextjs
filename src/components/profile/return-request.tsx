@@ -39,22 +39,17 @@ export function ReturnRequestDialog({ productData }: ReturnRequestDialogProps) {
     images: [],
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   const [returnId, setReturnId] = useState<string | null>(null);
 
   const createReturnRequest = useMutation({
     mutationFn: async (data: any) => await returnApi.createRequestReturn(data),
     onSuccess: (res: ReturnRequestResponse) => {
       console.log(`Return request created:`, res);
-      setIsSubmitted(true);
       setCurrentStep(3);
       setReturnId(res.data.item.id);
     },
     onError: (error: any) => {
       console.error("Error creating return request:", error);
-      setIsSubmitted(false);
     },
   });
 
@@ -78,13 +73,10 @@ export function ReturnRequestDialog({ productData }: ReturnRequestDialogProps) {
         reason: "",
         images: [],
       });
-      setIsSubmitted(false);
     }, 300);
   };
 
   const handleSubmit = async () => {
-    setIsSubmitting(true);
-
     const finalReason =
       formData.reason === "other"
         ? formData.description?.trim()
@@ -92,7 +84,6 @@ export function ReturnRequestDialog({ productData }: ReturnRequestDialogProps) {
 
     if (!finalReason) {
       alert("Vui lòng chọn hoặc nhập lý do đổi trả.");
-      setIsSubmitting(false);
       return;
     }
 
@@ -107,7 +98,6 @@ export function ReturnRequestDialog({ productData }: ReturnRequestDialogProps) {
     console.log("Submitting payload", payload);
 
     await createReturnRequest.mutateAsync(payload);
-    setIsSubmitting(false);
     setCurrentStep(3);
   };
 

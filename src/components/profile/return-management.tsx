@@ -18,12 +18,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RotateCcw, Clock, CheckCircle, XCircle, Eye } from "lucide-react";
 import Image from "next/image";
 import { ReturnRequestDetailsModal } from "./return-request-detail-modal";
 import { ReturnRequest, ReturnStatus } from "@/types/return-request";
 import { useGetMyReturnRequests } from "@/queries/return-request";
+
+const tabs = [
+  { label: "Pending", value: "PENDING" },
+  { label: "Approved", value: "APPROVED" },
+  { label: "Rejected", value: "REJECTED" },
+  { label: "Completed", value: "COMPLETED" },
+];
 
 const getStatusConfig = (status: ReturnStatus) => {
   switch (status) {
@@ -160,7 +166,7 @@ export function ReturnManagement() {
                   <TableRow key={request.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="w-12 h-12 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
                           <Image
                             src={request.images[0] || "/placeholder.svg"}
                             alt={request.orderItem.watch.name}
@@ -321,40 +327,28 @@ export function ReturnManagement() {
             </div>
           </div>
         </CardHeader>
-      </Card>
+        <CardContent className="p-0">
+          <div className="flex overflow-x-auto border-b border-border scrollbar-hide">
+            {tabs.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setStatus(tab.value as ReturnStatus)}
+                aria-selected={status === tab.value}
+                role="tab"
+                className={`text-sm px-4 py-2 whitespace-nowrap transition-colors flex-shrink-0 ${
+                  status === tab.value
+                    ? "border-b-2 border-primary text-primary font-medium"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
-      <Tabs
-        value={status}
-        onValueChange={(value) => setStatus(value as ReturnStatus)}
-        className="mt-4"
-      >
-        <TabsList className="bg-gray-50 border-b">
-          <TabsTrigger value="PENDING" className="text-sm">
-            Pending
-          </TabsTrigger>
-          <TabsTrigger value="APPROVED" className="text-sm">
-            Approved
-          </TabsTrigger>
-          <TabsTrigger value="REJECTED" className="text-sm">
-            Rejected
-          </TabsTrigger>
-          <TabsTrigger value="COMPLETED" className="text-sm">
-            Completed
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value={status} className="mt-4">
-          {returnRequests ? (
-            renderRequestTable(returnRequests)
-          ) : (
-            <div className="text-center py-12">
-              <RotateCcw className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
-                Loading return requests...
-              </h3>
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
+          <div className="p-4">{renderRequestTable(returnRequests || [])}</div>
+        </CardContent>
+      </Card>
 
       {selectedRequestId && (
         <ReturnRequestDetailsModal

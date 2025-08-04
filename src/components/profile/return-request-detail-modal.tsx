@@ -7,7 +7,6 @@ import {
   User,
   MessageSquare,
   ImageIcon,
-  X,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -163,7 +162,7 @@ export function ReturnRequestDetailsModal({
               <CardContent>
                 <div className="flex gap-4">
                   <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                    <img
+                    <Image
                       src={
                         request?.orderItem.watch?.images[0].absolute_url ||
                         "/placeholder.svg"
