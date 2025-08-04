@@ -34,6 +34,7 @@ import { CancelOrderDialog } from "./cancel-order-dialog";
 import { toast } from "sonner";
 import { queryClient } from "../providers/providers";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useOrderMutation } from "@/mutation/order.mutation";
 
 export function OrderHistory() {
   const tabs: { label: string; value: OrderStatus }[] = [
@@ -49,7 +50,9 @@ export function OrderHistory() {
   const [activeTab, setActiveTab] = useState<OrderStatus>(OrderStatus.PENDING);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+
   const { data: orders = [], isLoading, error } = useMyOrdersQuery(activeTab);
+  const { completeOrder } = useOrderMutation();
   const cancelOrderMutation = useCancelOrderMutation();
 
   const handleViewDetails = (orderId: string) => {
@@ -461,16 +464,17 @@ export function OrderHistory() {
       case OrderStatus.SHIPPING:
       case OrderStatus.DELIVERED:
         return {
-          text: "Reorder",
+          text: "Đã nhận",
           variant: "outline",
-          onClick: () => {},
+          onClick: () => completeOrder.mutate(order.id),
           disabled: false,
         };
       case OrderStatus.COMPLETED:
       // return {
-      //   text: "Review",
+      //   text: "Hoàn Trả",
       //   variant: "default",
-      //   onClick: () => {},
+      //   onClick: () =>
+      //     handleOpenReturnRequestDialog(order.id, order.orderItems[0].id),
       //   disabled: false,
       // };
       case OrderStatus.CANCELED:

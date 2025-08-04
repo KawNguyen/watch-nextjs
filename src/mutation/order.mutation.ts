@@ -53,7 +53,7 @@ export const useOrderMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-cart"] });
       queryClient.invalidateQueries({ queryKey: ["my-orders"] });
-      toast.success("Your order has been created successfully.");
+      toast.success("Bạn đã đặt hàng thành công.");
     },
     onError: (error: any) => {
       toast.error(`${error.response.data.message}`);
@@ -69,12 +69,23 @@ export const useOrderMutation = () => {
       );
     },
     onSuccess: () => {
-      toast.success("Your order has been created successfully.");
+      toast.success("Bạn đã đặt hàng thành công.");
     },
     onError: (error: any) => {
       toast.error(`${error.response.data.message}`);
     },
   });
 
-  return { createOrderFromCart, createOrderWalkin };
+  const completeOrder = useMutation({
+    mutationFn: async (orderId: string) => orderAPI.completeOrder(orderId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-orders"] });
+      toast.success("Đã hoàn thành đơn hàng.");
+    },
+    onError: (error: any) => {
+      toast.error(`Đã xảy ra lỗi: ${error.response.data.message}`);
+    },
+  });
+
+  return { createOrderFromCart, createOrderWalkin, completeOrder };
 };

@@ -37,7 +37,7 @@ export default function ReviewDialog({ watchId }: { watchId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" size={"lg"} className="w-full">
           <Star className="w-4 h-4 mr-2" /> Viết đánh giá
         </Button>
       </DialogTrigger>

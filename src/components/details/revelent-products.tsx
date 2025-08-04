@@ -1,49 +1,53 @@
-// import { useState, useEffect } from "react";
-// import ProductCard from "../product-card";
-// import { useWatchByBrand } from "@/queries";
+import { useState, useEffect } from "react";
+import ProductCard from "../product-card";
+import { useWatchesQuery } from "@/queries/watches";
+import WatchCard from "../watch-card";
 
-// interface RelevantProductsProps {
-//   currentProductId: string;
-//   brandId: string;
-// }
+interface RelevantProductsProps {
+  currentProductId: string;
+  brandSlug: string;
+}
 
-// export const RelevantProduct = ({
-//   currentProductId,
-//   brandId,
-// }: RelevantProductsProps) => {
-//   const { data: watchesData, isLoading } = useWatchByBrand(brandId);
-//   const [relevantProducts, setRelevantProducts] = useState([]);
+export const RelevantProduct = ({
+  currentProductId,
+  brandSlug,
+}: RelevantProductsProps) => {
+  const { data: watchesData, isLoading } = useWatchesQuery(1, {
+    brands: [brandSlug],
+  });
 
-//   useEffect(() => {
-//     if (watchesData?.data?.items) {
-//       const filtered = watchesData.data.items
-//         .filter(
-//           (product: any) =>
-//             product.id !== currentProductId && product.brandId === brandId,
-//         )
-//         .slice(0, 4);
-//       setRelevantProducts(filtered);
-//     }
-//   }, [watchesData, currentProductId, brandId]);
+  const [relevantProducts, setRelevantProducts] = useState<any[]>([]);
 
-//   if (isLoading) {
-//     return (
-//       <div className="container mx-auto px-4">
-//         <div>Loading...</div>
-//       </div>
-//     );
-//   }
+  useEffect(() => {
+    if (watchesData?.data?.items) {
+      const filtered = watchesData.data.items
+        .filter(
+          (product: any) =>
+            product.id !== currentProductId && product.brand.slug === brandSlug
+        )
+        .slice(0, 4);
+      setRelevantProducts(filtered);
+    }
+  }, [watchesData, currentProductId, brandSlug]);
 
-//   return (
-//     <div className="container mx-auto px-4">
-//       <h2 className="text-3xl font-bold text-gray-900 mb-8">
-//         Similar Products
-//       </h2>
-//       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-//         {relevantProducts?.map((product: any) => (
-//           <ProductCard key={product.id} product={product} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4">
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4">
+      <h2 className="text-3xl font-bold text-gray-900 mb-8">
+        Similar Products
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        {relevantProducts?.map((product: any) => (
+          <WatchCard key={product.id} watchData={product} />
+        ))}
+      </div>
+    </div>
+  );
+};

@@ -24,6 +24,7 @@ import { useOrderQuery } from "@/queries/order";
 import { formatMoney } from "@/lib/utils";
 import ReviewDialog from "./review-modal";
 import Link from "next/link";
+import { ReturnRequestDialog } from "./return-request";
 
 enum OrderStatus {
   PENDING = "PENDING",
@@ -31,6 +32,7 @@ enum OrderStatus {
   SHIPPING = "SHIPPING",
   DELIVERED = "DELIVERED",
   COMPLETED = "COMPLETED",
+  RETURN = "RETURN",
   CANCELED = "CANCELED",
 }
 
@@ -200,7 +202,15 @@ export function OrderDetailsModal({
                         {formatMoney(item.watch.price * item.quantity)}
                       </p>
                     </div>
-                    <ReviewDialog watchId={item.watch.id} />
+                    <div className="flex flex-col items-center gap-2">
+                      <ReturnRequestDialog
+                        productData={{
+                          orderId: orderDetails.id,
+                          orderItemId: item.id,
+                        }}
+                      />
+                      <ReviewDialog watchId={item.watch.id} />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -233,7 +243,6 @@ export function OrderDetailsModal({
             </Card>
           </div>
 
-          {/* Summary */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">Order Summary</CardTitle>

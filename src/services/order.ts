@@ -22,7 +22,9 @@ export const orderAPI = {
   },
 
   trackingOrder: async (orderId: string, phoneLast4Digits: string) => {
-    const response = await axiosInstance.get(`/order/track/${orderId}?phoneLast4Digits=${phoneLast4Digits}`);
+    const response = await axiosInstance.get(
+      `/order/track/${orderId}?phoneLast4Digits=${phoneLast4Digits}`
+    );
     return response.data;
   },
 
@@ -33,6 +35,11 @@ export const orderAPI = {
 
   createOrderWalkin: async (data: OrderPayload) => {
     const response = await axiosInstance.post(`/order/create-walkin`, data);
+    return response.data;
+  },
+
+  completeOrder: async (orderId: string) => {
+    const response = await axiosInstance.patch(`/order/complete/${orderId}`);
     return response.data;
   },
 

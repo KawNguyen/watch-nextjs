@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, LockKeyholeIcon, MapPin, Package, User } from "lucide-react";
+import { Heart, LockKeyholeIcon, MapPin, Package, RotateCcw, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const menuItems = [
   { id: "profile", label: "Profile Information", icon: User },
   { id: "orders", label: "Order History", icon: Package },
+  { id: "return-request", label: "Return Requests", icon: RotateCcw },
   { id: "addresses", label: "Addresses", icon: MapPin },
   { id: "favorites", label: "Favorites", icon: Heart },
   { id: "password", label: "Password", icon: LockKeyholeIcon },

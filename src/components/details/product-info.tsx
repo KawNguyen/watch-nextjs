@@ -57,12 +57,17 @@ export function ProductInfo({ watchData, price }: ProductInfoProps) {
       <div className="space-y-6">
         <div className="flex items-center gap-4">
           <Button
-            className="flex-1 h-12 text-base"
+            className={`flex-1 h-12 text-base ${
+              watchData.inventory.quantity === 0
+                ? "cursor-not-allowed"
+                : "text-white"
+            }`}
             onClick={() => handleAddToCart()}
             disabled={watchData.inventory.quantity === 0}
-            variant={"destructive"}
           >
-            {watchData.inventory.quantity === 0 ? `Hết hàng` : `Thêm vào giỏ hàng`}
+            {watchData.inventory.quantity === 0
+              ? `Hết hàng`
+              : `Thêm vào giỏ hàng`}
           </Button>
           <Button className="h-12 w-12" variant="outline">
             <Heart className="h-5 w-5" />

@@ -5,7 +5,7 @@ import { ProductImages } from "@/components/details/product-images";
 import { ProductInfo } from "@/components/details/product-info";
 import { ProductName } from "@/components/details/product-name";
 import { ProductTabs } from "@/components/details/product-tab";
-// import RevelentProduct from "@/components/details/revelent-products";
+import { RelevantProduct } from "@/components/details/revelent-products";
 import ReviewProduct from "@/components/details/review-products";
 import { useWatchQuery } from "@/queries/watches";
 import React from "react";
@@ -34,10 +34,13 @@ const DetailsPage = ({ params }: { params: { slug: string } }) => {
           {data && <ProductInfo watchData={data} price={data.price ?? 0} />}
         </div>
       </div>
-      <div>
+      <div className="mb-8">
         {data && <ProductFeatures watch={data} />}
-        {/* <RevelentProduct /> */}
         <ReviewProduct slug={data?.slug || ""} />
+        <RelevantProduct
+          currentProductId={data?.id || ""}
+          brandSlug={data?.brand.slug || ""}
+        />
       </div>
     </div>
   );
