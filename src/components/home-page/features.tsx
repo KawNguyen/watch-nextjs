@@ -10,26 +10,27 @@ const Features = () => {
   const benefits = [
     {
       icon: <ShieldCheckIcon size={32} className="text-gray-900" />,
-      title: "Authentic Guarantee",
+      title: "Cam kết chính hãng",
       description:
-        "Every timepiece comes with a certificate of authenticity and a 5-year warranty.",
+        "Mỗi chiếc đồng hồ đều đi kèm giấy chứng nhận chính hãng và bảo hành 5 năm.",
     },
     {
       icon: <TruckIcon size={32} className="text-gray-900" />,
-      title: "Free Shipping",
+      title: "Miễn phí vận chuyển",
       description:
-        "Enjoy complimentary express shipping on all orders worldwide.",
+        "Miễn phí giao hàng nhanh trên toàn thế giới cho tất cả đơn hàng.",
     },
     {
       icon: <RefreshCwIcon size={32} className="text-gray-900" />,
-      title: "Easy Returns",
-      description: "Not satisfied? Return within 30 days for a full refund.",
+      title: "Đổi trả dễ dàng",
+      description:
+        "Không hài lòng? Đổi trả trong vòng 30 ngày để nhận hoàn tiền 100%.",
     },
     {
       icon: <ClockIcon size={32} className="text-gray-900" />,
-      title: "Lifetime Support",
+      title: "Hỗ trợ trọn đời",
       description:
-        "Our master watchmakers provide maintenance and repair services.",
+        "Đội ngũ thợ đồng hồ của chúng tôi luôn sẵn sàng bảo trì và sửa chữa.",
     },
   ];
 
@@ -37,7 +38,7 @@ const Features = () => {
     <section className="py-8">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-          Why Choose KRONLUX
+          Vì sao chọn KRONLUX
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((benefit, index) => (
@@ -56,4 +57,5 @@ const Features = () => {
     </section>
   );
 };
+
 export default Features;

@@ -3,24 +3,7 @@ import { Star, ChevronRight, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useInfiniteReviews } from "@/queries/review";
-
-interface Review {
-  id: string;
-  rating: number;
-  comment: string | null;
-  userId: string;
-  watchId: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-  user: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    avatar: string | null;
-  };
-}
+import { Review } from "@/types/review";
 
 const ReviewProduct = ({ slug }: { slug: string }) => {
   const {
@@ -31,7 +14,6 @@ const ReviewProduct = ({ slug }: { slug: string }) => {
     isFetchingNextPage,
   } = useInfiniteReviews(slug);
   console.log(reviews);
-  
 
   const allReviews: Review[] =
     reviews?.pages?.flatMap((page: any) => page.reviews) || [];
@@ -79,7 +61,7 @@ const ReviewProduct = ({ slug }: { slug: string }) => {
                 <div className="flex items-center">
                   <Avatar>
                     <AvatarImage
-                      src={review.user?.avatar || ""}
+                      src={review.user?.avatar?.absolute_url || ""}
                       alt={`${review.user?.firstName} ${review.user?.lastName}`}
                     />
                     <AvatarFallback>

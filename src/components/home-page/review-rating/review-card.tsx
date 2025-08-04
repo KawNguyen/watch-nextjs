@@ -1,17 +1,9 @@
 import React from "react";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
-interface ReviewProps {
-  review: {
-    id: number;
-    name: string;
-    avatar: string;
-    rating: number;
-    date: string;
-    review: string;
-  };
-}
-export function ReviewCard({ review }: ReviewProps) {
+import { Review } from "@/types/review";
+
+export function ReviewCard({ review }: { review: Review }) {
   const renderStars = (rating: number) => {
     return Array(5)
       .fill(0)
@@ -30,15 +22,17 @@ export function ReviewCard({ review }: ReviewProps) {
       <div className="flex items-center mb-6">
         <div className="relative">
           <Image
-            src={review.avatar}
-            alt={`${review.name} avatar`}
+            src={review?.user?.avatar?.absolute_url || ""}
+            alt={`${review.user?.firstName} ${review.user?.lastName} avatar`}
             width={140}
             height={140}
             className="w-14 h-14 rounded-full object-cover"
           />
         </div>
         <div className="ml-4">
-          <h3 className="font-semibold text-gray-800 text-lg">{review.name}</h3>
+          <h3 className="font-semibold text-gray-800 text-lg">
+            {review.user?.firstName} {review.user?.lastName}
+          </h3>
           <div className="flex items-center gap-1 mt-1">
             {renderStars(review.rating)}
           </div>
@@ -46,10 +40,10 @@ export function ReviewCard({ review }: ReviewProps) {
       </div>
       <div className="relative">
         <p className="text-gray-600 mb-4 leading-relaxed">
-          &quot;{review.review}&quot;
+          &quot;{review.comment}&quot;
         </p>
         <div className="text-sm text-gray-400 flex items-center gap-2">
-          {review.date}
+          {review.createdAt}
         </div>
       </div>
     </div>

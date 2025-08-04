@@ -1,72 +1,37 @@
-import React from "react";
+"use client";
+
+import type { Review } from "@/types/review";
 import { ReviewCard } from "./review-card";
-import { ReviewForm } from "./review-form";
+import { useReviews } from "@/queries/review";
+
 export function Review() {
-  const reviews = [
-    {
-      id: 1,
-      name: "Nguyễn Văn A",
-      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-      rating: 5,
-      date: "15/06/2023",
-      review:
-        "Sản phẩm tuyệt vời, chất lượng vượt xa mong đợi. Tôi rất hài lòng với trải nghiệm mua hàng và sẽ quay lại trong tương lai!",
-    },
-    {
-      id: 2,
-      name: "Trần Thị B",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      rating: 4,
-      date: "02/07/2023",
-      review:
-        "Dịch vụ khách hàng rất tốt, nhân viên nhiệt tình và thân thiện. Sản phẩm đúng như mô tả, giao hàng nhanh chóng.",
-    },
-    {
-      id: 3,
-      name: "Lê Minh C",
-      avatar: "https://randomuser.me/api/portraits/men/67.jpg",
-      rating: 5,
-      date: "20/07/2023",
-      review:
-        "Tôi đã mua sản phẩm này như một món quà cho bạn bè và họ rất thích nó! Chất lượng sản phẩm tốt, đóng gói cẩn thận.",
-    },
-    {
-      id: 4,
-      name: "Phạm Hoàng D",
-      avatar: "https://randomuser.me/api/portraits/men/81.jpg",
-      rating: 4,
-      date: "05/08/2023",
-      review:
-        "Giá cả hợp lý cho chất lượng nhận được. Tôi đã sử dụng sản phẩm được một tháng và mọi thứ vẫn hoạt động tốt.",
-    },
-  ];
+  const { data: reviews } = useReviews();
+
+  const allReviews: Review[] =
+    reviews?.pages?.flatMap((page: any) => page.reviews) || [];
+
   return (
-    <div className="w-full container mx-auto py-12">
-      <div className="text-center mb-16 relative">
+    <div className="w-full py-12 bg-gray-50 overflow-hidden">
+      <div className="text-center mb-10 relative">
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-100 to-blue-100 blur-3xl opacity-30 rounded-full"></div>
         <h2 className="text-4xl font-bold text-gray-800 mb-4">
-          Share with us your experience
+          Chia sẻ trải nghiệm của bạn
         </h2>
-        <p className="text-gray-800 mb-4">How do you feel about KRONLUX?</p>
+        <p className="text-gray-800 mb-4">
+          Bạn cảm nhận như thế nào về KRONLUX?
+        </p>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {reviews.map((review, index) => (
-              <div
-                key={review.id}
-                className="animate-fade-up"
-                style={{
-                  animationDelay: `${index * 150}ms`,
-                }}
-              >
-                <ReviewCard review={review} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="lg:col-span-4 lg:sticky lg:top-6 h-fit">
-          <ReviewForm />
+
+      <div className="relative w-full overflow-x-hidden">
+        <div className="flex justify-center w-full animate-marquee">
+          {allReviews.map((review: Review, index: number) => (
+            <div
+              key={`${review.id}-${index}`}
+              className="inline-block mx-4 w-[300px] align-top"
+            >
+              <ReviewCard review={review} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
