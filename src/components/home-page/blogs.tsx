@@ -46,13 +46,13 @@ export default function Blogs() {
   const { data, isLoading } = useBlogsQueries();
 
   return (
-    <div className="container mx-auto my-4">
+    <div className="container mx-auto my-4 mt-4">
       <div>
         <h2 className="text-3xl justify-center text-center font-bold text-gray-900 ">
-          Blogs
+          Khám Phá Đồng Hồ
         </h2>
         <p className="mt-4 text-center text-gray-600 max-w-2xl mx-auto">
-          News and insights from our blog.
+          Tin tức và thông tin từ blog của chúng tôi.
         </p>
       </div>
       <Carousel>
@@ -94,7 +94,7 @@ export default function Blogs() {
                         </div>
                         <CardFooter className="flex items-center justify-end mt-2">
                           <Button className="w-full text-white">
-                            Read More
+                            Đọc Thêm
                           </Button>
                         </CardFooter>
                       </div>

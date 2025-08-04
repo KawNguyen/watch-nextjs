@@ -25,10 +25,10 @@ import { ReturnRequest, ReturnStatus } from "@/types/return-request";
 import { useGetMyReturnRequests } from "@/queries/return-request";
 
 const tabs = [
-  { label: "Pending", value: "PENDING" },
-  { label: "Approved", value: "APPROVED" },
-  { label: "Rejected", value: "REJECTED" },
-  { label: "Completed", value: "COMPLETED" },
+  { label: "Chờ xét duyệt", value: "PENDING" },
+  { label: "Đã duyệt", value: "APPROVED" },
+  { label: "Bị từ chối", value: "REJECTED" },
+  { label: "Đã hoàn thành", value: "COMPLETED" },
 ];
 
 const getStatusConfig = (status: ReturnStatus) => {
@@ -40,7 +40,7 @@ const getStatusConfig = (status: ReturnStatus) => {
         bgColor: "bg-orange-50",
         borderColor: "border-orange-200",
         icon: Clock,
-        label: "Pending Review",
+        label: "Chờ Xét Duyệt",
       };
     case ReturnStatus.APPROVED:
       return {
@@ -49,7 +49,7 @@ const getStatusConfig = (status: ReturnStatus) => {
         bgColor: "bg-green-50",
         borderColor: "border-green-200",
         icon: CheckCircle,
-        label: "Approved",
+        label: "Đã Duyệt",
       };
     case ReturnStatus.REJECTED:
       return {
@@ -58,7 +58,7 @@ const getStatusConfig = (status: ReturnStatus) => {
         bgColor: "bg-red-50",
         borderColor: "border-red-200",
         icon: XCircle,
-        label: "Rejected",
+        label: "Bị Từ Chối",
       };
 
     case ReturnStatus.COMPLETED:
@@ -68,16 +68,16 @@ const getStatusConfig = (status: ReturnStatus) => {
         bgColor: "bg-green-50",
         borderColor: "border-green-200",
         icon: CheckCircle,
-        label: "Completed",
+        label: "Đã Hoàn Thành",
       };
-    case ReturnStatus.CANCELLED:
+    default:
       return {
         variant: "outline" as const,
         color: "text-gray-600",
         bgColor: "bg-gray-50",
         borderColor: "border-gray-200",
-        icon: XCircle,
-        label: "Cancelled",
+        icon: RotateCcw,
+        label: "Không xác định",
       };
   }
 };
@@ -103,7 +103,7 @@ const formatPrice = (price: number) => {
 };
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
+  return new Date(dateString).toLocaleDateString("vi-VN", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -132,10 +132,10 @@ export function ReturnManagement() {
         <div className="text-center py-12">
           <RotateCcw className="h-12 w-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-semibold mb-2">
-            No return requests found
+            Không có yêu cầu trả hàng nào
           </h3>
           <p className="text-gray-500 mb-4">
-            You haven't submitted any return requests yet
+            Bạn chưa gửi yêu cầu trả hàng nào
           </p>
         </div>
       );
@@ -147,14 +147,14 @@ export function ReturnManagement() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Reason</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>Sản Phẩm</TableHead>
+                <TableHead>Mã Đơn Hàng</TableHead>
+                <TableHead>Nguyên Nhân</TableHead>
+                <TableHead>Số Lượng</TableHead>
+                <TableHead>Giá</TableHead>
+                <TableHead>Trạng Thái</TableHead>
+                <TableHead>Ngày</TableHead>
+                <TableHead>Hành Động</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -218,7 +218,7 @@ export function ReturnManagement() {
                         onClick={() => handleViewDetails(request.id)}
                       >
                         <Eye className="h-4 w-4 mr-1" />
-                        Details
+                        Chi tiết
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -251,7 +251,7 @@ export function ReturnManagement() {
                         {request.orderItem.watch.name}
                       </h4>
                       <p className="text-xs text-gray-500 mb-2">
-                        Return ID: #{request.id.slice(0, 8)}
+                        Mã Trả Hàng: #{request.id.slice(0, 8)}
                       </p>
                       <div className="flex items-center gap-2 mb-2">
                         <Badge variant="outline" className="text-xs">
@@ -270,17 +270,17 @@ export function ReturnManagement() {
 
                   <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
                     <div>
-                      <p className="text-gray-500">Order ID</p>
+                      <p className="text-gray-500">Mã Đơn Hàng</p>
                       <p className="font-mono">
                         #{request.orderId.slice(0, 8)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Quantity</p>
+                      <p className="text-gray-500">Số Lượng</p>
                       <p className="font-medium">{request.returnQuantity}</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Amount</p>
+                      <p className="text-gray-500">Giá</p>
                       <p className="font-semibold text-green-600">
                         {formatPrice(
                           request.orderItem.price * request.returnQuantity
@@ -288,7 +288,7 @@ export function ReturnManagement() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Date</p>
+                      <p className="text-gray-500">Ngày</p>
                       <p>{formatDate(request.createdAt)}</p>
                     </div>
                   </div>
@@ -300,7 +300,7 @@ export function ReturnManagement() {
                     className="w-full"
                   >
                     <Eye className="h-4 w-4 mr-2" />
-                    View Details
+                    Xem Chi Tiết
                   </Button>
                 </CardContent>
               </Card>
@@ -320,9 +320,10 @@ export function ReturnManagement() {
               <RotateCcw className="h-5 w-5 text-orange-600" />
             </div>
             <div>
-              <CardTitle>Return Requests</CardTitle>
+              <CardTitle>Yêu Cầu Trả Hàng</CardTitle>
               <CardDescription>
-                Manage your product return requests and track their status
+                Quản lý yêu cầu trả hàng của bạn và theo dõi trạng thái của
+                chúng
               </CardDescription>
             </div>
           </div>

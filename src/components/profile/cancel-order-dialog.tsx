@@ -65,9 +65,9 @@ export function CancelOrderDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Cancel Order</DialogTitle>
+          <DialogTitle>Hủy Đơn Hàng</DialogTitle>
           <DialogDescription>
-            Are you sure to cancel this order? This action can be undone
+            Bạn có chắc chắn muốn hủy đơn hàng này? Vui lòng cung cấp lý do.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -77,10 +77,10 @@ export function CancelOrderDialog({
               name="reason"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Reason</FormLabel>
+                  <FormLabel>Lý do</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Please provide a reason for your cancellation."
+                      placeholder="Vui lòng cung cấp lý do cho việc hủy bỏ."
                       className="resize-none"
                       {...field}
                     />
@@ -92,7 +92,7 @@ export function CancelOrderDialog({
 
             <DialogFooter className="mt-8">
               <Button variant="outline" onClick={handleClose}>
-                Cancel
+                Hủy
               </Button>
               <Button
                 type="submit"
@@ -102,7 +102,7 @@ export function CancelOrderDialog({
                 {isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  "Confirm"
+                  "Xác nhận"
                 )}
               </Button>
             </DialogFooter>

@@ -21,14 +21,14 @@ const Page = () => {
           type: "email",
           label: "Email",
           placeholder: "Email",
-          validation: z.string().email(),
+          validation: z.string().email("Email không hợp lệ"),
         },
         {
           name: "password",
           type: "password",
-          label: "Password",
-          placeholder: "Password",
-          validation: z.string().min(6),
+          label: "Mật khẩu",
+          placeholder: "Mật khẩu",
+          validation: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
         },
       ]}
       onSubmit={(data) => handleSubmit(data as SignInTypes)}

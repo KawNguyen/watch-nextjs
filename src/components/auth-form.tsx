@@ -52,26 +52,20 @@ export function AuthForm({
 }: AuthFormProps) {
   const schema = useMemo(() => {
     return z.object(
-      fields.reduce(
-        (acc, field) => {
-          acc[field.name] = field.validation;
-          return acc;
-        },
-        {} as Record<string, z.ZodTypeAny>,
-      ),
+      fields.reduce((acc, field) => {
+        acc[field.name] = field.validation;
+        return acc;
+      }, {} as Record<string, z.ZodTypeAny>)
     );
   }, [fields]);
 
   type FormData = z.infer<typeof schema>;
 
   const defaultValues = useMemo(() => {
-    return fields.reduce(
-      (acc, field) => {
-        acc[field.name] = "";
-        return acc;
-      },
-      {} as Record<string, string>,
-    );
+    return fields.reduce((acc, field) => {
+      acc[field.name] = "";
+      return acc;
+    }, {} as Record<string, string>);
   }, [fields]);
 
   const form = useForm({
@@ -91,12 +85,12 @@ export function AuthForm({
     <Card className={`w-[400px] ${className}`}>
       <CardHeader>
         <CardTitle>
-          {mode === "signin" ? "Sign In" : "Create an Account"}
+          {mode === "signin" ? "Đăng Nhập" : "Tạo Tài Khoản"}
         </CardTitle>
         <CardDescription>
           {mode === "signin"
-            ? "Enter your credentials to access your account"
-            : "Fill the form to register"}
+            ? "Nhập thông tin xác thực của bạn để truy cập tài khoản"
+            : "Điền vào biểu mẫu để đăng ký"}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -131,30 +125,30 @@ export function AuthForm({
                 {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    In progress ...
+                    Đang xử lý...
                   </>
                 ) : mode === "signin" ? (
-                  "Sign In"
+                  "Đăng Nhập"
                 ) : (
-                  "Create Account"
+                  "Tạo Tài Khoản"
                 )}
               </Button>
 
               {mode === "signin" && (
                 <div className="text-center text-sm">
                   <span className="text-muted-foreground">
-                    Don&apos;t have an account?{" "}
+                    Bạn chưa có tài khoản?{" "}
                   </span>
-                  <Link href="/sign-up">Sign Up</Link>
+                  <Link href="/sign-up">Đăng Ký</Link>
                 </div>
               )}
 
               {mode === "register" && (
                 <div className="text-center text-sm">
                   <span className="text-muted-foreground">
-                    Already have an account?{" "}
+                    Bạn đã có tài khoản?{" "}
                   </span>
-                  <Link href="/sign-in">Sign in</Link>
+                  <Link href="/sign-in">Đăng Nhập</Link>
                 </div>
               )}
 
@@ -164,7 +158,7 @@ export function AuthForm({
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background px-2 text-muted-foreground">
-                    Or
+                    Hoặc
                   </span>
                 </div>
               </div>
@@ -182,7 +176,7 @@ export function AuthForm({
                   width={24}
                   height={24}
                 />
-                Sign in with Google
+                Đăng Nhập với Google
               </Button>
             </div>
           </form>

@@ -14,7 +14,7 @@ const NavigationGender = ({ gender }: { gender: GenderFilter[] }) => {
       {gender.map((item, ind) => (
         <NavigationMenuItem key={item.value + ind}>
           <NavigationMenuTrigger className="px-4 py-2">
-            {item.title}
+            {item.title === "Men" ? "Nam" : "Nữ"}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <div className="flex justify-between p-6 w-[440px] lg:w-[680px]">

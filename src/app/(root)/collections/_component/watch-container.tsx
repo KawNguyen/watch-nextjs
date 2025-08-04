@@ -76,7 +76,7 @@ export default function WatchesContainer() {
         />
         <div className="absolute inset-0 bg-black/50 size-full backdrop-blur-xs"></div>
         <h2 className="relative text-white text-4xl font-bold text-center">
-          Elevate Every Moment - Discover Your Watch
+          Bộ Sưu Tập Đồng Hồ
         </h2>
       </div>
 
@@ -93,12 +93,12 @@ export default function WatchesContainer() {
                 watches?.meta?.limit !== undefined &&
                 watches?.meta?.totalItems > watches?.meta?.limit ? (
                   <span className="hidden lg:block">
-                    Showing {watches?.meta?.limit} of{" "}
+                    Hiển thị {watches?.meta?.limit} trong số{" "}
                     {watches?.meta?.totalItems}
                   </span>
                 ) : (
                   <span className="hidden lg:block">
-                    Showing {watches?.meta?.totalItems ?? 0} of{" "}
+                    Hiển thị {watches?.meta?.totalItems ?? 0} trong số{" "}
                     {watches?.meta?.totalItems ?? 0}
                   </span>
                 )}
@@ -109,12 +109,12 @@ export default function WatchesContainer() {
                 watches?.meta?.limit !== undefined &&
                 watches?.meta?.totalItems > watches?.meta?.limit ? (
                   <span className="lg:hidden">
-                    Showing {watches?.meta?.limit} of{" "}
+                    Hiển thị {watches?.meta?.limit} trong số{" "}
                     {watches?.meta?.totalItems}
                   </span>
                 ) : (
                   <span className="lg:hidden">
-                    Showing {watches?.meta?.totalItems ?? 0} of{" "}
+                    Hiển thị {watches?.meta?.totalItems ?? 0} trong số{" "}
                     {watches?.meta?.totalItems ?? 0}
                   </span>
                 )}
@@ -122,7 +122,7 @@ export default function WatchesContainer() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline">
                       <ArrowUpDown className="h-4 w-4" />
-                      Sort by
+                      Sắp xếp theo
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
@@ -131,19 +131,19 @@ export default function WatchesContainer() {
                       onValueChange={(value) => setSortBy(value as SortOption)}
                     >
                       <DropdownMenuRadioItem value="a-z">
-                        Name: A - Z
+                        Tên: A - Z
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="z-a">
-                        Name: Z - A
+                        Tên: Z - A
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="price-low">
-                        Price: Low to High
+                        Giá: Thấp đến Cao
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="price-high">
-                        Price: High to Low
+                        Giá: Cao đến Thấp
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="rating">
-                        Highest Rated
+                        Đánh Giá Cao Nhất
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>

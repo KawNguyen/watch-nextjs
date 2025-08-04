@@ -38,12 +38,12 @@ import { useOrderMutation } from "@/mutation/order.mutation";
 
 export function OrderHistory() {
   const tabs: { label: string; value: OrderStatus }[] = [
-    { label: "Pending", value: OrderStatus.PENDING },
-    { label: "Processing", value: OrderStatus.PROCESSING },
-    { label: "Shipping", value: OrderStatus.SHIPPING },
-    { label: "Delivered", value: OrderStatus.DELIVERED },
-    { label: "Completed", value: OrderStatus.COMPLETED },
-    { label: "Canceled", value: OrderStatus.CANCELED },
+    { label: "Chờ duyệt", value: OrderStatus.PENDING },
+    { label: "Đã được duyệt", value: OrderStatus.PROCESSING },
+    { label: "Đang giao", value: OrderStatus.SHIPPING },
+    { label: "Đã giao", value: OrderStatus.DELIVERED },
+    { label: "Hoàn thành", value: OrderStatus.COMPLETED },
+    { label: "Đã hủy", value: OrderStatus.CANCELED },
   ];
 
   const [isCancelOrderOpen, setIsCancelOrderOpen] = useState<boolean>(false);
@@ -85,9 +85,9 @@ export function OrderHistory() {
     return (
       <Card>
         <CardHeader className="p-4">
-          <CardTitle>Order History</CardTitle>
+          <CardTitle>Lịch sử đơn hàng</CardTitle>
           <CardDescription>
-            View and track your orders by status
+            Xem và theo dõi đơn hàng của bạn theo trạng thái
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -119,7 +119,9 @@ export function OrderHistory() {
     return (
       <Card>
         <CardContent className="p-4 text-center text-red-500">
-          <p>Error fetching orders: {(error as Error).message}</p>
+          <p>
+            Lỗi lấy dữ liệu lịch sử đơn hàng của bạn: {(error as Error).message}
+          </p>
         </CardContent>
       </Card>
     );
@@ -129,9 +131,9 @@ export function OrderHistory() {
     <>
       <Card>
         <CardHeader className="p-4">
-          <CardTitle>Order History</CardTitle>
+          <CardTitle>Lịch sử đơn hàng</CardTitle>
           <CardDescription>
-            View and track your orders by status
+            Xem và theo dõi đơn hàng của bạn theo trạng thái
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -180,12 +182,12 @@ export function OrderHistory() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Items</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead>Mã đơn hàng</TableHead>
+                  <TableHead>Ngày</TableHead>
+                  <TableHead>Số lượng</TableHead>
+                  <TableHead>Tổng cộng</TableHead>
+                  <TableHead>Trạng thái</TableHead>
+                  <TableHead>Hành động</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -246,7 +248,7 @@ export function OrderHistory() {
       return (
         <div className="text-center py-8">
           <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-500">No orders found</p>
+          <p className="text-gray-500">Không tìm thấy đơn hàng nào</p>
         </div>
       );
     }
@@ -257,12 +259,12 @@ export function OrderHistory() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Items</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>Mã đơn hàng</TableHead>
+                <TableHead>Ngày</TableHead>
+                <TableHead>Số lượng</TableHead>
+                <TableHead>Tổng cộng</TableHead>
+                <TableHead>Trạng thái</TableHead>
+                <TableHead>Hành động</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -292,13 +294,13 @@ export function OrderHistory() {
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
-                        {actionButton.text !== "View Details" && (
+                        {actionButton.text !== "Xem chi tiết" && (
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => handleViewDetails(order.id)}
                           >
-                            View Details
+                            Xem chi tiết
                           </Button>
                         )}
                         <Button
@@ -392,7 +394,7 @@ export function OrderHistory() {
           bgColor: "bg-orange-50",
           borderColor: "border-orange-200",
           icon: Clock,
-          label: "Pending",
+          label: "Chờ duyệt",
         };
       case OrderStatus.PROCESSING:
         return {
@@ -401,7 +403,7 @@ export function OrderHistory() {
           bgColor: "bg-blue-50",
           borderColor: "border-blue-200",
           icon: PackageCheck,
-          label: "Processing",
+          label: "Đã được duyệt",
         };
       case OrderStatus.SHIPPING:
         return {
@@ -410,7 +412,7 @@ export function OrderHistory() {
           bgColor: "bg-purple-50",
           borderColor: "border-purple-200",
           icon: Truck,
-          label: "Shipping",
+          label: "Đang giao",
         };
       case OrderStatus.DELIVERED:
       case OrderStatus.COMPLETED:
@@ -420,7 +422,7 @@ export function OrderHistory() {
           bgColor: "bg-green-50",
           borderColor: "border-green-200",
           icon: CheckCircle,
-          label: status === OrderStatus.DELIVERED ? "Delivered" : "Completed",
+          label: status === OrderStatus.DELIVERED ? "Đã giao" : "Hoàn thành",
         };
       case OrderStatus.CANCELED:
         return {
@@ -429,7 +431,7 @@ export function OrderHistory() {
           bgColor: "bg-red-50",
           borderColor: "border-red-200",
           icon: XCircle,
-          label: "Canceled",
+          label: "Đã hủy",
         };
     }
   }
@@ -449,14 +451,14 @@ export function OrderHistory() {
     switch (order.status) {
       case OrderStatus.PENDING:
         return {
-          text: "Cancel Order",
+          text: "Huỷ đơn",
           variant: "outline",
           onClick: () => handleOpenCancelOrderDialog(order.id),
           disabled: false,
         };
       case OrderStatus.PROCESSING:
         return {
-          text: "View Details",
+          text: "Xem chi tiết",
           variant: "outline",
           onClick: () => handleViewDetails(order.id),
           disabled: false,
@@ -480,7 +482,7 @@ export function OrderHistory() {
       case OrderStatus.CANCELED:
       default:
         return {
-          text: "View Details",
+          text: "Xem chi tiết",
           variant: "outline",
           onClick: () => handleViewDetails(order.id),
           disabled: false,

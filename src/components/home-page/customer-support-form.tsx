@@ -48,7 +48,7 @@ const CustomerSupportForm = () => {
     <Card className="max-w-xl mx-auto mt-10 shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl text-center">
-          Need Help with Your Order?
+          Bạn cần hỗ trợ gì?
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -67,19 +67,19 @@ const CustomerSupportForm = () => {
           </div>
 
           <div>
-            <Label htmlFor="subject">Subject</Label>
+            <Label htmlFor="subject">Chủ đề</Label>
             <Input
               id="subject"
               name="subject"
               value={form.subject}
               onChange={handleChange}
               required
-              placeholder="Order ID or Phone Number"
+              placeholder="Mã đơn hàng hoặc số điện thoại"
             />
           </div>
 
           <div>
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">Nội dung</Label>
             <Textarea
               id="message"
               name="message"
@@ -87,7 +87,7 @@ const CustomerSupportForm = () => {
               value={form.message}
               onChange={handleChange}
               required
-              placeholder="Describe your issue or question"
+              placeholder="Mô tả vấn đề hoặc câu hỏi của bạn"
             />
           </div>
 
@@ -96,7 +96,7 @@ const CustomerSupportForm = () => {
             className="w-full"
             disabled={createSupportTicket.isPending}
           >
-            {createSupportTicket.isPending ? "Sending..." : "Send Message"}
+            {createSupportTicket.isPending ? "Đang gửi..." : "Gửi yêu cầu"}
           </Button>
         </form>
       </CardContent>

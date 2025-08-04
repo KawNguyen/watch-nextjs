@@ -136,11 +136,11 @@ export function OrderDetailsModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-xl font-bold">
             <Package className="h-6 w-6 text-blue-600" />
-            Order #{orderDetails?.id}
+            Mã đơn hàng #{orderDetails?.id}
           </DialogTitle>
           <DialogDescription className="text-muted-foreground text-sm">
-            Placed on {orderDetails?.date} • {orderDetails?.orderItems.length}{" "}
-            item{orderDetails?.orderItems.length > 1 ? "s" : ""}
+            Đặt hàng vào {orderDetails?.date} • {orderDetails?.orderItems.length}{" "}
+            mục{orderDetails?.orderItems.length > 1 ? "s" : ""}
           </DialogDescription>
         </DialogHeader>
 
@@ -149,7 +149,7 @@ export function OrderDetailsModal({
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <StatusIcon className="h-5 w-5" />
-                Order Status
+                Trạng thái đơn hàng
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -165,7 +165,7 @@ export function OrderDetailsModal({
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Order Items</CardTitle>
+              <CardTitle className="text-lg">Các mục trong đơn hàng</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -222,7 +222,7 @@ export function OrderDetailsModal({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <MapPin className="h-5 w-5" />
-                  Shipping Address
+                  Địa chỉ giao hàng
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-muted-foreground">
@@ -234,7 +234,7 @@ export function OrderDetailsModal({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <CreditCard className="h-5 w-5" />
-                  Payment Method
+                  Phương thức thanh toán
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-muted-foreground">
@@ -245,11 +245,11 @@ export function OrderDetailsModal({
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Order Summary</CardTitle>
+              <CardTitle className="text-lg">Tóm tắt đơn hàng</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Original Price:</span>
+                <span>Giá gốc:</span>
                 <span>{formatMoney(orderDetails.originalPrice)}</span>
               </div>
 
@@ -257,7 +257,7 @@ export function OrderDetailsModal({
                 <div className="space-y-1 text-sm text-muted-foreground">
                   <div className="flex justify-between items-center">
                     <span className="text-base font-medium text-foreground">
-                      Coupon:
+                      Mã giảm giá:
                     </span>
                     <span className="font-semibold text-red-600">
                       - {formatMoney(orderDetails.coupon.discountValue)}
@@ -269,13 +269,13 @@ export function OrderDetailsModal({
                     </p>
                     {orderDetails.coupon.discountPercent && (
                       <p>
-                        <strong>Discount:</strong>{" "}
+                        <strong>Giảm giá:</strong>{" "}
                         {orderDetails.coupon.discountPercent}%
                       </p>
                     )}
                     {orderDetails.coupon.minOrder && (
                       <p>
-                        <strong>Min. Order:</strong>{" "}
+                        <strong>Giá trị đơn hàng tối thiểu:</strong>{" "}
                         {formatMoney(orderDetails.coupon.minOrder)}
                       </p>
                     )}
@@ -283,15 +283,15 @@ export function OrderDetailsModal({
                 </div>
               ) : (
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Coupon:</span>
-                  <span className="italic">None</span>
+                  <span>Mã giảm giá:</span>
+                  <span className="italic">Không có</span>
                 </div>
               )}
 
               <Separator />
 
               <div className="flex justify-between text-lg font-semibold">
-                <span>Total:</span>
+                <span>Tổng cộng:</span>
                 <span>{formatMoney(orderDetails.totalPrice)}</span>
               </div>
             </CardContent>

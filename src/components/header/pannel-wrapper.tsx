@@ -9,10 +9,10 @@ const PanelWrapper = () => {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              Free shipping for all orders
+              Miễn phí vận chuyển toàn quốc
             </span>
             <span className="hidden md:block">|</span>
-            <span className="hidden md:block">2 - year warranty</span>
+            <span className="hidden md:block">Bảo hành 2 năm</span>
           </div>
 
           <div className="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[560px] z-0">

@@ -29,23 +29,23 @@ export default function PrivacyPolicyPage() {
         {/* Header Section */}
         <div className="text-center mb-12">
           <Shield className="w-8 h-8 mx-auto mb-4 text-gray-700" />
-          <h1 className="text-3xl font-light mb-3">Privacy Policy</h1>
+          <h1 className="text-3xl font-light mb-3">Chính sách bảo mật</h1>
           <p className="text-gray-600">
-            LuxWatch - Premium Watch E-commerce Platform
+            LuxWatch - Nền tảng thương mại điện tử đồng hồ cao cấp
           </p>
           <p className="text-sm text-gray-500 mt-2">
-            Last updated: January 15, 2024
+            Cập nhật lần cuối: 15 tháng 1, 2024
           </p>
         </div>
 
         {/* Introduction Section */}
         <div className="bg-gray-50 p-6 rounded-lg mb-12">
-          <h2 className="text-xl font-light mb-4">Your Privacy Matters</h2>
+          <h2 className="text-xl font-light mb-4">Quyền riêng tư của bạn rất quan trọng</h2>
           <p className="text-gray-600 leading-relaxed">
-            At LuxWatch, we take your privacy seriously. This policy outlines
-            how we collect, use, and protect your personal information when you
-            use our website and services. We are committed to maintaining the
-            trust and confidence of our valued customers.
+            Tại LuxWatch, chúng tôi coi trọng quyền riêng tư của bạn. Chính sách này phác thảo
+            cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn khi bạn
+            sử dụng trang web và dịch vụ của chúng tôi. Chúng tôi cam kết duy trì
+            sự tin tưởng và tự tin của khách hàng quý giá.
           </p>
         </div>
 
@@ -53,20 +53,20 @@ export default function PrivacyPolicyPage() {
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           <div className="bg-blue-50 p-6 rounded-lg">
             <Lock className="w-6 h-6 text-blue-600 mb-3" />
-            <h3 className="font-medium mb-2">Secure Shopping</h3>
-            <p className="text-sm text-gray-600">SSL encrypted transactions</p>
+            <h3 className="font-medium mb-2">Mua sắm an toàn</h3>
+            <p className="text-sm text-gray-600">Giao dịch được mã hóa SSL</p>
           </div>
 
           <div className="bg-emerald-50 p-6 rounded-lg">
             <Eye className="w-6 h-6 text-emerald-600 mb-3" />
-            <h3 className="font-medium mb-2">Data Transparency</h3>
-            <p className="text-sm text-gray-600">Clear data usage policies</p>
+            <h3 className="font-medium mb-2">Minh bạch dữ liệu</h3>
+            <p className="text-sm text-gray-600">Chính sách sử dụng dữ liệu rõ ràng</p>
           </div>
 
           <div className="bg-purple-50 p-6 rounded-lg">
             <Shield className="w-6 h-6 text-purple-600 mb-3" />
-            <h3 className="font-medium mb-2">GDPR Compliant</h3>
-            <p className="text-sm text-gray-600">European privacy standards</p>
+            <h3 className="font-medium mb-2">Tuân thủ GDPR</h3>
+            <p className="text-sm text-gray-600">Tiêu chuẩn bảo mật dữ liệu châu Âu</p>
           </div>
         </div>
 
@@ -79,7 +79,7 @@ export default function PrivacyPolicyPage() {
             >
               <div className="flex items-center gap-3">
                 <UserCircle className="w-5 h-5 text-gray-600" />
-                <span className="font-light">Information We Collect</span>
+                <span className="font-light">Thông tin chúng tôi thu thập</span>
               </div>
               <span className="text-gray-400">
                 {expandedSection === "information" ? (
@@ -92,16 +92,16 @@ export default function PrivacyPolicyPage() {
             {expandedSection === "information" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We collect personal information that you voluntarily provide
-                  to us when you register on our website, place an order,
-                  subscribe to our newsletter, or contact our customer service.
-                  This may include your name, email address, shipping address,
-                  phone number, and payment information.
+                  Chúng tôi thu thập thông tin cá nhân mà bạn tự nguyện cung cấp
+                  cho chúng tôi khi bạn đăng ký trên trang web của chúng tôi, đặt hàng,
+                  đăng ký nhận bản tin hoặc liên hệ với dịch vụ khách hàng của chúng tôi.
+                  Thông tin này có thể bao gồm tên, địa chỉ email, địa chỉ giao hàng,
+                  số điện thoại và thông tin thanh toán của bạn.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  We also automatically collect certain information about your
-                  device, including your IP address, browser type, and browsing
-                  patterns through cookies and similar technologies.
+                  Chúng tôi cũng tự động thu thập một số thông tin về thiết bị của bạn,
+                  bao gồm địa chỉ IP, loại trình duyệt và các mẫu duyệt web thông qua
+                  cookie và các công nghệ tương tự.
                 </p>
               </div>
             )}
@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
             >
               <div className="flex items-center gap-3">
                 <Server className="w-5 h-5 text-gray-600" />
-                <span className="font-light">How We Use Your Data</span>
+                <span className="font-light">Chúng tôi sử dụng dữ liệu của bạn như thế nào</span>
               </div>
               <span className="text-gray-400">
                 {expandedSection === "usage" ? (
@@ -127,14 +127,15 @@ export default function PrivacyPolicyPage() {
             {expandedSection === "usage" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We use your personal information to process and fulfill your
-                  orders, communicate with you about your purchases, provide
-                  customer support, and send you marketing communications if you
-                  ve opted in.
+                  Chúng tôi sử dụng thông tin cá nhân của bạn để xử lý và hoàn tất
+                  đơn hàng, giao tiếp với bạn về các giao dịch mua hàng, cung cấp
+                  hỗ trợ khách hàng và gửi cho bạn các thông báo tiếp thị nếu bạn
+                  đã đồng ý.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  We also use your data to improve our website, analyze usage
-                  patterns, prevent fraud, and comply with legal obligations.
+                  Chúng tôi cũng sử dụng dữ liệu của bạn để cải thiện trang web,
+                  phân tích các mẫu sử dụng, ngăn chặn gian lận và tuân thủ các
+                  nghĩa vụ pháp lý.
                 </p>
               </div>
             )}
@@ -147,7 +148,7 @@ export default function PrivacyPolicyPage() {
             >
               <div className="flex items-center gap-3">
                 <Lock className="w-5 h-5 text-gray-600" />
-                <span className="font-light">Data Security</span>
+                <span className="font-light">Bảo mật dữ liệu</span>
               </div>
               <span className="text-gray-400">
                 {expandedSection === "security" ? (
@@ -160,14 +161,14 @@ export default function PrivacyPolicyPage() {
             {expandedSection === "security" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We implement appropriate technical and organizational measures
-                  to protect your personal data against unauthorized access,
-                  alteration, disclosure, or destruction.
+                  Chúng tôi thực hiện các biện pháp kỹ thuật và tổ chức phù hợp
+                  để bảo vệ dữ liệu cá nhân của bạn khỏi việc truy cập trái phép,
+                  thay đổi, tiết lộ hoặc phá hủy.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  All payment transactions are encrypted using SSL technology,
-                  and we do not store your full credit card information on our
-                  servers.
+                  Tất cả các giao dịch thanh toán đều được mã hóa bằng công nghệ SSL,
+                  và chúng tôi không lưu trữ thông tin thẻ tín dụng đầy đủ của bạn trên
+                  máy chủ của mình.
                 </p>
               </div>
             )}
@@ -180,7 +181,7 @@ export default function PrivacyPolicyPage() {
             >
               <div className="flex items-center gap-3">
                 <Bell className="w-5 h-5 text-gray-600" />
-                <span className="font-light">Communication Preferences</span>
+                <span className="font-light">Tùy chọn giao tiếp</span>
               </div>
               <span className="text-gray-400">
                 {expandedSection === "communication" ? (
@@ -193,14 +194,14 @@ export default function PrivacyPolicyPage() {
             {expandedSection === "communication" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  You can manage your communication preferences by updating your
-                  account settings or clicking the unsubscribe link in our
-                  marketing emails.
+                  Bạn có thể quản lý tùy chọn giao tiếp của mình bằng cách cập nhật
+                  cài đặt tài khoản hoặc nhấp vào liên kết hủy đăng ký trong các
+                  email tiếp thị của chúng tôi.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  We will still send you service-related communications, such as
-                  order confirmations and important account notifications, even
-                  if you opt out of marketing communications.
+                  Chúng tôi vẫn sẽ gửi cho bạn các thông báo liên quan đến dịch vụ,
+                  chẳng hạn như xác nhận đơn hàng và thông báo tài khoản quan trọng,
+                  ngay cả khi bạn chọn không nhận các thông báo tiếp thị.
                 </p>
               </div>
             )}
@@ -213,7 +214,7 @@ export default function PrivacyPolicyPage() {
             >
               <div className="flex items-center gap-3">
                 <Eye className="w-5 h-5 text-gray-600" />
-                <span className="font-light">Your Privacy Rights</span>
+                <span className="font-light">Quyền riêng tư của bạn</span>
               </div>
               <span className="text-gray-400">
                 {expandedSection === "rights" ? (
@@ -226,13 +227,13 @@ export default function PrivacyPolicyPage() {
             {expandedSection === "rights" && (
               <div className="p-4 bg-gray-50 border-t">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Depending on your location, you may have certain rights
-                  regarding your personal data, including the right to access,
-                  correct, delete, or restrict processing of your data.
+                  Tùy thuộc vào vị trí của bạn, bạn có thể có một số quyền nhất định
+                  liên quan đến dữ liệu cá nhân của mình, bao gồm quyền truy cập,
+                  chỉnh sửa, xóa hoặc hạn chế việc xử lý dữ liệu của bạn.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  To exercise these rights, please contact us at
-                  privacy@luxwatch.com with your specific request.
+                  Để thực hiện các quyền này, vui lòng liên hệ với chúng tôi tại
+                  privacy@luxwatch.com với yêu cầu cụ thể của bạn.
                 </p>
               </div>
             )}
@@ -241,8 +242,8 @@ export default function PrivacyPolicyPage() {
 
         {/* Contact Section */}
         <div className="mt-12 text-center text-sm text-gray-500">
-          <p>For privacy-related inquiries, please contact us at:</p>
-          <p className="mt-1">privacy@luxwatch.com</p>
+          <p>Đối với các yêu cầu liên quan đến quyền riêng tư, vui lòng liên hệ với chúng tôi tại:</p>
+          <p className="mt-1">kronlux@gmail.com</p>
         </div>
       </div>
     </div>

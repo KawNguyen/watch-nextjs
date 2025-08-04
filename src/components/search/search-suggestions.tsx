@@ -20,7 +20,7 @@ export function SearchSuggestions({
       <div className="mb-4">
         <h4 className="text-sm font-medium mb-2 flex items-center">
           <TrendingUp className="h-4 w-4 mr-2" />
-          Popular Searches
+          Sản phẩm phổ biến
         </h4>
         <div className="flex flex-wrap gap-2">
           {popularSearches.map((search, index) => (
@@ -41,7 +41,7 @@ export function SearchSuggestions({
       <div>
         <h4 className="text-sm font-medium mb-2 flex items-center">
           <History className="h-4 w-4 mr-2" />
-          Recent Searches
+          Tìm kiếm gần đây
         </h4>
         <div className="space-y-1">
           {recentSearches.map((search, index) => (

@@ -21,14 +21,6 @@ import WatchSearchBar from "../search-bar";
 import { menuItems } from "@/constant/routes";
 import { useAuth } from "@/mutation/auth.mutation";
 
-// const mockUser = {
-//   isLoggedIn: true,
-//   firstName: "Nguyễn",
-//   lastName: "Văn An",
-//   email: "nguyenvanan@example.com",
-//   avatar: "/placeholder.svg?height=40&width=40&text=User",
-// };
-
 export default function MobileSheetMenu() {
   const router = useRouter();
   const { isAuthenticated, profile } = useAuth();
@@ -180,7 +172,6 @@ export default function MobileSheetMenu() {
           </nav>
         </div>
 
-        {/* Footer */}
         <div className="p-6 pt-4 border-t bg-gray-50">
           {isAuthenticated ? (
             <div className="space-y-4">

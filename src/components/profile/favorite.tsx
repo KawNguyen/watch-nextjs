@@ -115,7 +115,7 @@ export function Favorite() {
 
   if (isError) {
     return (
-      <div className="p-4 text-red-500">Failed to load your wishlist.</div>
+      <div className="p-4 text-red-500">Không thể tải danh sách yêu thích của bạn.</div>
     );
   }
 
@@ -129,13 +129,13 @@ export function Favorite() {
             </div>
             <div>
               <CardTitle className="flex items-center gap-2">
-                My Wishlist
+                Danh sách yêu thích của tôi
                 <Badge variant="secondary" className="ml-2">
-                  {data.length} items
+                  {data.length} mục
                 </Badge>
               </CardTitle>
               <CardDescription>
-                Items you have saved for later purchase
+                Các mục bạn đã lưu để mua sau
               </CardDescription>
             </div>
           </div>
@@ -173,12 +173,12 @@ export function Favorite() {
         {data.length === 0 ? (
           <div className="text-center py-12">
             <h3 className="text-lg font-semibold mb-2">
-              Your wishlist is empty
+              Danh sách yêu thích của bạn đang trống
             </h3>
             <p className="text-gray-600 mb-6">
-              Save items you love to buy them later
+              Lưu các mục bạn yêu thích để mua sau
             </p>
-            <Button>Continue Shopping</Button>
+            <Button>Tiếp tục mua sắm</Button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -229,12 +229,12 @@ export function Favorite() {
                             <DialogContent>
                               <DialogHeader>
                                 <DialogTitle>
-                                  Confirm removing item from wishlist?
+                                  Xác nhận xóa mục khỏi danh sách yêu thích?
                                 </DialogTitle>
                               </DialogHeader>
                               <DialogFooter>
                                 <DialogClose asChild>
-                                  <Button variant="outline">Cancel</Button>
+                                  <Button variant="outline">Hủy</Button>
                                 </DialogClose>
                                 <Button
                                   variant="destructive"
@@ -244,8 +244,8 @@ export function Favorite() {
                                   disabled={deleteFavorite.isPending}
                                 >
                                   {deleteFavorite.isPending
-                                    ? "Removing..."
-                                    : "Confirm"}
+                                    ? "Đang xóa..."
+                                    : "Xác nhận"}
                                 </Button>
                               </DialogFooter>
                             </DialogContent>
@@ -254,7 +254,7 @@ export function Favorite() {
 
                         <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                           {item.watch.description ||
-                            "No description available."}
+                            "Không có mô tả nào."}
                         </p>
 
                         {renderStars(0)}
@@ -273,7 +273,7 @@ export function Favorite() {
                             size="sm"
                           >
                             <ShoppingCart className="h-4 w-4 mr-2" />
-                            Add to Cart
+                            Thêm vào giỏ hàng
                           </Button>
                         </div>
                       </div>

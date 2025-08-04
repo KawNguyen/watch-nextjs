@@ -31,8 +31,6 @@ const NotificationDropdown = () => {
       await notificationApi.markAsRead(notificationId);
     },
     onSuccess: () => {
-      // Optionally, you can refetch notifications or update local state here
-      // refetchNotifications();
       queryClient.invalidateQueries({ queryKey: ["notifications", 1] });
     },
   });
@@ -60,15 +58,6 @@ const NotificationDropdown = () => {
     }
   };
 
-  // const markAllAsRead = async () => {
-  //   try {
-  //     await fetch("/api/notifications/mark-all-read", { method: "PATCH" });
-  //     fetchNotifications(page); // reload data
-  //   } catch {
-  //     console.error("Failed to mark all as read");
-  //   }
-  // };
-
   return (
     <TooltipProvider>
       <div className="relative" ref={dropdownRef}>
@@ -94,7 +83,7 @@ const NotificationDropdown = () => {
             </Link>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Notifications</p>
+            <p>Thông báo</p>
           </TooltipContent>
         </Tooltip>
 
@@ -108,11 +97,11 @@ const NotificationDropdown = () => {
               <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
                 <div>
                   <h3 className="font-semibold text-slate-900 dark:text-slate-100">
-                    Notifications
+                    Thông báo
                   </h3>
                   {unreadCount > 0 && (
                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                      {unreadCount} unread
+                      {unreadCount} chưa đọc
                     </p>
                   )}
                 </div>
@@ -141,10 +130,10 @@ const NotificationDropdown = () => {
                       <Bell className="h-8 w-8 text-slate-400 dark:text-slate-500" />
                     </div>
                     <p className="text-slate-500 dark:text-slate-400 text-center">
-                      No notifications yet
+                      Chưa có thông báo nào
                     </p>
                     <p className="text-sm text-slate-400 dark:text-slate-500 text-center mt-1">
-                      We'll notify you when something arrives!
+                      Chúng tôi sẽ thông báo cho bạn khi có gì mới!
                     </p>
                   </div>
                 ) : (
@@ -182,7 +171,7 @@ const NotificationDropdown = () => {
                               </p>
                               {!notification.isRead && (
                                 <span className="text-xs text-black dark:text-blue-400 font-medium">
-                                  New
+                                  Chưa đọc
                                 </span>
                               )}
                             </div>
@@ -193,31 +182,6 @@ const NotificationDropdown = () => {
                   </div>
                 )}
               </div>
-
-              {/* Pagination */}
-              {/* {meta.totalPages > 1 && (
-                <div className="flex justify-between items-center px-6 py-3 border-t border-slate-100 dark:border-slate-800">
-                  <button
-                    onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                    className="text-sm text-blue-600 hover:underline disabled:text-gray-400"
-                    disabled={page <= 1}
-                  >
-                    Previous
-                  </button>
-                  <span className="text-sm text-slate-500">
-                    Page {page} of {meta.totalPages}
-                  </span>
-                  <button
-                    onClick={() =>
-                      setPage((p) => Math.min(p + 1, meta.totalPages))
-                    }
-                    className="text-sm text-blue-600 hover:underline disabled:text-gray-400"
-                    disabled={page >= meta.totalPages}
-                  >
-                    Next
-                  </button>
-                </div>
-              )} */}
             </div>
           </>
         )}

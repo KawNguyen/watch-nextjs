@@ -16,7 +16,10 @@ const FAQPage = () => {
       <div className="flex items-center gap-3 mb-6">
         <HelpCircle className="text-indigo-600" size={32} />
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-          Frequently Asked Questions
+          Câu hỏi thường gặp
+          <span className="text-gray-600 text-base ml-2">
+            (FAQ - Câu hỏi thường gặp)
+          </span>
         </h1>
       </div>
       <div className="w-full max-w-2xl space-y-4">

@@ -80,12 +80,12 @@ export default function WatchFilters({ className }: WatchFiltersProps) {
         <div className="flex items-center gap-2">
           <Filter className="size-4 text-muted-foreground" />
           <span className="font-semibold text-xl text-muted-foreground">
-            Filters
+            Bộ lọc
           </span>
         </div>
         {activeFilterCount > 0 && (
           <Button variant="ghost" size="sm" onClick={clearAll}>
-            Clear All ({activeFilterCount})
+            Xóa Tất Cả ({activeFilterCount})
           </Button>
         )}
       </div>
@@ -102,25 +102,25 @@ export default function WatchFilters({ className }: WatchFiltersProps) {
           onToggleGender={toggleGender}
         />
         <FilterList
-          name="Brand"
+          name="Thương hiệu"
           data={brands}
           selectedItems={selectedBrands}
           onToggleItem={toggleBrand}
         />
         <FilterList
-          name="Movement"
+          name="Chuyển động"
           data={movements}
           selectedItems={selectedMovements}
           onToggleItem={toggleMovement}
         />
         <FilterList
-          name="Material"
+          name="Chất liệu vỏ"
           data={materials}
           selectedItems={selectedMaterials}
           onToggleItem={toggleMaterial}
         />
         <FilterList
-          name="Band Material"
+          name="Chất liệu dây"
           data={bandMaterials}
           selectedItems={selectedBandMaterials}
           onToggleItem={toggleBandMaterial}

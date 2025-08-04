@@ -182,7 +182,7 @@ export const AddAddressModal = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {type === "create" ? (
-          <Button variant="outline">Add Address</Button>
+          <Button variant="outline">Thêm địa chỉ</Button>
         ) : (
           <Button variant="ghost">
             <Edit />
@@ -192,17 +192,17 @@ export const AddAddressModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {type === "create" ? "Add" : "Edit"} Address
+            {type === "create" ? "Thêm" : "Chỉnh sửa"} Địa chỉ
           </DialogTitle>
           <DialogDescription>
-            Provide your detailed address information
+            Vui lòng cung cấp thông tin địa chỉ chi tiết của bạn
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormItem>
-              <FormLabel>City / Province</FormLabel>
+              <FormLabel>Thành phố / Tỉnh</FormLabel>
               <Select
                 onValueChange={(value) => {
                   const selected = provinces.find(
@@ -224,7 +224,7 @@ export const AddAddressModal = ({
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose city/province" />
+                    <SelectValue placeholder="Chọn thành phố/tỉnh" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -241,7 +241,7 @@ export const AddAddressModal = ({
             </FormItem>
 
             <FormItem>
-              <FormLabel>District</FormLabel>
+              <FormLabel>Quận / Huyện</FormLabel>
               <Select
                 onValueChange={(value) => {
                   const selected = districts.districts.find(
@@ -261,7 +261,7 @@ export const AddAddressModal = ({
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose district" />
+                    <SelectValue placeholder="Chọn quận/huyện" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -282,7 +282,7 @@ export const AddAddressModal = ({
               name="ward"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ward</FormLabel>
+                  <FormLabel>Phường / Xã</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       const selected:
@@ -302,7 +302,7 @@ export const AddAddressModal = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Choose ward" />
+                        <SelectValue placeholder="Chọn phường/xã" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -325,9 +325,9 @@ export const AddAddressModal = ({
               name="street"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address number / Street</FormLabel>
+                  <FormLabel>Số nhà / Đường</FormLabel>
                   <FormControl>
-                    <Input placeholder="123/45 Street ABC" {...field} />
+                    <Input placeholder="123/45 Đường ABC" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -339,7 +339,7 @@ export const AddAddressModal = ({
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country</FormLabel>
+                  <FormLabel>Quốc gia</FormLabel>
                   <FormControl>
                     <Input placeholder="Việt Nam" {...field} />
                   </FormControl>
@@ -349,7 +349,7 @@ export const AddAddressModal = ({
             />
 
             <Button type="submit" className="w-full">
-              Save
+              Lưu
             </Button>
           </form>
         </Form>

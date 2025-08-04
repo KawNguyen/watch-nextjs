@@ -13,10 +13,9 @@ export function CheckoutHeader() {
               className="flex items-center text-gray-600 hover:text-gray-900"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Shop
+              Quay Lại Trang Chủ
             </Link>
           </div>
-          {/* <div className="text-2xl font-bold text-gray-900">KronLux</div> */}
           <Image
             src="/images/logo/logo-black.png"
             alt="KronLux"

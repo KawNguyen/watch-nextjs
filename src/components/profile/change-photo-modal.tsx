@@ -15,7 +15,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { uploadImage } from "@/services/upload-image";
-// import { useUserMutation } from "@/mutation/user.mutation";
 import { useAuth } from "@/mutation/auth.mutation";
 
 interface ChangePhotoModalProps {
@@ -96,9 +95,9 @@ export function ChangePhotoModal({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Change Profile Photo</DialogTitle>
+          <DialogTitle>Thay đổi ảnh đại diện</DialogTitle>
           <DialogDescription>
-            Upload a new profile picture. Recommended size is 400x400px.
+            Tải lên một bức ảnh đại diện mới. Kích thước khuyến nghị là 400x400px.
           </DialogDescription>
         </DialogHeader>
 
@@ -127,7 +126,7 @@ export function ChangePhotoModal({
               disabled={isLoading}
             >
               <Upload className="h-4 w-4 mr-2" />
-              Choose File
+              Chọn tệp
             </Button>
             {previewImage && (
               <Button
@@ -137,7 +136,7 @@ export function ChangePhotoModal({
                 disabled={isLoading}
               >
                 <X className="h-4 w-4 mr-2" />
-                Remove
+                Xóa
               </Button>
             )}
           </div>
@@ -145,16 +144,16 @@ export function ChangePhotoModal({
 
         <DialogFooter>
           <Button variant="outline" onClick={handleClose} disabled={isLoading}>
-            Cancel
+            Hủy
           </Button>
           <Button onClick={handleSave} disabled={!selectedFile || isLoading}>
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Processing...
+                Đang xử lý...
               </>
             ) : (
-              "Save Photo"
+              "Lưu ảnh"
             )}
           </Button>
         </DialogFooter>

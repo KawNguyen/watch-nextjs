@@ -12,7 +12,7 @@ export default function WatchList({ watchesData, isFetching }: WatchListProps) {
   if (!watchesData?.length) {
     return (
       <div className="size-full flex items-center justify-center">
-        No watches found
+        Không tìm thấy sản phẩm nào
       </div>
     );
   }

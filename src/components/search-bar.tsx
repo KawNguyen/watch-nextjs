@@ -47,7 +47,7 @@ export default function WatchSearchBar() {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
             type="text"
-            placeholder="Search for watches by brand, model..."
+            placeholder="Bạn đang tìm kiếm gì?"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={handleInputFocus}

@@ -9,8 +9,8 @@ const Footer = () => {
     <div className="bg-white text-black border-t">
       <div className="container mx-auto py-10 grid md:grid-cols-4 gap-8">
         <div className="px-4 flex flex-col space-y-4">
-          <div className="font-bold text-xl">WELCOME TO KRONLUX INC</div>
-          <div>THE LUXURIOUS WATCH</div>
+          <div className="font-bold text-xl">Chào mừng đến với KRONLUX INC</div>
+          <div>ĐỒNG HỒ HẠNG SANG</div>
           <Link href="/">
             <Image
               src="/images/logo/logo-black-text.png"

@@ -13,7 +13,7 @@ export default function FilterSidebar({ className }: FilterSidebar) {
       <SheetTrigger asChild className="lg:hidden">
         <Button variant="outline">
           <Filter className="size-4" />
-          Filters
+          Bộ Lọc
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className={className}>

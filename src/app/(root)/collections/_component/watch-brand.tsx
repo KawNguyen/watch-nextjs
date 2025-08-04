@@ -23,7 +23,7 @@ export default function WatchBrand({ brands }: WatchBrandProps) {
         )}
         href="/collections"
       >
-        All
+        Tất cả Thương Hiệu
       </Link>
       {brands?.map((brand) => (
         <Link

@@ -5,13 +5,9 @@ import { Calendar } from "lucide-react";
 import { Blog } from "@/types/blog";
 import { formatDate } from "@/lib/utils";
 
-// interface BlogCardProps {
-//   blog: BlogPost;
-// }
-
 function extractTextFromHtml(html: string, maxLength = 150): string {
-  const text = html.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ")
-  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text
+  const text = html.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, " ");
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
 
 export function BlogCard({ blog }: { blog: Blog }) {

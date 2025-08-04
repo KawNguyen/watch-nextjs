@@ -42,10 +42,13 @@ export function ChangePasswordSection({
       userAPI.changePassword(
         userId!,
         formData.currentPassword,
-        formData.newPassword,
+        formData.newPassword
       ),
     onSuccess: () => {
-      setMessage({ type: "success", text: "Password changed successfully!" });
+      setMessage({
+        type: "success",
+        text: "Mật khẩu đã được thay đổi thành công!",
+      });
       setFormData({
         currentPassword: "",
         newPassword: "",
@@ -55,7 +58,7 @@ export function ChangePasswordSection({
     onError: (error: string) => {
       setMessage({
         type: "error",
-        text: error ?? "Failed to change password. Please try again.",
+        text: error ?? "Không thể thay đổi mật khẩu. Vui lòng thử lại.",
       });
     },
   });
@@ -75,20 +78,20 @@ export function ChangePasswordSection({
     if (formData.newPassword.length < 6) {
       setMessage({
         type: "error",
-        text: "New password must be at least 6 characters long",
+        text: "Mật khẩu mới phải có ít nhất 6 ký tự",
       });
       return;
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      setMessage({ type: "error", text: "New passwords do not match" });
+      setMessage({ type: "error", text: "Mật khẩu mới không khớp" });
       return;
     }
 
     if (formData.currentPassword === formData.newPassword) {
       setMessage({
         type: "error",
-        text: "New password must be different from current password",
+        text: "Mật khẩu mới phải khác với mật khẩu hiện tại",
       });
       return;
     }
@@ -102,7 +105,6 @@ export function ChangePasswordSection({
 
   return (
     <div className="space-y-6">
-      {/* Change Password Card */}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3">
@@ -110,9 +112,10 @@ export function ChangePasswordSection({
               <Lock className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <CardTitle>Change Password</CardTitle>
+              <CardTitle>Đổi mật khẩu</CardTitle>
               <CardDescription>
-                Update your account password to keep your account secure
+                Cập nhật mật khẩu tài khoản của bạn để giữ cho tài khoản của bạn
+                an toàn
               </CardDescription>
             </div>
           </div>
@@ -137,9 +140,8 @@ export function ChangePasswordSection({
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Current Password */}
             <div className="space-y-2">
-              <Label htmlFor="currentPassword">Current Password</Label>
+              <Label htmlFor="currentPassword">Mật khẩu hiện tại</Label>
               <div className="relative">
                 <Input
                   id="currentPassword"
@@ -148,7 +150,7 @@ export function ChangePasswordSection({
                   onChange={(e) =>
                     handleInputChange("currentPassword", e.target.value)
                   }
-                  placeholder="Enter your current password"
+                  placeholder="Nhập mật khẩu hiện tại của bạn"
                   required
                 />
                 <Button
@@ -171,7 +173,7 @@ export function ChangePasswordSection({
 
             {/* New Password */}
             <div className="space-y-2">
-              <Label htmlFor="newPassword">New Password</Label>
+              <Label htmlFor="newPassword">Mật khẩu mới</Label>
               <div className="relative">
                 <Input
                   id="newPassword"
@@ -180,7 +182,7 @@ export function ChangePasswordSection({
                   onChange={(e) =>
                     handleInputChange("newPassword", e.target.value)
                   }
-                  placeholder="Enter your new password"
+                  placeholder="Nhập mật khẩu mới của bạn"
                   required
                 />
                 <Button
@@ -201,7 +203,7 @@ export function ChangePasswordSection({
 
             {/* Confirm Password */}
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Label htmlFor="confirmPassword">Xác nhận mật khẩu mới</Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
@@ -210,7 +212,7 @@ export function ChangePasswordSection({
                   onChange={(e) =>
                     handleInputChange("confirmPassword", e.target.value)
                   }
-                  placeholder="Confirm your new password"
+                  placeholder="Xác nhận mật khẩu mới của bạn"
                   required
                 />
                 <Button
@@ -232,21 +234,18 @@ export function ChangePasswordSection({
                   {passwordsMatch ? (
                     <>
                       <Check className="h-4 w-4 text-green-600" />
-                      <span className="text-green-600">Passwords match</span>
+                      <span className="text-green-600">Mật khẩu khớp</span>
                     </>
                   ) : (
                     <>
                       <X className="h-4 w-4 text-red-600" />
-                      <span className="text-red-600">
-                        Passwords do not match
-                      </span>
+                      <span className="text-red-600">Mật khẩu không khớp</span>
                     </>
                   )}
                 </div>
               )}
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-end pt-4">
               <Button
                 type="submit"
@@ -258,14 +257,13 @@ export function ChangePasswordSection({
                 }
                 className="min-w-[140px]"
               >
-                {isPending ? "Changing..." : "Change Password"}
+                {isPending ? "Đang thay đổi..." : "Đổi mật khẩu"}
               </Button>
             </div>
           </form>
         </CardContent>
       </Card>
 
-      {/* Security Tips Card */}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3">
@@ -273,9 +271,9 @@ export function ChangePasswordSection({
               <Shield className="h-5 w-5 text-green-600" />
             </div>
             <div>
-              <CardTitle className="text-lg">Security Tips</CardTitle>
+              <CardTitle className="text-lg">Mẹo bảo mật</CardTitle>
               <CardDescription>
-                Keep your account secure with these recommendations
+                Giữ cho tài khoản của bạn an toàn với những khuyến nghị này
               </CardDescription>
             </div>
           </div>
@@ -286,10 +284,10 @@ export function ChangePasswordSection({
               <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
               <div>
                 <p className="font-medium text-sm">
-                  Use a strong, unique password
+                  Sử dụng mật khẩu mạnh, duy nhất
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Choose a password that you don&#39;t use for other accounts
+                  Chọn một mật khẩu mà bạn không sử dụng cho các tài khoản khác
                 </p>
               </div>
             </div>
@@ -297,10 +295,10 @@ export function ChangePasswordSection({
               <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
               <div>
                 <p className="font-medium text-sm">
-                  Include a mix of characters
+                  Bao gồm nhiều loại ký tự
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Use uppercase, lowercase, numbers, and special characters
+                  Sử dụng chữ hoa, chữ thường, số và ký tự đặc biệt
                 </p>
               </div>
             </div>
@@ -308,11 +306,11 @@ export function ChangePasswordSection({
               <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
               <div>
                 <p className="font-medium text-sm">
-                  Consider using a password manager
+                  Cân nhắc sử dụng trình quản lý mật khẩu
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Password managers can generate and store strong passwords
-                  securely
+                  Trình quản lý mật khẩu có thể tạo và lưu trữ mật khẩu mạnh
+                  một cách an toàn
                 </p>
               </div>
             </div>
@@ -320,10 +318,10 @@ export function ChangePasswordSection({
               <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
               <div>
                 <p className="font-medium text-sm">
-                  Enable two-factor authentication
+                  Bật xác thực hai yếu tố
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Add an extra layer of security to your account
+                  Thêm một lớp bảo mật bổ sung cho tài khoản của bạn
                 </p>
               </div>
             </div>

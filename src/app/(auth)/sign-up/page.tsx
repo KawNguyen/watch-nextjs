@@ -37,9 +37,9 @@ const Page = () => {
     <>
       {step === "2" ? (
         <div className="flex flex-col items-center justify-center px-4">
-          <h1 className="text-2xl font-bold mb-4">Enter OTP</h1>
+          <h1 className="text-2xl font-bold mb-4">Nhập mã OTP</h1>
           <p className="text-sm text-gray-500 mb-6 text-center">
-            A 6-digit code was sent to{" "}
+            Mã xác thực 6 chữ số đã được gửi đến{" "}
             <span className="font-semibold">{email}</span>.
           </p>
           <VerifyOTP length={6} onChange={setOtp} />
@@ -58,33 +58,31 @@ const Page = () => {
           fields={[
             {
               name: "firstName",
-              label: "First Name",
+              label: "Tên",
               type: "text",
-              placeholder: "First Name",
-              validation: z.string().min(1, "First name is required"),
+              placeholder: "Tên",
+              validation: z.string().min(1, "Tên là bắt buộc"),
             },
             {
               name: "lastName",
-              label: "Last Name",
+              label: "Họ",
               type: "text",
-              placeholder: "Last Name",
-              validation: z.string().min(1, "Last name is required"),
+              placeholder: "Họ",
+              validation: z.string().min(1, "Họ là bắt buộc"),
             },
             {
               name: "email",
               type: "email",
               label: "Email",
               placeholder: "Email",
-              validation: z.string().email("Invalid email address"),
+              validation: z.string().email("Email không hợp lệ"),
             },
             {
               name: "password",
               type: "password",
-              label: "Password",
-              placeholder: "Password",
-              validation: z
-                .string()
-                .min(6, "Password must be at least 6 characters"),
+              label: "Mật khẩu",
+              placeholder: "Mật khẩu",
+              validation: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
             },
           ]}
           onSubmit={handleSubmit}

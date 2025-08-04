@@ -6,15 +6,15 @@ import { Flame, Truck, Clock } from "lucide-react";
 const messages = [
   {
     icon: <Flame className="text-red-600" />,
-    text: "Big Sale up to 50% off on selected models!",
+    text: "Giảm giá sốc 50% cho sản phẩm mới",
   },
   {
     icon: <Truck className="text-green-500" />,
-    text: "Free worldwide shipping",
+    text: "Miễn phí vận chuyển toàn quốc",
   },
   {
     icon: <Clock className="text-yellow-500" />,
-    text: "Limited time offer – Shop now!",
+    text: "Ưu đãi có thời hạn - Mua ngay!",
   },
 ];
 

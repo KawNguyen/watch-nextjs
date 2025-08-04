@@ -58,7 +58,7 @@ const Header = () => {
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Favorite</p>
+                  <p>Yêu thích</p>
                 </TooltipContent>
               </Tooltip>
             )}
@@ -94,12 +94,12 @@ const Header = () => {
                       onClick={() => router.push("/account/profile")}
                     >
                       <UserCog className="mr-2 h-4 w-4" />
-                      Profile
+                      Quản lý tài khoản
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => logout()}>
                       <LogOut className="mr-2 h-4 w-4" />
-                      Log out
+                      Đăng xuất
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -111,7 +111,7 @@ const Header = () => {
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Sign In</p>
+                    <p>Đăng nhập</p>
                   </TooltipContent>
                 </Tooltip>
               ))}

@@ -91,13 +91,13 @@ export function CartSheet() {
           </SheetTrigger>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Cart</p>
+          <p>Giỏ hàng</p>
         </TooltipContent>
       </Tooltip>
 
       <SheetContent className="flex flex-col sm:max-w-md">
         <SheetHeader>
-          <SheetTitle>Shopping Cart</SheetTitle>
+          <SheetTitle>Giỏ hàng</SheetTitle>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto py-4">
@@ -117,10 +117,10 @@ export function CartSheet() {
                 />
                 <span className="text-sm text-muted-foreground">
                   {isAllSelected
-                    ? "Deselect All"
+                    ? "Bỏ chọn tất cả"
                     : isIndeterminate
-                    ? "Some items selected"
-                    : "Select All"}
+                    ? "Một số mục đã được chọn"
+                    : "Chọn tất cả"}
                 </span>
               </div>
 
@@ -140,7 +140,7 @@ export function CartSheet() {
             </>
           ) : (
             <div className="text-center py-8 text-gray-500">
-              Your cart is empty
+              Giỏ hàng của bạn đang trống
             </div>
           )}
         </div>
@@ -148,7 +148,7 @@ export function CartSheet() {
         {cartItemsToDisplay.length > 0 && (
           <div className="border-t pt-4">
             <div className="flex justify-between items-center mb-4">
-              <span className="font-medium">Total:</span>
+              <span className="font-medium">Tổng cộng:</span>
               <span className="font-bold text-lg">
                 {formatMoney(totalPrice)}
               </span>
@@ -157,8 +157,8 @@ export function CartSheet() {
             {selectedItems.length > 0 && (
               <div className="flex justify-between items-center mb-4">
                 <span className="text-sm text-gray-500">
-                  {selectedItems.length} item
-                  {selectedItems.length > 1 ? "s" : ""} selected
+                  {selectedItems.length} mục
+                  {selectedItems.length > 1 ? "s" : ""} đã được chọn
                 </span>
                 <Button
                   variant="ghost"
@@ -182,7 +182,7 @@ export function CartSheet() {
               onClick={handleCheckout}
               disabled={selectedItems.length === 0}
             >
-              Checkout ({selectedItems.length})
+              Thanh toán ({selectedItems.length})
             </Button>
           </div>
         )}

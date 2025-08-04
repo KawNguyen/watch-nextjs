@@ -280,10 +280,10 @@ export const CustomerInfo = ({
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { name: "firstName", label: "First Name" },
-              { name: "lastName", label: "Last Name" },
+              { name: "firstName", label: "Tên" },
+              { name: "lastName", label: "Họ" },
               { name: "email", label: "Email" },
-              { name: "phone", label: "Phone" },
+              { name: "phone", label: "Điện Thoại" },
             ].map(({ name, label }) => (
               <FormField
                 key={name}
@@ -308,7 +308,7 @@ export const CustomerInfo = ({
               name="addressId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Select Saved Address</FormLabel>
+                  <FormLabel>Chọn Địa Chỉ Đã Lưu</FormLabel>
                   <Select
                     onValueChange={(val) => {
                       field.onChange(val);
@@ -323,7 +323,7 @@ export const CustomerInfo = ({
                     </FormControl>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Addresses</SelectLabel>
+                        <SelectLabel>Địa Chỉ</SelectLabel>
                         {addresses.map((addr: AddressProps) => (
                           <SelectItem key={addr.id ?? ""} value={addr.id ?? ""}>
                             {formatAddress(addr)}
@@ -339,7 +339,7 @@ export const CustomerInfo = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormItem>
-              <FormLabel>Province / City</FormLabel>
+              <FormLabel>Tỉnh / Thành Phố</FormLabel>
               <Select
                 onValueChange={(value) => {
                   const selected = provinces.find(
@@ -358,7 +358,7 @@ export const CustomerInfo = ({
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose province/city" />
+                    <SelectValue placeholder="Chọn tỉnh/thành phố" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -373,7 +373,7 @@ export const CustomerInfo = ({
             </FormItem>
 
             <FormItem>
-              <FormLabel>District</FormLabel>
+              <FormLabel>Quận / Huyện</FormLabel>
               <Select
                 onValueChange={(value) => {
                   const selected = districts.districts.find(
@@ -391,7 +391,7 @@ export const CustomerInfo = ({
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose district" />
+                    <SelectValue placeholder="Chọn quận/huyện" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -412,7 +412,7 @@ export const CustomerInfo = ({
               name="wardName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ward</FormLabel>
+                  <FormLabel>Phường / Xã</FormLabel>
                   <Select
                     onValueChange={(value) => field.onChange(value)}
                     value={field.value}
@@ -420,7 +420,7 @@ export const CustomerInfo = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Choose ward" />
+                        <SelectValue placeholder="Chọn phường/xã" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -441,9 +441,9 @@ export const CustomerInfo = ({
               name="street"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address number / Street</FormLabel>
+                  <FormLabel>Số Nhà / Đường</FormLabel>
                   <FormControl>
-                    <Input placeholder="123/45 Street ABC" {...field} />
+                    <Input placeholder="123/45 Đường ABC" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -456,7 +456,7 @@ export const CustomerInfo = ({
             name="payment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Payment Method</FormLabel>
+                <FormLabel>Phương Thức Thanh Toán</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -468,9 +468,9 @@ export const CustomerInfo = ({
                   </FormControl>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Options</SelectLabel>
-                      <SelectItem value="cod">COD</SelectItem>
-                      <SelectItem value="momo">MOMO</SelectItem>
+                      <SelectLabel>Tùy Chọn</SelectLabel>
+                      <SelectItem value="cod">Thanh Toán Khi Nhận Hàng</SelectItem>
+                      <SelectItem value="momo">Thanh Toán Qua Momo</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

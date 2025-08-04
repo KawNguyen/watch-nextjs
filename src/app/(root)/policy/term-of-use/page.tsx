@@ -26,7 +26,6 @@ export default function TermOfUsePage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12 max-w-5xl">
-        {/* Header Section */}
         <div className="text-center mb-12">
           <Lock className="w-8 h-8 mx-auto mb-4 text-gray-700" />
           <h1 className="text-3xl font-light mb-3">Terms of Use</h1>
@@ -38,7 +37,6 @@ export default function TermOfUsePage() {
           </p>
         </div>
 
-        {/* Welcome Section */}
         <div className="bg-gray-100 p-6 rounded-lg mb-12">
           <h2 className="text-xl font-light mb-4">Welcome to KronLux</h2>
           <p className="text-gray-600 leading-relaxed">
@@ -51,7 +49,6 @@ export default function TermOfUsePage() {
           </p>
         </div>
 
-        {/* Feature Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           <div className="bg-emerald-50 p-6 rounded-lg">
             <Truck className="w-6 h-6 text-emerald-600 mb-3" />
@@ -76,7 +73,6 @@ export default function TermOfUsePage() {
           </div>
         </div>
 
-        {/* Terms Sections */}
         <div className="space-y-4">
           <div className="border rounded-lg overflow-hidden">
             <button

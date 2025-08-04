@@ -14,17 +14,11 @@ interface ProductItemProps {
 }
 
 export function ProductItem({ product, onBuy }: ProductItemProps) {
-  // const formatPrice = (price: number) => {
-  //   return new Intl.NumberFormat("en-US", {
-  //     style: "currency",
-  //     currency: "USD",
-  //     minimumFractionDigits: 0,
-  //     maximumFractionDigits: 0,
-  //   }).format(price / 25000);
-  // };
-
   return (
-    <Link href={`/collections/${product.slug}`} className="p-4 hover:bg-muted/50 cursor-pointer transition-colors">
+    <Link
+      href={`/collections/${product.slug}`}
+      className="p-4 hover:bg-muted/50 cursor-pointer transition-colors"
+    >
       <div className="flex gap-3">
         <div className="size-16 relative overflow-hidden rounded-md">
           <AspectRatio ratio={1} className="">
@@ -57,7 +51,7 @@ export function ProductItem({ product, onBuy }: ProductItemProps) {
               onClick={() => onBuy?.(product)}
             >
               <ShoppingCart className="h-3 w-3 mr-1" />
-              Buy
+              Mua
             </Button>
           </div>
         </div>

@@ -45,13 +45,13 @@ export const Invoice = ({
     <Card className="p-4 bg-gray-100">
       <CardHeader className="flex flex-row justify-between items-start">
         <div>
-          <CardTitle className="text-lg">Invoice</CardTitle>
-          <CardDescription>Invoice #: {invoiceNumber}</CardDescription>
-          <CardDescription>Date: {date}</CardDescription>
+          <CardTitle className="text-lg">Hóa Đơn</CardTitle>
+          <CardDescription>Mã Hóa Đơn: {invoiceNumber}</CardDescription>
+          <CardDescription>Ngày: {date}</CardDescription>
         </div>
         <div className="text-right">
           <h3 className="font-bold text-xl text-gray-800">KronLux</h3>
-          <p className="text-gray-500 text-sm">Premium Watch Store</p>
+          <p className="text-gray-500 text-sm">Cửa Hàng Đồng Hồ Cao Cấp</p>
         </div>
       </CardHeader>
 
@@ -59,10 +59,10 @@ export const Invoice = ({
         <table className="w-full">
           <thead>
             <tr className="text-left text-gray-500 text-sm">
-              <th className="pb-2">Description</th>
-              <th className="pb-2 text-center">Quantity</th>
-              <th className="pb-2 text-right">Price</th>
-              <th className="pb-2 text-right">Total</th>
+              <th className="pb-2">Mô Tả</th>
+              <th className="pb-2 text-center">Số Lượng</th>
+              <th className="pb-2 text-right">Giá</th>
+              <th className="pb-2 text-right">Tổng</th>
             </tr>
           </thead>
           <tbody>
@@ -83,23 +83,23 @@ export const Invoice = ({
       </CardContent>
       <CardHeader>
         <CardTitle className="text-base text-gray-800">
-          Payment Summary
+          Tóm Tắt Thanh Toán
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
         <div className="flex justify-between">
-          <span className="text-gray-500">Subtotal</span>
+          <span className="text-gray-500">Giá Gốc</span>
           <span className="text-gray-900">{formatMoney(subtotal)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-gray-500">Coupon Discount</span>
+          <span className="text-gray-500">Giảm Giá Coupon</span>
           <span className="text-gray-900">
             {formatMoney(discountValue || 0)}
           </span>
         </div>
       </CardContent>
       <CardFooter className="border-t border-gray-200 pt-4 flex justify-between font-semibold text-gray-900">
-        <span>Total Amount</span>
+        <span>Tổng Tiền</span>
         <span>{formatMoney(total)}</span>
       </CardFooter>
     </Card>

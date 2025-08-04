@@ -1,28 +1,30 @@
 import Image from "next/image";
+import Link from "next/link";
+
 const categories = [
   {
-    title: "Men's Watch",
-    subtitle: "Luxatch Collection",
+    title: "Đồng hồ Nam",
+    subtitle: "Bộ sưu tập Luxatch",
     image:
       "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1bn1.jpg?v=1722307763&width=1077",
-    alt: "Men's Luxury Watch Collection",
-    path: "/collections?genders=Men",
+    alt: "Bộ sưu tập đồng hồ cao cấp cho nam",
+    path: "/collections?genders=MEN",
   },
   {
-    title: "Women's Watch",
-    subtitle: "Luxatch Collection",
+    title: "Đồng hồ Nữ",
+    subtitle: "Bộ sưu tập Luxatch",
     image:
       "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1bn2.jpg?v=1722309719&width=983",
-    alt: "Women's Luxury Watch Collection",
-    path: "/collections?genders=Women",
+    alt: "Bộ sưu tập đồng hồ cao cấp cho nữ",
+    path: "/collections?genders=WOMEN",
   },
   {
-    title: "Unisex's Watch",
-    subtitle: "Luxatch Collection",
+    title: "Đồng hồ Unisex",
+    subtitle: "Bộ sưu tập Luxatch",
     image:
       "https://luxatch-store-newdemo.myshopify.com/cdn/shop/files/h1bn2.jpg?v=1722309719&width=983",
-    alt: "Women's Luxury Watch Collection",
-    path: "/collections?genders=Unisex",
+    alt: "Bộ sưu tập đồng hồ cao cấp Unisex",
+    path: "/collections?genders=UNISEX",
   },
 ];
 
@@ -32,18 +34,20 @@ const Category = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-            Shop By Your Gender
+            Mua sắm theo giới tính
           </h2>
           <div className="w-40 h-1 bg-gray-900 mx-auto"></div>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            Explore our curated collections for your style and needs.
+            Khám phá những bộ sưu tập được tuyển chọn phù hợp với phong cách và
+            nhu cầu của bạn.
           </p>
         </div>
         <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
           {categories.map((category, index) => (
-            <div
+            <Link
               key={index}
               className="relative overflow-hidden rounded-xl max-w-xl w-full shadow-lg group"
+              href={category.path}
             >
               <Image
                 src={category.image}
@@ -64,11 +68,12 @@ const Category = () => {
                   {category.title}
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
     </section>
   );
 };
+
 export default Category;

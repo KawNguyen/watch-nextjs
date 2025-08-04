@@ -169,28 +169,29 @@ export const navigation = {
 
 export const faqs = [
   {
-    question: "How do I place an order?",
+    question: "Làm thế nào để đặt hàng?",
     answer:
-      "Browse our collection, add your desired watch to the cart, and proceed to checkout. Follow the on-screen instructions to complete your purchase.",
+      "Duyệt qua bộ sưu tập của chúng tôi, thêm chiếc đồng hồ bạn muốn vào giỏ hàng và tiến hành thanh toán. Làm theo hướng dẫn trên màn hình để hoàn tất đơn hàng.",
   },
   {
-    question: "What payment methods are accepted?",
-    answer: "We accept major credit cards, PayPal, and bank transfers.",
+    question: "Các phương thức thanh toán nào được chấp nhận?",
+    answer:
+      "Chúng tôi chấp nhận thẻ tín dụng chính, PayPal và chuyển khoản ngân hàng.",
   },
   {
-    question: "How can I track my order?",
+    question: "Làm thế nào để theo dõi đơn hàng của tôi?",
     answer:
-      "Once your order is shipped, you will receive a tracking number via email. Use it to track your shipment on our website or the courier's site.",
+      "Khi đơn hàng của bạn được giao, bạn sẽ nhận được số theo dõi qua email. Sử dụng nó để theo dõi lô hàng của bạn trên trang web của chúng tôi hoặc trang web của đơn vị vận chuyển.",
   },
   {
-    question: "What is your return policy?",
+    question: "Chính sách đổi trả của bạn là gì?",
     answer:
-      "You can return any unworn watch within 14 days of delivery for a full refund. Please see our Return Policy page for details.",
+      "Bạn có thể trả lại bất kỳ chiếc đồng hồ nào chưa qua sử dụng trong vòng 14 ngày kể từ ngày giao hàng để được hoàn tiền đầy đủ. Vui lòng xem trang Chính sách đổi trả của chúng tôi để biết thêm chi tiết.",
   },
   {
-    question: "Do you offer international shipping?",
+    question: "Bạn có cung cấp dịch vụ vận chuyển quốc tế không?",
     answer:
-      "Yes, we ship worldwide. Shipping fees and delivery times vary by destination.",
+      "Có, chúng tôi cung cấp dịch vụ vận chuyển quốc tế. Phí vận chuyển và thời gian giao hàng sẽ thay đổi tùy theo địa điểm.",
   },
 ];
 
@@ -400,29 +401,29 @@ export const recentSearches = [
 
 export const routes = [
   {
-    title: "Our Products",
+    title: "Sản phẩm",
     children: [
-      { path: "/collections", title: "All products" },
-      { path: "/collections?genders=Men", title: "Men" },
-      { path: "/collections?genders=Women", title: "Women" },
+      { path: "/collections", title: "Tất cả sản phẩm" },
+      { path: "/collections?genders=Men", title: "Nam" },
+      { path: "/collections?genders=Women", title: "Nữ" },
       { path: "/collections?genders=Unisex", title: "Unisex" },
     ],
   },
   {
-    title: "Support",
+    title: "Hỗ trợ",
     children: [
-      { path: "/support/about-us", title: "About Us" },
-      { path: "/support/contact", title: "Contact" },
-      { path: "/support/faq", title: "FAQ" },
+      { path: "/support/about-us", title: "Về chúng tôi" },
+      { path: "/support/contact", title: "Liên hệ" },
+      { path: "/support/faq", title: "Câu hỏi thường gặp" },
     ],
   },
   {
-    title: "Policy",
+    title: "Chính sách",
     children: [
-      { path: "/policy/term-of-use", title: "Term Of Use" },
-      { path: "/policy/privacy-policy", title: "Privacy Policy" },
-      { path: "/policy/shipping-return", title: "Shipping And Returns" },
-      { path: "/policy/refund-policy", title: "Refund Policy" },
+      { path: "/policy/term-of-use", title: "Điều khoản sử dụng" },
+      { path: "/policy/privacy-policy", title: "Chính sách bảo mật" },
+      { path: "/policy/shipping-return", title: "Vận chuyển & Đổi trả" },
+      { path: "/policy/refund-policy", title: "Chính sách hoàn tiền" },
     ],
   },
 ];

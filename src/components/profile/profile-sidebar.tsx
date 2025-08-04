@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const menuItems = [
-  { id: "profile", label: "Profile Information", icon: User },
-  { id: "orders", label: "Order History", icon: Package },
-  { id: "return-request", label: "Return Requests", icon: RotateCcw },
-  { id: "addresses", label: "Addresses", icon: MapPin },
-  { id: "favorites", label: "Favorites", icon: Heart },
-  { id: "password", label: "Password", icon: LockKeyholeIcon },
+  { id: "profile", label: "Thông tin cá nhân", icon: User },
+  { id: "orders", label: "Lịch sử đơn hàng", icon: Package },
+  { id: "return-request", label: "Yêu cầu trả hàng", icon: RotateCcw },
+  { id: "addresses", label: "Địa chỉ", icon: MapPin },
+  { id: "favorites", label: "Yêu thích", icon: Heart },
+  { id: "password", label: "Mật khẩu", icon: LockKeyholeIcon },
 ];
 
 export function ProfileSidebar() {

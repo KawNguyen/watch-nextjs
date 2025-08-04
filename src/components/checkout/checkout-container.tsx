@@ -50,7 +50,6 @@ interface Coupon {
   updatedAt: string;
   deletedAt?: string | null;
 
-  // Calculated by backend:
   discountAmount: number;
   finalPrice: number;
   canUse: boolean;
@@ -152,7 +151,7 @@ const CheckoutContainer = () => {
 
   return (
     <div className="container mx-auto py-4">
-      <h1 className="text-4xl font-bold pb-4">Checkout</h1>
+      <h1 className="text-4xl font-bold pb-4">Thanh Toán</h1>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-7">
           <CustomerInfo
@@ -163,12 +162,12 @@ const CheckoutContainer = () => {
 
           <div className="mt-4 p-4 bg-gray-100 rounded">
             <label className="block text-sm font-medium mb-2">
-              Shipping Notes (Optional)
+              Ghi Chú Giao Hàng (Tùy Chọn)
             </label>
             <textarea
               className="w-full p-2 border rounded resize-none"
               rows={3}
-              placeholder="Any special delivery instructions..."
+              placeholder="Nhập ghi chú giao hàng của bạn tại đây..."
               value={shippingNotes}
               onChange={(e) => setShippingNotes(e.target.value)}
             />
@@ -176,7 +175,7 @@ const CheckoutContainer = () => {
 
           <div className="mt-4 p-4 bg-gray-100 rounded">
             <label className="block text-sm font-medium mb-2">
-              Coupon Code (Optional)
+              Mã Giảm Giá (Tùy Chọn)
             </label>
 
             <Select
@@ -189,7 +188,7 @@ const CheckoutContainer = () => {
               }}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a coupon" />
+                <SelectValue placeholder="Chọn mã giảm giá" />
               </SelectTrigger>
               <SelectContent>
                 {availableCoupons?.map((coupon: Coupon) => (
@@ -221,10 +220,10 @@ const CheckoutContainer = () => {
             {createOrderFromCart.isPending || createOrderWalkin.isPending ? (
               <>
                 <Loader2 className="animate-spin mr-2" />
-                Order is being placed...
+                Đang xử lý...
               </>
             ) : (
-              "Order Now"
+              "Đặt Hàng"
             )}
           </Button>
         </div>

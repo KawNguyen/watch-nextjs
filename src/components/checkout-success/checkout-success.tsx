@@ -26,6 +26,7 @@ export default function Component() {
   const orderId = searchParams.get("orderInfo") ?? router.push("/");
 
   const { data, isLoading } = useOrderQuery(orderId as string);
+  console.log(data);
 
   const orderDate = new Date(data?.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
@@ -57,11 +58,10 @@ export default function Component() {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Order Confirmed!
+            Xác Nhận Đặt Hàng Thành Công
           </h1>
           <p className="text-lg text-gray-600">
-            Thank you for your purchase. Your order has been successfully
-            placed.
+            Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đã được đặt thành công.
           </p>
         </div>
 
@@ -71,17 +71,17 @@ export default function Component() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Package className="w-5 h-5" />
-                  Order Details
+                  Chi tiết đơn hàng
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Order Number</p>
+                    <p className="text-sm text-gray-600">Mã đơn hàng</p>
                     <p className="font-semibold text-lg">{data?.id}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Order Date</p>
+                    <p className="text-sm text-gray-600">Ngày đặt hàng</p>
                     <p className="font-semibold">{orderDate}</p>
                   </div>
                 </div>
@@ -105,8 +105,12 @@ export default function Component() {
                       <h3 className="font-semibold text-lg">
                         {item.watch.name}
                       </h3>
-                      <p className="text-gray-600">Black Dial, Steel Case</p>
-                      <p className="text-sm text-gray-500">Model: 126610LN</p>
+                      <p className="text-gray-600">
+                        {item.watch.brand.name}, {item.watch.movement.name},{" "}
+                        {item.watch.bandMaterial.name},{" "}
+                        {item.watch.material.name}
+                      </p>
+                      <p className="text-sm text-gray-500">{item.watch.code}</p>
                       <div className="flex items-center gap-1 mt-1">
                         {[...Array(5)].map((_, i) => (
                           <Star
@@ -139,13 +143,13 @@ export default function Component() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Truck className="w-5 h-5" />
-                  Shipping Information
+                  Thông tin giao hàng
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Shipping Address</p>
+                    <p className="text-sm text-gray-600">Địa chỉ giao hàng</p>
                     <div className="mt-1">
                       <p className="font-medium">{fullName}</p>
                       <p className="text-gray-700">{deliveryAddress.street}</p>
@@ -157,20 +161,21 @@ export default function Component() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Shipping Method</p>
-                    <p className="font-medium">Express Shipping</p>
-                    <p className="text-sm text-gray-600">2-3 business days</p>
+                    <p className="text-sm text-gray-600">
+                      Phương thức giao hàng
+                    </p>
+                    <p className="font-medium">Giao hàng nhanh</p>
+                    <p className="text-sm text-gray-600">2-3 ngày làm việc</p>
                   </div>
                 </div>
 
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <div className="flex items-center gap-2 text-blue-800">
                     <Package className="w-4 h-4" />
-                    <span className="font-medium">Tracking Information</span>
+                    <span className="font-medium">Thông tin theo dõi</span>
                   </div>
                   <p className="text-sm text-blue-700 mt-1">
-                    Your tracking number will be sent to your email within 24
-                    hours
+                    Mã theo dõi của bạn sẽ được gửi đến email trong vòng 24 giờ
                   </p>
                 </div>
               </CardContent>
@@ -189,10 +194,10 @@ export default function Component() {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium">Order Processing</p>
+                      <p className="font-medium">Xử lý đơn hàng</p>
                       <p className="text-sm text-gray-600">
-                        {"We're preparing your watch for shipment"} (1-2
-                        business days)
+                        {"Chúng tôi đang chuẩn bị đồng hồ của bạn để giao hàng"}{" "}
+                        (1-2 ngày làm việc)
                       </p>
                     </div>
                   </div>
@@ -203,9 +208,9 @@ export default function Component() {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium">Shipping Confirmation</p>
+                      <p className="font-medium">Xác nhận giao hàng</p>
                       <p className="text-sm text-gray-600">
-                        {"You'll receive tracking information via email"}
+                        {"Bạn sẽ nhận được thông tin theo dõi qua email"}
                       </p>
                     </div>
                   </div>
@@ -216,9 +221,9 @@ export default function Component() {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium">Delivery</p>
+                      <p className="font-medium">Giao hàng</p>
                       <p className="text-sm text-gray-600">
-                        Your watch will arrive in 2-3 business days
+                        Đồng hồ của bạn sẽ được giao trong 2-3 ngày làm việc
                       </p>
                     </div>
                   </div>
@@ -230,32 +235,34 @@ export default function Component() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+                <CardTitle>Thông tin đơn hàng</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span>Subtotal:</span>
+                    <span>Tổng phụ:</span>
                     <span>{formatMoney(data?.originalPrice)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Coupon:</span>
-                    <span>- {formatMoney(data?.coupon.discountValue)}</span>
+                    <span>
+                      -{" "}
+                      {data.coupon
+                        ? formatMoney(data?.coupon?.discountValue)
+                        : 0}
+                    </span>
                   </div>
 
                   <Separator />
-                  <div className="flex justify-between text-lg font-bold">
-                    <span>Total Paid:</span>
+                  <div className="flex justify-between text-sm font-bold">
+                    <span>Tổng thanh toán:</span>
                     <span>{formatMoney(data?.totalPrice)}</span>
                   </div>
                 </div>
 
                 <div className="bg-green-50 p-3 rounded-lg">
                   <p className="text-sm text-green-800 font-medium">
-                    Payment Successful
-                  </p>
-                  <p className="text-xs text-green-700">
-                    Charged to card ending in 3456
+                    Thanh toán thành công
                   </p>
                 </div>
               </CardContent>
@@ -263,19 +270,19 @@ export default function Component() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
+                <CardTitle>Hành động nhanh</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button className="w-full" variant="outline">
                   <Download className="w-4 h-4 mr-2" />
-                  Download Receipt
+                  Tải biên nhận
                 </Button>
                 <Button className="w-full" variant="outline">
                   <Package className="w-4 h-4 mr-2" />
-                  Track Your Order
+                  Theo dõi đơn hàng
                 </Button>
                 <Button className="w-full" onClick={() => router.push("/")}>
-                  Continue Shopping
+                  Tiếp tục mua sắm
                 </Button>
               </CardContent>
             </Card>
@@ -284,38 +291,36 @@ export default function Component() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Shield className="w-5 h-5" />
-                  Warranty & Support
+                  Bảo hành & Hỗ trợ
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Shield className="w-4 h-4 text-green-600" />
-                    <span className="text-sm">
-                      2-Year International Warranty
-                    </span>
+                    <span className="text-sm">2-Năm Bảo Hành Quốc Tế</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span className="text-sm">30-Day Return Policy</span>
+                    <span className="text-sm">Chính Sách Đổi Trả 30 Ngày</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span className="text-sm">Authentication Certificate</span>
+                    <span className="text-sm">Chứng Nhận Xác Thực</span>
                   </div>
                 </div>
 
                 <Separator />
 
                 <div className="space-y-2">
-                  <p className="font-medium text-sm">Need Help?</p>
+                  <p className="font-medium text-sm">Cần giúp đỡ?</p>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Mail className="w-4 h-4" />
-                    <span>support@watchstore.com</span>
+                    <span>kronLux@gmail.com</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Phone className="w-4 h-4" />
-                    <span>1-800-WATCHES</span>
+                    <span>12-3456-7890</span>
                   </div>
                 </div>
               </CardContent>
@@ -328,11 +333,11 @@ export default function Component() {
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-blue-600" />
               <div>
-                <p className="font-medium">Confirmation Email Sent</p>
+                <p className="font-medium">Xác Nhận Email Đã Gửi</p>
                 <p className="text-sm text-gray-600">
-                  {"We've sent a detailed confirmation email to "}{" "}
-                  <strong>john@example.com</strong>{" "}
-                  {" with your order details and tracking information."}
+                  {"Chúng tôi đã gửi một email xác nhận chi tiết đến "}{" "}
+                  <strong>{data?.user?.email}</strong>{" "}
+                  {" với thông tin chi tiết về đơn hàng và thông tin theo dõi."}
                 </p>
               </div>
             </div>

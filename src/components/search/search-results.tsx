@@ -43,9 +43,9 @@ export function SearchResults({
     return (
       <div className="p-8 text-center">
         <Clock className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-        <div className="text-sm font-medium mb-1">No products found</div>
+        <div className="text-sm font-medium mb-1">Không có sản phẩm nào</div>
         <div className="text-xs text-muted-foreground">
-          Try different keywords or check spelling
+          Thử các từ khóa khác hoặc kiểm tra chính tả
         </div>
       </div>
     );
@@ -55,7 +55,7 @@ export function SearchResults({
     <div className="max-h-96 overflow-y-auto">
       <div className="p-4 border-b bg-muted/50">
         <div className="text-sm font-medium">
-          Search results for "{query}" ({totalItems} products)
+          Kết quả tìm kiếm cho "{query}" ({totalItems} sản phẩm)
         </div>
       </div>
 
@@ -79,7 +79,7 @@ export function SearchResults({
 
       {!hasNextPage && totalItems > 0 && (
         <div className="p-4 text-center text-sm text-muted-foreground">
-          You've reached the end of the list.
+          Bạn đã đến cuối danh sách.
         </div>
       )}
     </div>

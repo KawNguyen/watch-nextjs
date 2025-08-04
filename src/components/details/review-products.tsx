@@ -39,16 +39,16 @@ const ReviewProduct = ({ slug }: { slug: string }) => {
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="flex items-center justify-between mb-12">
-        <h2 className="text-3xl font-bold text-black">Customer Reviews</h2>
+        <h2 className="text-3xl font-bold text-black">Đánh giá của khách hàng</h2>
         <div className="text-sm text-gray-600">
-          {allReviews.length} review{allReviews.length !== 1 ? "s" : ""}
+          {allReviews.length} đánh giá{allReviews.length !== 1 ? "s" : ""}
         </div>
       </div>
 
       {allReviews.length === 0 ? (
         <div className="text-center py-12">
-          <div className="text-gray-400 text-lg mb-2">No reviews yet</div>
-          <p className="text-gray-600">Be the first to review this product!</p>
+          <div className="text-gray-400 text-lg mb-2">Không có đánh giá nào</div>
+          <p className="text-gray-600">Hãy là người đầu tiên đánh giá sản phẩm này!</p>
         </div>
       ) : (
         <div className="space-y-6">
@@ -92,7 +92,7 @@ const ReviewProduct = ({ slug }: { slug: string }) => {
               <p className="mt-4 text-gray-600 leading-relaxed">
                 {review.comment || (
                   <span className="italic text-gray-400">
-                    No comment provided
+                    Không có bình luận nào
                   </span>
                 )}
               </p>
@@ -108,11 +108,11 @@ const ReviewProduct = ({ slug }: { slug: string }) => {
               {isFetchingNextPage ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600 mr-2"></div>
-                  Loading...
+                  Đang tải...
                 </>
               ) : (
                 <>
-                  Load More Reviews
+                  Tải thêm đánh giá
                   <ChevronRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
                 </>
               )}

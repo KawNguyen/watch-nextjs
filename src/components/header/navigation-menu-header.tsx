@@ -15,7 +15,7 @@ const NavigationMenuHeader = () => {
         <NavigationMenu className="mx-auto">
           <NavigationMenuList className="flex gap-6 z-20">
             <NavigationMenuItem>
-              <Link href={"/collections"}>Collections</Link>
+              <Link href={"/collections"}>Bộ sưu tập</Link>
             </NavigationMenuItem>
 
             <NavigationBrand brands={navigation.brand} />
@@ -23,7 +23,7 @@ const NavigationMenuHeader = () => {
             <NavigationGender gender={navigation.gender} />
 
             <NavigationMenuItem>
-              <Link href={"/promotion"}>Promotion</Link>
+              <Link href={"/tracking-order"}>Theo dõi đơn hàng</Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>

@@ -19,7 +19,7 @@ export function Step3Success({ returnId }: { returnId: string | null }) {
       <div className="bg-gray-50 p-4 rounded-lg space-y-2">
         <div className="flex justify-between">
           <span className="text-sm text-gray-600">Mã yêu cầu:</span>
-          <Badge variant="secondary"></Badge>
+          <Badge variant="secondary"> {returnId}</Badge>
         </div>
         <div className="flex justify-between">
           <span className="text-sm text-gray-600">

@@ -13,7 +13,7 @@ export const ProductTrailer = ({ videoUrl }: VideoPlayerProps) => {
   const videoId = getYouTubeVideoId(videoUrl);
 
   if (!videoId) {
-    return <div>Invalid YouTube URL</div>;
+    return <div>Không có video</div>;
   }
 
   return (

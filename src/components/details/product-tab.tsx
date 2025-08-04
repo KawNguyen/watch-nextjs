@@ -39,10 +39,10 @@ export function ProductTabs({
       <Tabs defaultValue="specifications" className="w-full">
         <TabsList className="w-full grid grid-cols-2 gap-4">
           <TabsTrigger value="specifications" className="text-base">
-            Specifications
+            Thông Số Kỹ Thuật
           </TabsTrigger>
           <TabsTrigger value="description" className="text-base">
-            Description
+            Mô Tả
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description">
@@ -54,41 +54,41 @@ export function ProductTabs({
           <div className="bg-white rounded-lg p-6 shadow-sm mt-4">
             <div className="grid grid-cols-2 gap-6">
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Store className="h-4 w-4" /> Brand
+                <Store className="h-4 w-4" /> Thương Hiệu
               </div>
               <div className="text-gray-600">{brand?.name}</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Globe className="h-4 w-4" /> Country
+                <Globe className="h-4 w-4" /> Quốc Gia
               </div>
               <div className="text-gray-600">{brand?.country}</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Cog className="h-4 w-4" /> Movement
+                <Cog className="h-4 w-4" /> Chuyển động
               </div>
               <div className="text-gray-600">{movement?.name}</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Circle className="h-4 w-4" /> Case Material
+                <Circle className="h-4 w-4" /> Vật Liệu Vỏ
               </div>
               <div className="text-gray-600">{material?.name}</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Link className="h-4 w-4" /> Band Material
+                <Link className="h-4 w-4" /> Vật Liệu Dây
               </div>
               <div className="text-gray-600">{bandMaterial?.name}</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Ruler className="h-4 w-4" /> Case Diameter
+                <Ruler className="h-4 w-4" /> Đường Kính Case
               </div>
               <div className="text-gray-600">{diameter}mm</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Users className="h-4 w-4" /> Gender
+                <Users className="h-4 w-4" /> Giới Tính
               </div>
               <div className="text-gray-600">{gender}</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Droplets className="h-4 w-4" /> Water Resistance
+                <Droplets className="h-4 w-4" /> Khả Năng Chống Nước
               </div>
               <div className="text-gray-600">{waterResistance}m</div>
               <div className="font-medium text-gray-900 flex items-center gap-2">
-                <Shield className="h-4 w-4" /> Warranty
+                <Shield className="h-4 w-4" /> Bảo Hành
               </div>
-              <div className="text-gray-600">{warranty} months</div>
+              <div className="text-gray-600">{warranty} tháng</div>
             </div>
           </div>
         </TabsContent>

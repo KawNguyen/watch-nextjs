@@ -56,9 +56,9 @@ export function AddressManagement() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pl-6 pt-4">
         <div>
-          <CardTitle>Saved Addresses</CardTitle>
+          <CardTitle>Địa Chỉ</CardTitle>
           <CardDescription>
-            Manage your shipping and billing addresses
+            Quản lý địa chỉ giao hàng và thanh toán của bạn
           </CardDescription>
         </div>
         <AddAddressModal type="create" userId={user?.id ?? ""} />
@@ -76,7 +76,7 @@ export function AddressManagement() {
                     <div>
                       <div className="flex items-center gap-2 mb-2">
                         <Home className="h-4 w-4 text-muted-foreground" />
-                        <span className="font-medium">Address {index + 1}</span>
+                        <span className="font-medium">Địa chỉ {index + 1}</span>
                       </div>
                       <p className="text-sm text-muted-foreground whitespace-pre-line">
                         {formatAddress(address)}
@@ -112,20 +112,20 @@ export function AddressManagement() {
                         <AlertDialogContent>
                           <AlertDialogHeader>
                             <AlertDialogTitle>
-                              Are you absolutely sure?
+                              Bạn có chắc chắn không?
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                              You are about to delete the following address:
+                              Bạn sắp xóa địa chỉ sau:
                               <br />
                               <span className="font-medium block mt-2">
                                 {formatAddress(address)}
                               </span>
                               <br />
-                              This action cannot be undone.
+                              Hành động này không thể hoàn tác.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>Hủy</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() =>
                                 mutation.mutate({
@@ -134,7 +134,7 @@ export function AddressManagement() {
                                 })
                               }
                             >
-                              Yes, delete it
+                              Có, xóa nó
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -147,7 +147,7 @@ export function AddressManagement() {
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            No addresses saved yet.
+            Bạn chưa có địa chỉ nào.{" "}
           </p>
         )}
       </CardContent>

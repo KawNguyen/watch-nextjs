@@ -17,12 +17,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState, useEffect } from "react";
 import { ChangePhotoModal } from "./change-photo-modal";
 import { useAuthStore } from "@/store/auth.store";
-// import { useUserMutation } from "@/mutation/user.mutation";
 import { useAuth } from "@/mutation/auth.mutation";
 
 export function ProfileInfo() {
   const { profile: user } = useAuthStore();
-  // const { updateProfile } = useUserMutation();
   const { updateProfile } = useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -81,9 +79,9 @@ export function ProfileInfo() {
     <>
       <Card>
         <CardHeader className="pl-6 pt-4">
-          <CardTitle>Profile Information</CardTitle>
+          <CardTitle>Thông tin cá nhân</CardTitle>
           <CardDescription>
-            Update your personal information and profile details
+            Cập nhật thông tin cá nhân và chi tiết hồ sơ của bạn
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -108,7 +106,7 @@ export function ProfileInfo() {
                 onClick={() => setIsPhotoModalOpen(true)}
               >
                 <Edit className="h-4 w-4 mr-2" />
-                Change Photo
+                Thay đổi ảnh
               </Button>
             </div>
           </div>
@@ -117,7 +115,7 @@ export function ProfileInfo() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name</Label>
+              <Label htmlFor="firstName">Tên</Label>
               <Input
                 id="firstName"
                 value={formData.firstName}
@@ -126,7 +124,7 @@ export function ProfileInfo() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="lastName">Họ</Label>
               <Input
                 id="lastName"
                 value={formData.lastName}
@@ -135,7 +133,7 @@ export function ProfileInfo() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone">Số điện thoại</Label>
               <Input
                 id="phone"
                 value={formData.phone}
@@ -149,14 +147,14 @@ export function ProfileInfo() {
             {!isEditing ? (
               <Button onClick={handleEdit}>
                 <Edit className="h-4 w-4 mr-2" />
-                Edit Profile
+                Chỉnh sửa hồ sơ
               </Button>
             ) : (
               <>
                 <Button variant="outline" onClick={handleCancel}>
-                  Cancel
+                  Hủy
                 </Button>
-                <Button onClick={handleSave}>Save Changes</Button>
+                <Button onClick={handleSave}>Lưu thay đổi</Button>
               </>
             )}
           </div>

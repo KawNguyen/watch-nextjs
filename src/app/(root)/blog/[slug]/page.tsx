@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 // import { getBlogBySlug, formatDate } from "@/lib/blog-data"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,9 +13,7 @@ interface BlogDetailPageProps {
   params: { slug: string };
 }
 
-export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
-  //   const { slug } = await params
-  //   const blog = getBlogBySlug(slug)
+export default function BlogDetailPage({ params }: BlogDetailPageProps) {
   const { data: blog } = useBlogBySlugQuery(params.slug);
 
   return (
@@ -41,7 +38,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
             </div>
             <div className="flex items-center gap-2">
               <User className="h-4 w-4" />
-              <span>Admin</span>
+              <span>Quản trị viên</span>
             </div>
             {blog?.isPublished && (
               <Badge variant="secondary">Đã xuất bản</Badge>

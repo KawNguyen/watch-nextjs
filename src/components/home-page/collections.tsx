@@ -60,19 +60,20 @@ const Collections = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-            Movement Catalogue
+            Khám Phá Bộ Sưu Tập
           </h2>
           <div className="w-40 h-1 bg-gray-900 mx-auto"></div>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            Explore our passion watch by movement type
+            Khám phá bộ sưu tập đồng hồ theo loại chuyển động, thương hiệu và
+            tính năng. Tìm kiếm
           </p>
         </div>
 
-        <div className="w-full overflow-x-auto scroll-smooth mb-12 no-scrollbar">
+        <div className="w-full ">
           {brandsLoading ? (
             <BrandSkeleton />
           ) : (
-            <div className="flex justify-start sm:justify-center w-fit mx-auto gap-4 sm:gap-6 md:gap-8 px-4 py-2">
+            <div className="flex justify-start sm:justify-center w-fit mx-auto gap-4 sm:gap-6 md:gap-8 px-4 py-2 flex-wrap mb-8">
               {brands?.data?.items?.map((category) => (
                 <Button
                   key={category.id}
@@ -102,7 +103,7 @@ const Collections = () => {
               ))
           ) : (
             <p className="col-span-full text-center text-gray-500">
-              No watches found for this brand.
+              Không tìm thấy đồng hồ nào cho thương hiệu này.
             </p>
           )}
         </div>
@@ -115,7 +116,7 @@ const Collections = () => {
                 window.location.href = `/collections?brands=${activeCategory?.slug}`;
               }}
             >
-              <span>View Collection</span>
+              <span>Xem Bộ Sưu Tập</span>
               <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>

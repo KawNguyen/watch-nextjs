@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import ProductCard from "../product-card";
 import { useWatchesQuery } from "@/queries/watches";
 import WatchCard from "../watch-card";
 
@@ -33,7 +32,7 @@ export const RelevantProduct = ({
   if (isLoading) {
     return (
       <div className="container mx-auto px-4">
-        <div>Loading...</div>
+        <div>Đang tải...</div>
       </div>
     );
   }
@@ -41,7 +40,7 @@ export const RelevantProduct = ({
   return (
     <div className="container mx-auto px-4">
       <h2 className="text-3xl font-bold text-gray-900 mb-8">
-        Similar Products
+        Sản Phẩm Tương Tự
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {relevantProducts?.map((product: any) => (

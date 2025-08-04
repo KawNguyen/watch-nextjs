@@ -5,56 +5,58 @@ import { Watch } from "@/types/watch";
 const features = [
   {
     icon: ClockIcon,
-    title: "Precision Movement",
+    title: "Chuyển động chính xác",
     description:
-      "Swiss-made automatic movement with 28,800 vibrations per hour for exceptional accuracy.",
+      "Bộ máy tự động Thụy Sĩ với 28.800 dao động mỗi giờ, mang lại độ chính xác tuyệt vời.",
   },
   {
     icon: ShieldIcon,
-    title: "Premium Materials",
+    title: "Vật liệu cao cấp",
     description:
-      "Crafted from surgical-grade stainless steel and scratch-resistant sapphire crystal.",
+      "Được chế tác từ thép không gỉ cấp phẫu thuật và mặt kính sapphire chống trầy xước.",
   },
   {
     icon: AwardIcon,
-    title: "Master Craftsmanship",
+    title: "Chế tác thủ công tinh xảo",
     description:
-      "Hand-finished by master watchmakers with decades of experience in fine horology.",
+      "Hoàn thiện thủ công bởi những nghệ nhân đồng hồ với hàng chục năm kinh nghiệm.",
   },
   {
     icon: RefreshCwIcon,
-    title: "Lasting Heritage",
+    title: "Di sản bền vững",
     description:
-      "Built to be passed down through generations with proper care and regular servicing.",
+      "Được thiết kế để truyền lại qua nhiều thế hệ với sự chăm sóc và bảo dưỡng đúng cách.",
   },
 ];
+
 const specifications = [
   {
-    label: "Power Reserve",
-    value: "72 Hours",
+    label: "Dự trữ năng lượng",
+    value: "72 giờ",
   },
   {
-    label: "Accuracy",
-    value: "+/- 2 sec/day",
+    label: "Độ chính xác",
+    value: "+/- 2 giây/ngày",
   },
   {
-    label: "Warranty",
-    value: "2 Years",
+    label: "Bảo hành",
+    value: "2 năm",
   },
 ];
+
 export const ProductFeatures = ({ watch }: { watch: Watch }) => {
   return (
     <section className="py-16 my-4 rounded-md bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-gray-900">
-            Unparalleled Excellence
+            Sự hoàn hảo vượt trội
           </h2>
           <p className="mt-4 text-lg text-gray-600 w-full mx-auto">
-            The
+            Chiếc
             <span className="m-1 strong font-bold">{watch?.name}</span>
-            is not only just a watch but also a testament to precision and
-            craftsmanship.
+            không chỉ là một chiếc đồng hồ mà còn là minh chứng cho độ chính xác
+            và tay nghề tinh xảo.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

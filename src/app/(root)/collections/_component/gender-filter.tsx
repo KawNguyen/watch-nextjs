@@ -9,8 +9,8 @@ interface GenderFilterProps {
 }
 
 const genderOptions: { value: Gender; label: string }[] = [
-  { value: "MEN", label: "Men" },
-  { value: "WOMEN", label: "Women" },
+  { value: "MEN", label: "Nam" },
+  { value: "WOMEN", label: "Nữ" },
   { value: "UNISEX", label: "Unisex" },
 ];
 
@@ -20,7 +20,7 @@ export default function GenderFilter({
 }: GenderFilterProps) {
   return (
     <div className="space-y-2">
-      <span className="text-lg font-medium">Gender</span>
+      <span className="text-lg font-medium">Giới Tính</span>
       <div className="flex items-center flex-wrap gap-2">
         {genderOptions.map((option) => {
           const isSelected = selectedGenders.includes(option.value);

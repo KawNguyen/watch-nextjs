@@ -24,7 +24,7 @@ export default function AboutUs() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -44,9 +44,9 @@ export default function AboutUs() {
       <div className="container mx-auto px-4 py-12 max-w-5xl">
         <div className="text-center mb-12">
           <Gem className="w-8 h-8 mx-auto mb-4 text-emerald-600" />
-          <h1 className="text-3xl font-light mb-3">About KronLux</h1>
+          <h1 className="text-3xl font-light mb-3">Về KronLux</h1>
           <p className="text-gray-600">
-            Crafting Timeless Luxury, One Watch at a Time
+            Chế tác sự sang trọng vượt thời gian, từng chiếc đồng hồ một
           </p>
         </div>
 
@@ -55,10 +55,11 @@ export default function AboutUs() {
             <Star className="w-5 h-5 text-yellow-500" /> Our Story
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Founded in 2020, KronLux was born from a passion for horology and a
-            vision to make luxury timepieces accessible to discerning collectors
-            worldwide. Each watch in our curated collection is handpicked for
-            its craftsmanship, heritage, and timeless design.
+            Được thành lập vào năm 2025, KronLux ra đời từ niềm đam mê chế tác
+            đồng hồ và tầm nhìn mang đến những chiếc đồng hồ sang trọng cho
+            những người sưu tập tinh tế trên toàn thế giới. Mỗi chiếc đồng hồ
+            trong bộ sưu tập của chúng tôi đều được chọn lọc kỹ lưỡng về tay
+            nghề, di sản và thiết kế vượt thời gian.
           </p>
         </div>
 
@@ -67,10 +68,11 @@ export default function AboutUs() {
             <ShieldCheck className="w-5 h-5 text-blue-500" /> Our Mission
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Our mission is to deliver exceptional value, authenticity, and
-            service. We believe every customer deserves a seamless experience,
-            from browsing to unboxing. LuxWatch guarantees genuine products,
-            secure transactions, and expert support at every step.
+            Sứ mệnh của chúng tôi là mang đến giá trị, tính xác thực và dịch vụ
+            xuất sắc. Chúng tôi tin rằng mỗi khách hàng đều xứng đáng có được
+            trải nghiệm liền mạch, từ việc duyệt sản phẩm đến mở hộp. LuxWatch
+            đảm bảo cung cấp sản phẩm chính hãng, giao dịch an toàn và hỗ trợ
+            chuyên gia ở mọi bước.
           </p>
         </div>
 
@@ -101,7 +103,7 @@ export default function AboutUs() {
 
         <div className="text-center mt-12">
           <p className="text-gray-600">
-            Want to know more or collaborate? Reach out at{" "}
+            Bạn muốn biết thêm hoặc hợp tác? Liên hệ với chúng tôi tại{" "}
             <span className="text-emerald-600 font-medium">
               KronLux@gmail.com
             </span>
@@ -111,11 +113,12 @@ export default function AboutUs() {
 
       <div className="min-h-[80vh] bg-gradient-to-br from-gray-50 to-gray-200 flex flex-col items-center justify-center py-12 px-4">
         <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gray-900">
-          Contact Us
+          Liên hệ với chúng tôi
         </h1>
         <p className="text-gray-600 mb-8 text-center max-w-xl">
-          We would love to hear from you! Fill out the form below or reach us
-          directly via phone, email, or visit our store.
+          Chúng tôi rất muốn nghe từ bạn! Hãy điền vào mẫu dưới đây hoặc liên hệ
+          trực tiếp với chúng tôi qua điện thoại, email hoặc đến cửa hàng của
+          chúng tôi.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10 w-full max-w-4xl">
@@ -124,7 +127,7 @@ export default function AboutUs() {
               <CardHeader className="flex flex-row items-center gap-4">
                 <Phone className="text-indigo-600" />
                 <div>
-                  <CardTitle className="text-base">Phone</CardTitle>
+                  <CardTitle className="text-base">Điện thoại</CardTitle>
                   <p className="text-sm text-gray-500">+1 234 567 890</p>
                 </div>
               </CardHeader>
@@ -134,9 +137,7 @@ export default function AboutUs() {
                 <Mail className="text-indigo-600" />
                 <div>
                   <CardTitle className="text-base">Email</CardTitle>
-                  <p className="text-sm text-gray-500">
-                    contact@luxurywatch.com
-                  </p>
+                  <p className="text-sm text-gray-500">kronlux@gmail.com</p>
                 </div>
               </CardHeader>
             </Card>
@@ -144,7 +145,7 @@ export default function AboutUs() {
               <CardHeader className="flex flex-row items-center gap-4">
                 <MapPin className="text-indigo-600" />
                 <div>
-                  <CardTitle className="text-base">Address</CardTitle>
+                  <CardTitle className="text-base">Địa chỉ</CardTitle>
                   <p className="text-sm text-gray-500">
                     123 KronLux Ave, New York, NY
                   </p>
@@ -186,13 +187,13 @@ export default function AboutUs() {
                 "Sending..."
               ) : (
                 <>
-                  <Send size={18} className="mr-2" /> Send Message
+                  <Send size={18} className="mr-2" /> Gửi tin nhắn
                 </>
               )}
             </Button>
             {sent && (
               <div className="text-green-600 text-center font-medium mt-2">
-                Thank you! Your message has been sent.
+                Cảm ơn bạn! Tin nhắn của bạn đã được gửi.
               </div>
             )}
           </form>

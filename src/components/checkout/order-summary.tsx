@@ -8,7 +8,7 @@ export const OrderSummary = ({ items }: { items: CartItem[] }) => {
   return (
     <Card className="p-4 bg-gray-100">
       <h2 className="text-lg font-semibold text-gray-900 mb-4">
-        Order Summary
+        Tóm Tắt Đơn Hàng
       </h2>
       <div className="space-y-2 overflow-y-scroll h-[150px]">
         {items.map((product: CartItem, index) => (
@@ -27,7 +27,7 @@ export const OrderSummary = ({ items }: { items: CartItem[] }) => {
                 {product.watch.name}
               </h3>
               <p className="text-gray-500 text-sm">
-                Brand: {product.watch.brand.name}
+                Thương hiệu: {product.watch.brand.name}
               </p>
               <p className="font-semibold text-gray-900 mt-1">
                 {formatMoney(product.watch.price)}
