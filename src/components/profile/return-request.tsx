@@ -74,6 +74,7 @@ export function ReturnRequestDialog({ productData }: ReturnRequestDialogProps) {
         images: [],
       });
     }, 300);
+    setOpen(false);
   };
 
   const handleSubmit = async () => {
@@ -126,14 +127,6 @@ export function ReturnRequestDialog({ productData }: ReturnRequestDialogProps) {
                 {currentStep === 3 && "Yêu cầu đã được gửi thành công"}
               </DialogDescription>
             </div>
-            {/* <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleClose}
-              className="h-6 w-6 p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button> */}
           </div>
         </DialogHeader>
 
